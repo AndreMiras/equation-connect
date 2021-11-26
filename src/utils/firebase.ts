@@ -25,8 +25,6 @@ const database = getDatabase();
 const auth = getAuth(app);
 
 const login = async (email: string, password: string) => {
-  console.log("email:", email);
-  console.log("password:", password);
   const { user } = await signInWithEmailAndPassword(auth, email, password);
   return user;
 };

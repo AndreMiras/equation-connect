@@ -4,10 +4,9 @@ import { UserContext, anonymousUser } from "../context/provider";
 import { logout } from "../utils/firebase";
 
 const Logout = (): JSX.Element => {
-  const { user, setUser } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
 
   const onLogout = async () => {
-    console.log("Logout:", user);
     logout();
     setUser(anonymousUser);
   };

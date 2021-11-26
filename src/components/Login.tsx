@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { User, UserContext } from "../context/provider";
-import { login, getInstallations } from "../utils/firebase";
+import { login } from "../utils/firebase";
 
 const Login = (): JSX.Element => {
   const [email, setEmail] = useState<string>("");
@@ -17,9 +17,6 @@ const Login = (): JSX.Element => {
   const onLogin = async () => {
     try {
       const user: User = await login(email, password);
-      console.log("user:", user);
-      const installations = await getInstallations(user.uid);
-      console.log("installations:", installations);
       setUser(user);
     } catch (error) {
       console.error(error);
