@@ -1,6 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Container, Nav, Navbar } from "react-bootstrap";
+import Login from "./Login";
 
 const Header = (): JSX.Element => (
   <Navbar bg="dark" variant="dark" expand="sm">
@@ -17,6 +18,7 @@ const Header = (): JSX.Element => (
           </Nav.Link>
         </Nav>
       </Navbar.Collapse>
+      <Login />
     </Container>
   </Navbar>
 );
