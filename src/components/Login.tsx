@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
-import { login } from "../utils/firebase";
+import { login, getInstallations } from "../utils/firebase";
 
 const Login = (): JSX.Element => {
   const [email, setEmail] = useState<string>("");
@@ -16,6 +16,8 @@ const Login = (): JSX.Element => {
     try {
       const user = await login(email, password);
       console.log("user:", user);
+      const installations = await getInstallations(user.uid);
+      console.log("installations:", installations);
     } catch (error) {
       console.error(error);
     }

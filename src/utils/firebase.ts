@@ -1,4 +1,13 @@
 import { initializeApp } from "firebase/app";
+import {
+  child,
+  equalTo,
+  get,
+  getDatabase,
+  query,
+  orderByChild,
+  ref,
+} from "firebase/database";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 const firebaseConfig = {
@@ -12,17 +21,30 @@ const firebaseConfig = {
 
 // TODO: do not init at import time, but at first usage e.g. with a singleton
 const app = initializeApp(firebaseConfig);
+const database = getDatabase();
 const auth = getAuth(app);
 
 const login = async (email: string, password: string) => {
   console.log("email:", email);
   console.log("password:", password);
-  const userCredential = await signInWithEmailAndPassword(
-    auth,
-    email,
-    password
-  );
-  return userCredential;
+  const { user } = await signInWithEmailAndPassword(auth, email, password);
+  return user;
 };
 
-export { login };
+const getUser = async (uid: string) => {
+  const path = `users/${uid}`;
+  const snapshot = await get(child(ref(database), path));
+  const user = snapshot.val();
+  return user;
+};
+
+const getInstallations = async (uid: string) => {
+  const path = "installations2";
+  const snapshot = await get(
+    query(ref(database, path), orderByChild("userid"), equalTo(uid))
+  );
+  const installations = snapshot.val();
+  return installations;
+};
+
+export { login, getInstallations, getUser };
