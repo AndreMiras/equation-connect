@@ -8,7 +8,7 @@ import {
   orderByChild,
   ref,
 } from "firebase/database";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDfqBq3AfIg1wPjuHse3eiXqeDIxnhvp6U",
@@ -31,6 +31,8 @@ const login = async (email: string, password: string) => {
   return user;
 };
 
+const logout = () => signOut(auth);
+
 const getUser = async (uid: string) => {
   const path = `users/${uid}`;
   const snapshot = await get(child(ref(database), path));
@@ -47,4 +49,4 @@ const getInstallations = async (uid: string) => {
   return installations;
 };
 
-export { login, getInstallations, getUser };
+export { login, logout, getInstallations, getUser };

@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Form, Button } from "react-bootstrap";
+import { User, UserContext } from "../context/provider";
 import { login, getInstallations } from "../utils/firebase";
 
 const Login = (): JSX.Element => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const { setUser } = useContext(UserContext);
 
   const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setEmail(e.target.value);
@@ -14,10 +16,11 @@ const Login = (): JSX.Element => {
 
   const onLogin = async () => {
     try {
-      const user = await login(email, password);
+      const user: User = await login(email, password);
       console.log("user:", user);
       const installations = await getInstallations(user.uid);
       console.log("installations:", installations);
+      setUser(user);
     } catch (error) {
       console.error(error);
     }
