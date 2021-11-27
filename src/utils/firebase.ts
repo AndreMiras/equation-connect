@@ -9,6 +9,7 @@ import {
   ref,
 } from "firebase/database";
 import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { InstallationsType } from "../types";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDfqBq3AfIg1wPjuHse3eiXqeDIxnhvp6U",
@@ -38,7 +39,7 @@ const getUser = async (uid: string) => {
   return user;
 };
 
-const getInstallations = async (uid: string) => {
+const getInstallations = async (uid: string): Promise<InstallationsType> => {
   const path = "installations2";
   const snapshot = await get(
     query(ref(database, path), orderByChild("userid"), equalTo(uid))
