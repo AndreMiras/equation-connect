@@ -1,12 +1,21 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { Form, Button } from "react-bootstrap";
-import { User, UserContext } from "../context/provider";
+import { anonymousUser, User, UserContext } from "../context/provider";
 import { login } from "../utils/firebase";
 
 const Login = (): JSX.Element => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const { setUser } = useContext(UserContext);
+
+  useEffect(() => {
+    const auth = getAuth();
+    onAuthStateChanged(auth, (currentUser) => {
+      const user = currentUser === null ? anonymousUser : currentUser;
+      setUser(user);
+    });
+  }, [setUser]);
 
   const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setEmail(e.target.value);
