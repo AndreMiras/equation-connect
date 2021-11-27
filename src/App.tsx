@@ -7,6 +7,7 @@ import { fab } from "@fortawesome/free-brands-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import Home from "./components/Home";
 import Header from "./components/Header";
+import Device from "./components/Device";
 
 library.add(fas, fab);
 
@@ -18,6 +19,7 @@ const App = (): JSX.Element => {
         <Container>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="devices/:id" element={<Device />} />
           </Routes>
         </Container>
       </Router>

@@ -1,5 +1,6 @@
 interface ZoneOverviewType {
   id: string;
+  name: string;
   type: string;
   comfort: number;
   eco: number;

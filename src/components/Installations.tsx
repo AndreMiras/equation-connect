@@ -20,15 +20,10 @@ const Installations = (): JSX.Element => {
 
   return (
     <div>
-      <h2>Installations</h2>
-      <Card>
-        <Card.Body>
-          {installations &&
-            Object.keys(installations).map((key) => (
-              <Installation key={key} {...installations[key]} />
-            ))}
-        </Card.Body>
-      </Card>
+      {installations &&
+        Object.keys(installations).map((key) => (
+          <Installation key={key} {...installations[key]} />
+        ))}
       Debug:
       <Card>
         <Card.Body>
