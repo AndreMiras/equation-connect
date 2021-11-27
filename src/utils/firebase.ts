@@ -9,7 +9,7 @@ import {
   ref,
 } from "firebase/database";
 import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
-import { InstallationsType } from "../types";
+import { DeviceType, InstallationsType } from "../types";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDfqBq3AfIg1wPjuHse3eiXqeDIxnhvp6U",
@@ -48,4 +48,11 @@ const getInstallations = async (uid: string): Promise<InstallationsType> => {
   return installations;
 };
 
-export { login, logout, getInstallations, getUser };
+const getDevice = async (id: string): Promise<DeviceType> => {
+  const path = `devices/${id}`;
+  const snapshot = await get(child(ref(database), path));
+  const device = snapshot.val();
+  return device;
+};
+
+export { login, logout, getInstallations, getUser, getDevice };

@@ -32,10 +32,8 @@ const ZoneOverview: FunctionComponent<ZoneOverviewType> = ({
     </Card>
     <ul>
       {Object.keys(devices).map((device) => (
-        <li>
-          <Link to={`/devices/${device}`} key={device}>
-            {device}
-          </Link>
+        <li key={device}>
+          <Link to={`/devices/${device}`}>{device}</Link>
         </li>
       ))}
     </ul>
