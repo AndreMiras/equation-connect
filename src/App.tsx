@@ -1,21 +1,26 @@
-import React, { useContext } from "react";
+import React from "react";
+import { HashRouter as Router, Route, Routes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container } from "react-bootstrap";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
-import Installations from "./components/Installations";
+import Home from "./components/Home";
 import Header from "./components/Header";
-import { UserContext } from "./context/provider";
 
 library.add(fas, fab);
 
 const App = (): JSX.Element => {
-  const { user } = useContext(UserContext);
   return (
     <div className="App">
-      <Header />
-      <Container>{user.isAnonymous ? null : <Installations />}</Container>
+      <Router>
+        <Header />
+        <Container>
+          <Routes>
+            <Route path="/" element={<Home />} />
+          </Routes>
+        </Container>
+      </Router>
     </div>
   );
 };
