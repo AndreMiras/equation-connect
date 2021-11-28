@@ -17,4 +17,7 @@ jobs:
         git config user.email github-pages-deploy-action@@users.noreply.github.com
         git remote set-url origin https://${{github.actor}}:${{github.token}}@github.com/${{github.repository}}.git
     - run: yarn install
+    # note this step also runs the build via predeploy
     - run: yarn deploy
+      env:
+        REACT_APP_OPEN_WEATHER_API_KEY: ${{ secrets.REACT_APP_OPEN_WEATHER_API_KEY }}
