@@ -20,6 +20,8 @@ interface InstallationType {
   name: string;
   power: boolean;
   location: string;
+  latitude: number;
+  longitude: number;
   zones: ZonesOverviewType;
 }
 

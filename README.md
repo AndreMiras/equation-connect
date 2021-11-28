@@ -15,6 +15,7 @@ The Equation Connect is an app for controlling wifi radiators.
 ```sh
 yarn start
 ```
+Note you need a valid Open Weather API key, see `.env.example` file for details.
 
 ## Test
 ```sh
