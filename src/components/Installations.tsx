@@ -24,10 +24,12 @@ const Installations = (): JSX.Element => {
         Object.keys(installations).map((key) => (
           <Installation key={key} {...installations[key]} />
         ))}
-      Debug:
-      <Card>
+      <Card className="mb-3">
         <Card.Body>
-          <pre>{JSON.stringify(installations, null, 2)}</pre>
+          <Card.Title>Debug</Card.Title>
+          <Card.Text>
+            <pre>{JSON.stringify(installations, null, 2)}</pre>
+          </Card.Text>
         </Card.Body>
       </Card>
     </div>

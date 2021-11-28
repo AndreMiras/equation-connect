@@ -11,20 +11,14 @@ const Installation: FunctionComponent<InstallationType> = ({
 }) => (
   <div>
     <h2>Installation</h2>
-    <Card>
+    <Card className="mb-3">
       <Card.Body>
-        <ul>
-          <li>name: {name}</li>
-          <li>location: {location}</li>
-          <li>power: {power.toString()}</li>
-        </ul>
+        <Card.Title>{name}</Card.Title>
+        <Card.Subtitle className="mb-2 text-muted">{location}</Card.Subtitle>
+        <Card.Text>TODO: weather widget</Card.Text>
       </Card.Body>
     </Card>
-    <Card>
-      <Card.Body>
-        <ZonesOverview zones={zones} />
-      </Card.Body>
-    </Card>
+    <ZonesOverview zones={zones} />
   </div>
 );
 
