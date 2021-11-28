@@ -3,7 +3,7 @@ import { Accordion, Alert } from "react-bootstrap";
 // @ts-ignore
 import ReactWeather, { useOpenWeather } from "react-open-weather";
 import ZonesOverview from "./ZonesOverview";
-import { InstallationType } from "../types";
+import { InstallationType } from "equation-connect/dist/types";
 
 interface InstallationProps {
   installation: InstallationType;

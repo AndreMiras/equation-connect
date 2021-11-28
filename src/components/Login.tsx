@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { Form, Button } from "react-bootstrap";
 import { anonymousUser, User, UserContext } from "../context/provider";
-import { login } from "../utils/firebase";
+import { login } from "equation-connect";
 
 const Login = (): JSX.Element => {
   const [email, setEmail] = useState<string>("");
