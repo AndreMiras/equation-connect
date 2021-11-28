@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Card } from "react-bootstrap";
 import { UserContext } from "../context/provider";
 import { getInstallations } from "../utils/firebase";
 import Installation from "./Installation";
@@ -24,14 +23,6 @@ const Installations = (): JSX.Element => {
         Object.keys(installations).map((key) => (
           <Installation key={key} installation={installations[key]} />
         ))}
-      <Card className="mb-3">
-        <Card.Body>
-          <Card.Title>Debug</Card.Title>
-          <Card.Text>
-            <pre>{JSON.stringify(installations, null, 2)}</pre>
-          </Card.Text>
-        </Card.Body>
-      </Card>
     </div>
   );
 };

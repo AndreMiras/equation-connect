@@ -1,27 +1,21 @@
 import React, { FunctionComponent } from "react";
 import { Link } from "react-router-dom";
-import { Card } from "react-bootstrap";
+import { Accordion } from "react-bootstrap";
 import { ZoneOverviewType } from "../types";
 
-const ZoneOverview: FunctionComponent<ZoneOverviewType> = ({
-  id,
-  name,
-  type,
-  comfort,
-  eco,
-  temp,
-  power,
-  mode,
-  devices,
-}) => (
-  <>
-    <Card className="mb-3">
-      <Card.Body>
-        <Card.Title>{name}</Card.Title>
-        <Card.Subtitle className="mb-2 text-muted">{temp}&deg;</Card.Subtitle>
-        <Card.Text>
+interface ZoneOverviewProps {
+  zone: ZoneOverviewType;
+}
+const ZoneOverview: FunctionComponent<ZoneOverviewProps> = ({ zone }) => {
+  const { id, name, type, comfort, eco, temp, power, mode, devices } = zone;
+  return (
+    <Accordion className="mb-3" defaultActiveKey="0">
+      <Accordion.Item eventKey="0">
+        <Accordion.Header>{name}</Accordion.Header>
+        <Accordion.Body>
           <ul>
             <li>id: {id}</li>
+            <li>temp: {temp}&deg;</li>
             <li>type: {type}</li>
             <li>comfort: {comfort}&deg;</li>
             <li>eco: {eco}&deg;</li>
@@ -37,10 +31,16 @@ const ZoneOverview: FunctionComponent<ZoneOverviewType> = ({
               ))}
             </ul>
           </ul>
-        </Card.Text>
-      </Card.Body>
-    </Card>
-  </>
-);
+        </Accordion.Body>
+      </Accordion.Item>
+      <Accordion.Item eventKey="1">
+        <Accordion.Header>Debug</Accordion.Header>
+        <Accordion.Body>
+          <pre>{JSON.stringify(zone, null, 2)}</pre>
+        </Accordion.Body>
+      </Accordion.Item>
+    </Accordion>
+  );
+};
 
 export default ZoneOverview;

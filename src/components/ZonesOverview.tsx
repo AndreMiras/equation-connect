@@ -10,7 +10,7 @@ const ZonesOverview: FunctionComponent<ZonesOverviewProps> = ({ zones }) => (
   <>
     {zones &&
       Object.keys(zones).map((key) => (
-        <ZoneOverview key={key} {...zones[key]} />
+        <ZoneOverview key={key} zone={zones[key]} />
       ))}
   </>
 );
