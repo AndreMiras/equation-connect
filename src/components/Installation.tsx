@@ -1,18 +1,18 @@
 import React, { FunctionComponent } from "react";
-import { Alert, Card } from "react-bootstrap";
+import { Accordion, Alert } from "react-bootstrap";
 // @ts-ignore
 import ReactWeather, { useOpenWeather } from "react-open-weather";
 import ZonesOverview from "./ZonesOverview";
 import { InstallationType } from "../types";
 
-const Installation: FunctionComponent<InstallationType> = ({
-  name,
-  power,
-  location,
-  latitude,
-  longitude,
-  zones,
+interface InstallationProps {
+  installation: InstallationType;
+}
+
+const Installation: FunctionComponent<InstallationProps> = ({
+  installation,
 }) => {
+  const { name, location, latitude, longitude, zones } = installation;
   const { data, isLoading, errorMessage } = useOpenWeather({
     key: process.env.REACT_APP_OPEN_WEATHER_API_KEY,
     lat: latitude.toString(),
@@ -27,10 +27,10 @@ const Installation: FunctionComponent<InstallationType> = ({
   );
   return (
     <div>
-      <Card className="mb-3">
-        <Card.Body>
-          <Card.Title>{name}</Card.Title>
-          <Card.Text>
+      <Accordion className="mb-3" defaultActiveKey="0">
+        <Accordion.Item eventKey="0">
+          <Accordion.Header>{name}</Accordion.Header>
+          <Accordion.Body>
             {"REACT_APP_OPEN_WEATHER_API_KEY" in process.env ? (
               <ReactWeather
                 isLoading={isLoading}
@@ -44,9 +44,16 @@ const Installation: FunctionComponent<InstallationType> = ({
             ) : (
               missingApiKeyMessage
             )}
-          </Card.Text>
-        </Card.Body>
-      </Card>
+          </Accordion.Body>
+        </Accordion.Item>
+        <Accordion.Item eventKey="1">
+          <Accordion.Header>Debug</Accordion.Header>
+          <Accordion.Body>
+            <pre>{JSON.stringify(installation, null, 2)}</pre>
+          </Accordion.Body>
+        </Accordion.Item>
+      </Accordion>
+
       <ZonesOverview zones={zones} />
     </div>
   );
