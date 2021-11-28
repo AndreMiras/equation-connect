@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Accordion } from "react-bootstrap";
-import { getDevice } from "../utils/firebase";
-import { DeviceType } from "../types";
+import { getDevice } from "equation-connect";
+import { DeviceType } from "equation-connect/dist/types";
 
 const Device = (): JSX.Element => {
   const { id } = useParams<"id">();
