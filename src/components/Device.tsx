@@ -15,28 +15,35 @@ const Device = (): JSX.Element => {
     fetch();
   }, [id, setDevice]);
 
-  return (
-    <div>
-      <h2>Radiator Overview {id}</h2>
-      <Card>
+  return device === null ? (
+    <div />
+  ) : (
+    <>
+      <Card className="mb-3">
         <Card.Body>
-          {device === null ? null : (
+          <Card.Title>{device.data.name}</Card.Title>
+          <Card.Subtitle className="mb-2 text-muted">
+            {device.data.temp}&deg;
+          </Card.Subtitle>
+          <Card.Text>
             <ul>
-              <li>name: {device.data.name}</li>
-              <li>temp: {device.data.temp}</li>
-              <li>temp_calc: {device.data.temp_calc}</li>
-              <li>temp_probe: {device.data.temp_probe}</li>
+              <li>id: {id}</li>
+              <li>temp_calc: {device.data.temp_calc}&deg;</li>
+              <li>temp_probe: {device.data.temp_probe}&deg;</li>
             </ul>
-          )}
+          </Card.Text>
         </Card.Body>
       </Card>
-      Debug:
-      <Card>
+
+      <Card className="mb-3">
         <Card.Body>
-          <pre>{JSON.stringify(device, null, 2)}</pre>
+          <Card.Title>Debug</Card.Title>
+          <Card.Text>
+            <pre>{JSON.stringify(device, null, 2)}</pre>
+          </Card.Text>
         </Card.Body>
       </Card>
-    </div>
+    </>
   );
 };
 

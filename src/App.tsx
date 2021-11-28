@@ -16,7 +16,7 @@ const App = (): JSX.Element => {
     <div className="App">
       <Router>
         <Header />
-        <Container>
+        <Container className="mt-3">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="devices/:id" element={<Device />} />

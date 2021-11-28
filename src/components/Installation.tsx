@@ -10,7 +10,6 @@ const Installation: FunctionComponent<InstallationType> = ({
   zones,
 }) => (
   <div>
-    <h2>Installation</h2>
     <Card className="mb-3">
       <Card.Body>
         <Card.Title>{name}</Card.Title>
