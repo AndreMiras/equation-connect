@@ -1,7 +1,7 @@
 {
   "name": "equation-connect",
   "homepage": "https://andremiras.github.io/equation-connect/",
-  "version": "0.1.0",
+  "version": "2021.11.28",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.4",
