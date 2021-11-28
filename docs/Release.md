@@ -20,7 +20,7 @@ git flow release finish
 Push everything, make sure tags are also pushed:
 ```sh
 git push
-git push origin master:master
+git push origin main:main
 git push --tags
 ```
 
