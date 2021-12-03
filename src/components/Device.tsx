@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Accordion } from "react-bootstrap";
-import { getDevice } from "equation-connect";
-import { DeviceType } from "equation-connect/dist/types";
+import { DeviceType, getDevice } from "equation-connect";
 
 const Device = (): JSX.Element => {
   const { id } = useParams<"id">();

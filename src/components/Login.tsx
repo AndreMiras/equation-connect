@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import { Form, Button } from "react-bootstrap";
 import { anonymousUser, User, UserContext } from "../context/provider";
-import { login } from "equation-connect";
+import { login, auth } from "equation-connect";
 
 const Login = (): JSX.Element => {
   const [email, setEmail] = useState<string>("");
@@ -10,7 +10,6 @@ const Login = (): JSX.Element => {
   const { setUser } = useContext(UserContext);
 
   useEffect(() => {
-    const auth = getAuth();
     onAuthStateChanged(auth, (currentUser) => {
       const user = currentUser === null ? anonymousUser : currentUser;
       setUser(user);

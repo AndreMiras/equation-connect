@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
 import ZoneOverview from "./ZoneOverview";
-import { ZonesOverviewType } from "equation-connect/dist/types";
+import { ZonesOverviewType } from "equation-connect";
 
 interface ZonesOverviewProps {
   zones: ZonesOverviewType;

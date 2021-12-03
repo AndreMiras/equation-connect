@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react";
 import { Link } from "react-router-dom";
 import { Accordion } from "react-bootstrap";
-import { ZoneOverviewType } from "equation-connect/dist/types";
+import { ZoneOverviewType } from "equation-connect";
 
 interface ZoneOverviewProps {
   zone: ZoneOverviewType;

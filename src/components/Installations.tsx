@@ -1,8 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/provider";
-import { getInstallations } from "equation-connect";
+import { InstallationsType, getInstallations } from "equation-connect";
 import Installation from "./Installation";
-import { InstallationsType } from "equation-connect/dist/types";
 
 const Installations = (): JSX.Element => {
   const [installations, setInstallations] = useState<InstallationsType | null>(
