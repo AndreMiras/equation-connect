@@ -10,6 +10,15 @@ This is a work in progress attempt to reverse and give access to the
 [Equation Connect](https://play.google.com/store/apps/details?id=com.equation.connect) API.
 The Equation Connect is an app for controlling wifi radiators.
 
+## Features / Roadmap
+- [x] Firebase login
+- [ ] Firebase register
+- [x] Weather widget
+- [x] Zones overview / listing
+- [ ] Zones update
+- [x] Devices overview / listing
+- [x] Devices details
+- [ ] Devices update
 
 ## Run
 ```sh
