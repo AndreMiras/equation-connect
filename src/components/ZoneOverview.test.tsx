@@ -26,3 +26,14 @@ test("ZoneOverview renders correctly", () => {
   );
   expect(asFragment()).toMatchSnapshot();
 });
+
+test("ZoneOverview devices is optional", () => {
+  const zoneProps2 = { ...zoneProps };
+  delete zoneProps2.devices;
+  const { asFragment } = render(
+    <Router>
+      <ZoneOverview zone={zoneProps2} />
+    </Router>
+  );
+  expect(asFragment()).toMatchSnapshot();
+});

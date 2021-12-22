@@ -8,6 +8,14 @@ interface ZoneOverviewProps {
 }
 const ZoneOverview: FunctionComponent<ZoneOverviewProps> = ({ zone }) => {
   const { id, name, type, comfort, eco, temp, power, mode, devices } = zone;
+  const devicesCount = devices ? Object.keys(devices).length : 0;
+  const devicesList = devices
+    ? Object.keys(devices).map((device) => (
+        <li key={device}>
+          <Link to={`/devices/${device}`}>{device}</Link>
+        </li>
+      ))
+    : null;
   return (
     <Accordion className="mb-3" defaultActiveKey="0">
       <Accordion.Item eventKey="0">
@@ -22,14 +30,8 @@ const ZoneOverview: FunctionComponent<ZoneOverviewProps> = ({ zone }) => {
             <li>temp: {temp}&deg;</li>
             <li>power: {power.toString()}</li>
             <li>mode: {mode}</li>
-            <li>devices: {Object.keys(devices).length}</li>
-            <ul>
-              {Object.keys(devices).map((device) => (
-                <li key={device}>
-                  <Link to={`/devices/${device}`}>{device}</Link>
-                </li>
-              ))}
-            </ul>
+            <li>devices: {devicesCount}</li>
+            <ul>{devicesList}</ul>
           </ul>
         </Accordion.Body>
       </Accordion.Item>
