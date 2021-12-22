@@ -1,0 +1,117 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ZoneOverview renders correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="mb-3 accordion"
+  >
+    <div
+      class="accordion-item"
+    >
+      <h2
+        class="accordion-header"
+      >
+        <button
+          aria-expanded="true"
+          class="accordion-button"
+          type="button"
+        >
+          Living room
+        </button>
+      </h2>
+      <div
+        class="accordion-collapse collapse show"
+      >
+        <div
+          class="accordion-body"
+        >
+          <ul>
+            <li>
+              id: -MpGOkgR4zExLBUDUafq
+            </li>
+            <li>
+              temp: 21°
+            </li>
+            <li>
+              type: radiator
+            </li>
+            <li>
+              comfort: 22°
+            </li>
+            <li>
+              eco: 16°
+            </li>
+            <li>
+              temp: 21°
+            </li>
+            <li>
+              power: true
+            </li>
+            <li>
+              mode: manual
+            </li>
+            <li>
+              devices: 2
+            </li>
+            <ul>
+              <li>
+                <a
+                  href="#/devices/D89DDF3A7D80D89DDF3A7D80"
+                >
+                  D89DDF3A7D80D89DDF3A7D80
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#/devices/F9097F334FC4F9097F334FC4"
+                >
+                  F9097F334FC4F9097F334FC4
+                </a>
+              </li>
+            </ul>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div
+      class="accordion-item"
+    >
+      <h2
+        class="accordion-header"
+      >
+        <button
+          aria-expanded="false"
+          class="accordion-button collapsed"
+          type="button"
+        >
+          Debug
+        </button>
+      </h2>
+      <div
+        class="accordion-collapse collapse"
+      >
+        <div
+          class="accordion-body"
+        >
+          <pre>
+            {
+  "comfort": 22,
+  "devices": {
+    "D89DDF3A7D80D89DDF3A7D80": true,
+    "F9097F334FC4F9097F334FC4": true
+  },
+  "eco": 16,
+  "id": "-MpGOkgR4zExLBUDUafq",
+  "mode": "manual",
+  "name": "Living room",
+  "power": true,
+  "temp": 21,
+  "type": "radiator"
+}
+          </pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
