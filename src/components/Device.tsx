@@ -1,18 +1,40 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Accordion } from "react-bootstrap";
-import { DeviceType, getDevice } from "equation-connect";
+import Slider from "rc-slider";
+import "rc-slider/assets/index.css";
+import {
+  DeviceType,
+  getDevice,
+  updateDeviceTemperature,
+} from "equation-connect";
 
 const Device = (): JSX.Element => {
   const { id } = useParams<"id">();
   const [device, setDevice] = useState<DeviceType | null>(null);
+  const [temp, setTemp] = useState(0);
+  const onTemperature = useCallback(
+    (newTemperature: number) => {
+      if (newTemperature === temp) return;
+      setTemp(newTemperature);
+      updateDeviceTemperature(id!, newTemperature);
+    },
+    [id, temp]
+  );
+  const onDevice = useCallback(
+    (device: DeviceType) => {
+      setDevice(device);
+      onTemperature(device.data.temp);
+    },
+    [onTemperature]
+  );
 
   useEffect(() => {
     const fetch = async () => {
-      setDevice(await getDevice(id!));
+      onDevice(await getDevice(id!));
     };
     fetch();
-  }, [id, setDevice]);
+  }, [onDevice, id]);
 
   return device === null ? (
     <div />
@@ -23,7 +45,16 @@ const Device = (): JSX.Element => {
         <Accordion.Body>
           <ul>
             <li>id: {id}</li>
-            <li>temp: {device.data.temp}&deg;</li>
+            <li>
+              temp: {temp}&deg;
+              <Slider
+                min={7}
+                max={30}
+                step={0.5}
+                defaultValue={device.data.temp}
+                onAfterChange={(value) => onTemperature(value)}
+              />
+            </li>
             <li>temp_calc: {device.data.temp_calc}&deg;</li>
             <li>temp_probe: {device.data.temp_probe}&deg;</li>
           </ul>

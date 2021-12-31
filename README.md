@@ -18,7 +18,7 @@ The Equation Connect is an app for controlling wifi radiators.
 - [ ] Zones update
 - [x] Devices overview / listing
 - [x] Devices details
-- [ ] Devices update
+- [x] Devices update
 
 ## Run
 ```sh
