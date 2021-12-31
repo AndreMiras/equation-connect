@@ -1,13 +1,15 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Accordion } from "react-bootstrap";
-import Slider from "rc-slider";
+import Slider, { createSliderWithTooltip } from "rc-slider";
 import "rc-slider/assets/index.css";
 import {
   DeviceType,
   getDevice,
   updateDeviceTemperature,
 } from "equation-connect";
+
+const SliderWithTooltip = createSliderWithTooltip(Slider);
 
 const Device = (): JSX.Element => {
   const { id } = useParams<"id">();
@@ -47,7 +49,7 @@ const Device = (): JSX.Element => {
             <li>id: {id}</li>
             <li>
               temp: {temp}&deg;
-              <Slider
+              <SliderWithTooltip
                 min={7}
                 max={30}
                 step={0.5}
