@@ -1,15 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Accordion } from "react-bootstrap";
-import Slider, { createSliderWithTooltip } from "rc-slider";
-import "rc-slider/assets/index.css";
+import { Accordion, Button, Col, Form, InputGroup } from "react-bootstrap";
 import {
   DeviceType,
   getDevice,
   updateDeviceTemperature,
 } from "equation-connect";
-
-const SliderWithTooltip = createSliderWithTooltip(Slider);
 
 const Device = (): JSX.Element => {
   const { id } = useParams<"id">();
@@ -47,19 +43,25 @@ const Device = (): JSX.Element => {
         <Accordion.Body>
           <ul>
             <li>id: {id}</li>
-            <li>
-              temp: {temp}&deg;
-              <SliderWithTooltip
-                min={7}
-                max={30}
-                step={0.5}
-                defaultValue={device.data.temp}
-                onAfterChange={(value) => onTemperature(value)}
-              />
-            </li>
             <li>temp_calc: {device.data.temp_calc}&deg;</li>
             <li>temp_probe: {device.data.temp_probe}&deg;</li>
           </ul>
+          <Form className="row">
+            <Form.Label htmlFor="temperature">Temperature</Form.Label>
+            <Col xs={7} sm={5} lg={3}>
+              <InputGroup size="lg">
+                <Button onClick={() => onTemperature(temp - 0.5)}>-</Button>
+                <Form.Control
+                  id="temperature"
+                  value={temp}
+                  type="number"
+                  readOnly
+                  onChange={(value) => onTemperature(Number(value))}
+                />
+                <Button onClick={() => onTemperature(temp + 0.5)}>+</Button>
+              </InputGroup>
+            </Col>
+          </Form>
         </Accordion.Body>
       </Accordion.Item>
       <Accordion.Item eventKey="1">
