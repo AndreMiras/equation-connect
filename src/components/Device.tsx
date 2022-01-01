@@ -2,6 +2,7 @@ import React, {
   useCallback,
   useEffect,
   useState,
+  ChangeEvent,
   FunctionComponent,
 } from "react";
 import { useParams } from "react-router-dom";
@@ -54,11 +55,23 @@ interface PresetProps {
   onPreset(newStatus: DeviceStatus): void;
 }
 
+type FormControlElement =
+  | HTMLInputElement
+  | HTMLSelectElement
+  | HTMLTextAreaElement;
+
 const Preset: FunctionComponent<PresetProps> = ({
   currentStatus,
   onPreset,
 }) => {
   const statusList = Object.keys(DeviceStatus);
+  const [radioValue, setRadioValue] = useState<DeviceStatus>(currentStatus);
+  const onChange = (e: ChangeEvent<FormControlElement>) => {
+    const status =
+      DeviceStatus[e.currentTarget.value as keyof typeof DeviceStatus];
+    setRadioValue(status);
+    onPreset(status);
+  };
   return (
     <ButtonGroup className="mt-2">
       {statusList.map((status, idx) => (
@@ -68,11 +81,10 @@ const Preset: FunctionComponent<PresetProps> = ({
           type="radio"
           name="radio"
           value={status}
-          onChange={(e) =>
-            onPreset(
-              DeviceStatus[e.currentTarget.value as keyof typeof DeviceStatus]
-            )
+          checked={
+            radioValue === DeviceStatus[status as keyof typeof DeviceStatus]
           }
+          onChange={onChange}
         >
           {status}
         </ToggleButton>
