@@ -37,7 +37,7 @@ const NumberInput: FunctionComponent<NumberInputProps> = ({
   onChange,
   label,
 }) => (
-  <Form className="row">
+  <>
     <Form.Label htmlFor="input">{label}</Form.Label>
     <Col xs={7} sm={5} lg={3}>
       <InputGroup size="lg">
@@ -52,7 +52,7 @@ const NumberInput: FunctionComponent<NumberInputProps> = ({
         <Button onClick={() => onChange(value + 0.5)}>+</Button>
       </InputGroup>
     </Col>
-  </Form>
+  </>
 );
 
 interface TemperatureProps {
@@ -63,8 +63,11 @@ interface TemperatureProps {
 const Temperature: FunctionComponent<TemperatureProps> = ({
   temp,
   onTemperature,
-}) => <NumberInput value={temp} onChange={onTemperature} label="Temperature" />;
-
+}) => (
+  <Form className="row">
+    <NumberInput value={temp} onChange={onTemperature} label="Temperature" />
+  </Form>
+);
 interface PowerOffProps {
   checked: boolean;
   onPowerOff(): void;
@@ -156,28 +159,12 @@ const Backlight: FunctionComponent<BacklightProps> = ({
 }) => {
   return (
     <Form>
-      <Form.Group className="row mt-2">
-        <Col xs={6} sm={5} lg={3}>
-          <Form.Label htmlFor="backlight">Backlight</Form.Label>
-          <Form.Control
-            id="backlight"
-            type="number"
-            className="mt-2"
-            defaultValue={backlight}
-            onChange={(e) => onBacklight(Number(e.target.value))}
-          />
-        </Col>
-        <Col xs={6} sm={5} lg={3}>
-          <Form.Label htmlFor="backlight-in">Backlight On</Form.Label>
-          <Form.Control
-            id="backlight-on"
-            type="number"
-            className="mt-2"
-            defaultValue={backlightOn}
-            onChange={(e) => onBacklightOn(Number(e.target.value))}
-          />
-        </Col>
-      </Form.Group>
+      <NumberInput value={backlight} onChange={onBacklight} label="Backlight" />
+      <NumberInput
+        value={backlightOn}
+        onChange={onBacklightOn}
+        label="Backlight on"
+      />
     </Form>
   );
 };
@@ -186,6 +173,8 @@ const Device = (): JSX.Element => {
   const { id } = useParams<"id">();
   const [device, setDevice] = useState<DeviceType | null>(null);
   const [temp, setTemp] = useState(0);
+  const [backlight, setBacklight] = useState(0);
+  const [backlightOn, setBacklightOn] = useState(0);
   const onTemperature = useCallback(
     (newTemperature: number) => {
       if (newTemperature === temp) return;
@@ -194,12 +183,30 @@ const Device = (): JSX.Element => {
     },
     [id, temp]
   );
+  const onBacklight = useCallback(
+    (newBacklight: number) => {
+      if (newBacklight === backlight) return;
+      setBacklight(newBacklight);
+      setDeviceBacklight(id!, newBacklight);
+    },
+    [id, backlight]
+  );
+  const onBacklightOn = useCallback(
+    (newBacklight: number) => {
+      if (newBacklight === backlight) return;
+      setBacklightOn(newBacklight);
+      setDeviceBacklightOn(id!, newBacklight);
+    },
+    [id, backlightOn]
+  );
   const onDevice = useCallback(
     (device: DeviceType) => {
       setDevice(device);
       onTemperature(device.data.temp);
+      onBacklight(device.data.backlight);
+      onBacklightOn(device.data.backlight_on);
     },
-    [onTemperature]
+    [onTemperature, onBacklight, onBacklightOn]
   );
 
   useEffect(() => {
@@ -230,9 +237,9 @@ const Device = (): JSX.Element => {
           />
           <Backlight
             backlight={device.data.backlight}
-            onBacklight={(value) => setDeviceBacklight(id!, value)}
+            onBacklight={onBacklight}
             backlightOn={device.data.backlight_on}
-            onBacklightOn={(value) => setDeviceBacklightOn(id!, value)}
+            onBacklightOn={onBacklightOn}
           />
         </Accordion.Body>
       </Accordion.Item>
