@@ -26,6 +26,35 @@ import {
   updateDeviceTemperature,
 } from "equation-connect";
 
+interface NumberInputProps {
+  value: number;
+  onChange(newValue: number): void;
+  label: string;
+}
+
+const NumberInput: FunctionComponent<NumberInputProps> = ({
+  value,
+  onChange,
+  label,
+}) => (
+  <Form className="row">
+    <Form.Label htmlFor="input">{label}</Form.Label>
+    <Col xs={7} sm={5} lg={3}>
+      <InputGroup size="lg">
+        <Button onClick={() => onChange(value - 0.5)}>-</Button>
+        <Form.Control
+          id="input"
+          value={value}
+          type="number"
+          readOnly
+          onChange={(value) => onChange(Number(value))}
+        />
+        <Button onClick={() => onChange(value + 0.5)}>+</Button>
+      </InputGroup>
+    </Col>
+  </Form>
+);
+
 interface TemperatureProps {
   temp: number;
   onTemperature(newTemperature: number): void;
@@ -34,24 +63,7 @@ interface TemperatureProps {
 const Temperature: FunctionComponent<TemperatureProps> = ({
   temp,
   onTemperature,
-}) => (
-  <Form className="row">
-    <Form.Label htmlFor="temperature">Temperature</Form.Label>
-    <Col xs={7} sm={5} lg={3}>
-      <InputGroup size="lg">
-        <Button onClick={() => onTemperature(temp - 0.5)}>-</Button>
-        <Form.Control
-          id="temperature"
-          value={temp}
-          type="number"
-          readOnly
-          onChange={(value) => onTemperature(Number(value))}
-        />
-        <Button onClick={() => onTemperature(temp + 0.5)}>+</Button>
-      </InputGroup>
-    </Col>
-  </Form>
-);
+}) => <NumberInput value={temp} onChange={onTemperature} label="Temperature" />;
 
 interface PowerOffProps {
   checked: boolean;
