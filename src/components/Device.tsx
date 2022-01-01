@@ -30,18 +30,20 @@ interface NumberInputProps {
   value: number;
   onChange(newValue: number): void;
   label: string;
+  step: number;
 }
 
 const NumberInput: FunctionComponent<NumberInputProps> = ({
   value,
   onChange,
   label,
+  step,
 }) => (
   <>
     <Form.Label htmlFor="input">{label}</Form.Label>
     <Col xs={7} sm={5} lg={3}>
       <InputGroup size="lg">
-        <Button onClick={() => onChange(value - 0.5)}>-</Button>
+        <Button onClick={() => onChange(value - step)}>-</Button>
         <Form.Control
           id="input"
           value={value}
@@ -49,7 +51,7 @@ const NumberInput: FunctionComponent<NumberInputProps> = ({
           readOnly
           onChange={(value) => onChange(Number(value))}
         />
-        <Button onClick={() => onChange(value + 0.5)}>+</Button>
+        <Button onClick={() => onChange(value + step)}>+</Button>
       </InputGroup>
     </Col>
   </>
@@ -65,7 +67,12 @@ const Temperature: FunctionComponent<TemperatureProps> = ({
   onTemperature,
 }) => (
   <Form className="row">
-    <NumberInput value={temp} onChange={onTemperature} label="Temperature" />
+    <NumberInput
+      value={temp}
+      onChange={onTemperature}
+      label="Temperature"
+      step={0.5}
+    />
   </Form>
 );
 interface PowerOffProps {
@@ -159,11 +166,17 @@ const Backlight: FunctionComponent<BacklightProps> = ({
 }) => {
   return (
     <Form>
-      <NumberInput value={backlight} onChange={onBacklight} label="Backlight" />
+      <NumberInput
+        value={backlight}
+        onChange={onBacklight}
+        label="Backlight"
+        step={1}
+      />
       <NumberInput
         value={backlightOn}
         onChange={onBacklightOn}
         label="Backlight on"
+        step={1}
       />
     </Form>
   );
@@ -193,7 +206,7 @@ const Device = (): JSX.Element => {
   );
   const onBacklightOn = useCallback(
     (newBacklight: number) => {
-      if (newBacklight === backlight) return;
+      if (newBacklight === backlightOn) return;
       setBacklightOn(newBacklight);
       setDeviceBacklightOn(id!, newBacklight);
     },
