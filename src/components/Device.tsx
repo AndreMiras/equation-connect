@@ -5,10 +5,20 @@ import React, {
   FunctionComponent,
 } from "react";
 import { useParams } from "react-router-dom";
-import { Accordion, Button, Col, Form, InputGroup } from "react-bootstrap";
 import {
+  Accordion,
+  Button,
+  ButtonGroup,
+  Col,
+  Form,
+  InputGroup,
+  ToggleButton,
+} from "react-bootstrap";
+import {
+  DeviceStatus,
   DeviceType,
   getDevice,
+  setDevicePreset,
   updateDeviceTemperature,
 } from "equation-connect";
 
@@ -38,6 +48,38 @@ const Temperature: FunctionComponent<TemperatureProps> = ({
     </Col>
   </Form>
 );
+
+interface PresetProps {
+  currentStatus: DeviceStatus;
+  onPreset(newStatus: DeviceStatus): void;
+}
+
+const Preset: FunctionComponent<PresetProps> = ({
+  currentStatus,
+  onPreset,
+}) => {
+  const statusList = Object.keys(DeviceStatus);
+  return (
+    <ButtonGroup className="mt-2">
+      {statusList.map((status, idx) => (
+        <ToggleButton
+          key={status}
+          id={`radio-${idx}`}
+          type="radio"
+          name="radio"
+          value={status}
+          onChange={(e) =>
+            onPreset(
+              DeviceStatus[e.currentTarget.value as keyof typeof DeviceStatus]
+            )
+          }
+        >
+          {status}
+        </ToggleButton>
+      ))}
+    </ButtonGroup>
+  );
+};
 
 const Device = (): JSX.Element => {
   const { id } = useParams<"id">();
@@ -79,6 +121,10 @@ const Device = (): JSX.Element => {
             <li>temp_probe: {device.data.temp_probe}&deg;</li>
           </ul>
           <Temperature temp={temp} onTemperature={onTemperature} />
+          <Preset
+            currentStatus={device.data.status}
+            onPreset={(status) => setDevicePreset(id!, status)}
+          />
         </Accordion.Body>
       </Accordion.Item>
       <Accordion.Item eventKey="1">
