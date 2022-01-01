@@ -21,6 +21,8 @@ import {
   getDevice,
   setDevicePowerOff,
   setDevicePreset,
+  setDeviceBacklight,
+  setDeviceBacklightOn,
   updateDeviceTemperature,
 } from "equation-connect";
 
@@ -127,6 +129,47 @@ const Preset: FunctionComponent<PresetProps> = ({
   );
 };
 
+interface BacklightProps {
+  backlight: number;
+  onBacklight(newBacklight: number): void;
+  backlightOn: number;
+  onBacklightOn(newBacklightOn: number): void;
+}
+
+const Backlight: FunctionComponent<BacklightProps> = ({
+  backlight,
+  onBacklight,
+  backlightOn,
+  onBacklightOn,
+}) => {
+  return (
+    <Form>
+      <Form.Group className="row mt-2">
+        <Col xs={6} sm={5} lg={3}>
+          <Form.Label htmlFor="backlight">Backlight</Form.Label>
+          <Form.Control
+            id="backlight"
+            type="number"
+            className="mt-2"
+            defaultValue={backlight}
+            onChange={(e) => onBacklight(Number(e.target.value))}
+          />
+        </Col>
+        <Col xs={6} sm={5} lg={3}>
+          <Form.Label htmlFor="backlight-in">Backlight On</Form.Label>
+          <Form.Control
+            id="backlight-on"
+            type="number"
+            className="mt-2"
+            defaultValue={backlightOn}
+            onChange={(e) => onBacklightOn(Number(e.target.value))}
+          />
+        </Col>
+      </Form.Group>
+    </Form>
+  );
+};
+
 const Device = (): JSX.Element => {
   const { id } = useParams<"id">();
   const [device, setDevice] = useState<DeviceType | null>(null);
@@ -172,6 +215,12 @@ const Device = (): JSX.Element => {
             onPreset={(status) => setDevicePreset(id!, status)}
             currentPower={device.data.power}
             onPowerOff={() => setDevicePowerOff(id!)}
+          />
+          <Backlight
+            backlight={device.data.backlight}
+            onBacklight={(value) => setDeviceBacklight(id!, value)}
+            backlightOn={device.data.backlight_on}
+            onBacklightOn={(value) => setDeviceBacklightOn(id!, value)}
           />
         </Accordion.Body>
       </Accordion.Item>
