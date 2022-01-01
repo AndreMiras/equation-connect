@@ -19,6 +19,7 @@ import {
   DeviceStatus,
   DeviceType,
   getDevice,
+  setDevicePowerOff,
   setDevicePreset,
   updateDeviceTemperature,
 } from "equation-connect";
@@ -50,9 +51,32 @@ const Temperature: FunctionComponent<TemperatureProps> = ({
   </Form>
 );
 
+interface PowerOffProps {
+  checked: boolean;
+  onPowerOff(): void;
+}
+
+const PowerOff: FunctionComponent<PowerOffProps> = ({
+  checked,
+  onPowerOff,
+}) => (
+  <ToggleButton
+    id="radio-off"
+    type="radio"
+    name="radio"
+    value="off"
+    checked={checked}
+    onChange={() => onPowerOff()}
+  >
+    off
+  </ToggleButton>
+);
+
 interface PresetProps {
   currentStatus: DeviceStatus;
   onPreset(newStatus: DeviceStatus): void;
+  currentPower: boolean;
+  onPowerOff(): void;
 }
 
 type FormControlElement =
@@ -63,17 +87,26 @@ type FormControlElement =
 const Preset: FunctionComponent<PresetProps> = ({
   currentStatus,
   onPreset,
+  currentPower,
+  onPowerOff,
 }) => {
   const statusList = Object.keys(DeviceStatus);
   const [radioValue, setRadioValue] = useState<DeviceStatus>(currentStatus);
-  const onChange = (e: ChangeEvent<FormControlElement>) => {
+  const [power, setPower] = useState(currentPower);
+  const onStatusChange = (e: ChangeEvent<FormControlElement>) => {
     const status =
       DeviceStatus[e.currentTarget.value as keyof typeof DeviceStatus];
     setRadioValue(status);
+    setPower(true);
     onPreset(status);
+  };
+  const onPowerChange = () => {
+    setPower(false);
+    onPowerOff();
   };
   return (
     <ButtonGroup className="mt-2">
+      <PowerOff onPowerOff={() => onPowerChange()} checked={!power} />
       {statusList.map((status, idx) => (
         <ToggleButton
           key={status}
@@ -82,9 +115,10 @@ const Preset: FunctionComponent<PresetProps> = ({
           name="radio"
           value={status}
           checked={
+            power &&
             radioValue === DeviceStatus[status as keyof typeof DeviceStatus]
           }
-          onChange={onChange}
+          onChange={onStatusChange}
         >
           {status}
         </ToggleButton>
@@ -136,6 +170,8 @@ const Device = (): JSX.Element => {
           <Preset
             currentStatus={device.data.status}
             onPreset={(status) => setDevicePreset(id!, status)}
+            currentPower={device.data.power}
+            onPowerOff={() => setDevicePowerOff(id!)}
           />
         </Accordion.Body>
       </Accordion.Item>
