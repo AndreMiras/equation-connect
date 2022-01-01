@@ -1,4 +1,9 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useState,
+  FunctionComponent,
+} from "react";
 import { useParams } from "react-router-dom";
 import { Accordion, Button, Col, Form, InputGroup } from "react-bootstrap";
 import {
@@ -6,6 +11,33 @@ import {
   getDevice,
   updateDeviceTemperature,
 } from "equation-connect";
+
+interface TemperatureProps {
+  temp: number;
+  onTemperature(newTemperature: number): void;
+}
+
+const Temperature: FunctionComponent<TemperatureProps> = ({
+  temp,
+  onTemperature,
+}) => (
+  <Form className="row">
+    <Form.Label htmlFor="temperature">Temperature</Form.Label>
+    <Col xs={7} sm={5} lg={3}>
+      <InputGroup size="lg">
+        <Button onClick={() => onTemperature(temp - 0.5)}>-</Button>
+        <Form.Control
+          id="temperature"
+          value={temp}
+          type="number"
+          readOnly
+          onChange={(value) => onTemperature(Number(value))}
+        />
+        <Button onClick={() => onTemperature(temp + 0.5)}>+</Button>
+      </InputGroup>
+    </Col>
+  </Form>
+);
 
 const Device = (): JSX.Element => {
   const { id } = useParams<"id">();
@@ -46,22 +78,7 @@ const Device = (): JSX.Element => {
             <li>temp_calc: {device.data.temp_calc}&deg;</li>
             <li>temp_probe: {device.data.temp_probe}&deg;</li>
           </ul>
-          <Form className="row">
-            <Form.Label htmlFor="temperature">Temperature</Form.Label>
-            <Col xs={7} sm={5} lg={3}>
-              <InputGroup size="lg">
-                <Button onClick={() => onTemperature(temp - 0.5)}>-</Button>
-                <Form.Control
-                  id="temperature"
-                  value={temp}
-                  type="number"
-                  readOnly
-                  onChange={(value) => onTemperature(Number(value))}
-                />
-                <Button onClick={() => onTemperature(temp + 0.5)}>+</Button>
-              </InputGroup>
-            </Col>
-          </Form>
+          <Temperature temp={temp} onTemperature={onTemperature} />
         </Accordion.Body>
       </Accordion.Item>
       <Accordion.Item eventKey="1">
