@@ -15,9 +15,12 @@ import {
   InputGroup,
   ToggleButton,
 } from "react-bootstrap";
+import { ref, onValue } from "firebase/database";
 import {
   DeviceStatus,
   DeviceType,
+  database,
+  deviceDataByIdPath,
   getDevice,
   setDevicePowerOff,
   setDevicePreset,
@@ -222,12 +225,24 @@ const Device = (): JSX.Element => {
     [onTemperature, onBacklight, onBacklightOn]
   );
 
+  const subscribeOnDeviceData = useCallback(() => {
+    const path = deviceDataByIdPath(id!);
+    const deviceDataRef = ref(database, path);
+    onValue(deviceDataRef, (snapshot) => {
+      const deviceData = snapshot.val();
+      setTemp(deviceData.temp);
+      setBacklight(deviceData.backlight);
+      setBacklightOn(deviceData.backlight_on);
+    });
+  }, [id]);
+
   useEffect(() => {
     const fetch = async () => {
       onDevice(await getDevice(id!));
     };
     fetch();
-  }, [onDevice, id]);
+    subscribeOnDeviceData();
+  }, [onDevice, subscribeOnDeviceData, id]);
 
   return device === null ? (
     <div />
