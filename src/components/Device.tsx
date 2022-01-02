@@ -118,20 +118,17 @@ const Preset: FunctionComponent<PresetProps> = ({
   onPowerOff,
 }) => {
   const statusList = Object.keys(DeviceStatus);
-  const [power, setPower] = useState(currentPower);
   const onStatusChange = (e: ChangeEvent<FormControlElement>) => {
     const status =
       DeviceStatus[e.currentTarget.value as keyof typeof DeviceStatus];
-    setPower(true);
     onPreset(status);
   };
   const onPowerChange = () => {
-    setPower(false);
     onPowerOff();
   };
   return (
     <ButtonGroup className="mt-2">
-      <PowerOff onPowerOff={() => onPowerChange()} checked={!power} />
+      <PowerOff onPowerOff={() => onPowerChange()} checked={!currentPower} />
       {statusList.map((status, idx) => (
         <ToggleButton
           key={status}
@@ -140,7 +137,7 @@ const Preset: FunctionComponent<PresetProps> = ({
           name="radio"
           value={status}
           checked={
-            power &&
+            currentPower &&
             currentStatus === DeviceStatus[status as keyof typeof DeviceStatus]
           }
           onChange={onStatusChange}
@@ -190,6 +187,7 @@ const Device = (): JSX.Element => {
   const [backlight, setBacklight] = useState(0);
   const [backlightOn, setBacklightOn] = useState(0);
   const [status, setStatus] = useState(DeviceStatus.Comfort);
+  const [power, setPower] = useState(false);
   const onTemperature = useCallback(
     (newTemperature: number) => {
       if (newTemperature === temp) return;
@@ -215,11 +213,12 @@ const Device = (): JSX.Element => {
     [id, backlightOn]
   );
   const onDeviceData = useCallback(
-    ({ backlight, backlight_on, temp, status }) => {
+    ({ backlight, backlight_on, temp, status, power }) => {
       setTemp(temp);
       setBacklight(backlight);
       setBacklightOn(backlight_on);
       setStatus(status);
+      setPower(power);
     },
     []
   );
@@ -264,7 +263,7 @@ const Device = (): JSX.Element => {
           <Preset
             currentStatus={status}
             onPreset={(status) => setDevicePreset(id!, status)}
-            currentPower={device.data.power}
+            currentPower={power}
             onPowerOff={() => setDevicePowerOff(id!)}
           />
           <Backlight
