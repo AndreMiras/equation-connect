@@ -211,20 +211,18 @@ const Device = (): JSX.Element => {
     },
     [id, backlightOn]
   );
-  const onDeviceData = useCallback(
-    ({ backlight, backlight_on, temp, status, power }) => {
-      setTemp(temp);
-      setBacklight(backlight);
-      setBacklightOn(backlight_on);
-      setStatus(status);
-      setPower(power);
-    },
-    []
-  );
+  const onDeviceData = useCallback((deviceData) => {
+    const { backlight, backlight_on, temp, status, power } = deviceData;
+    setTemp(temp);
+    setBacklight(backlight);
+    setBacklightOn(backlight_on);
+    setStatus(status);
+    setPower(power);
+  }, []);
   const onDevice = useCallback(
     (device: DeviceType) => {
       setDevice(device);
-      onDeviceData({ ...device.data });
+      onDeviceData(device.data);
     },
     [onDeviceData]
   );
@@ -234,7 +232,7 @@ const Device = (): JSX.Element => {
     const deviceDataRef = ref(database, path);
     onValue(deviceDataRef, (snapshot) => {
       const deviceData = snapshot.val();
-      onDeviceData({ ...deviceData });
+      onDeviceData(deviceData);
     });
   }, [id, onDeviceData]);
 
