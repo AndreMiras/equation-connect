@@ -118,12 +118,10 @@ const Preset: FunctionComponent<PresetProps> = ({
   onPowerOff,
 }) => {
   const statusList = Object.keys(DeviceStatus);
-  const [radioValue, setRadioValue] = useState<DeviceStatus>(currentStatus);
   const [power, setPower] = useState(currentPower);
   const onStatusChange = (e: ChangeEvent<FormControlElement>) => {
     const status =
       DeviceStatus[e.currentTarget.value as keyof typeof DeviceStatus];
-    setRadioValue(status);
     setPower(true);
     onPreset(status);
   };
@@ -143,7 +141,7 @@ const Preset: FunctionComponent<PresetProps> = ({
           value={status}
           checked={
             power &&
-            radioValue === DeviceStatus[status as keyof typeof DeviceStatus]
+            currentStatus === DeviceStatus[status as keyof typeof DeviceStatus]
           }
           onChange={onStatusChange}
         >
@@ -191,6 +189,7 @@ const Device = (): JSX.Element => {
   const [temp, setTemp] = useState(0);
   const [backlight, setBacklight] = useState(0);
   const [backlightOn, setBacklightOn] = useState(0);
+  const [status, setStatus] = useState(DeviceStatus.Comfort);
   const onTemperature = useCallback(
     (newTemperature: number) => {
       if (newTemperature === temp) return;
@@ -215,11 +214,15 @@ const Device = (): JSX.Element => {
     },
     [id, backlightOn]
   );
-  const onDeviceData = useCallback(({ backlight, backlight_on, temp }) => {
-    setTemp(temp);
-    setBacklight(backlight);
-    setBacklightOn(backlight_on);
-  }, []);
+  const onDeviceData = useCallback(
+    ({ backlight, backlight_on, temp, status }) => {
+      setTemp(temp);
+      setBacklight(backlight);
+      setBacklightOn(backlight_on);
+      setStatus(status);
+    },
+    []
+  );
   const onDevice = useCallback(
     (device: DeviceType) => {
       setDevice(device);
@@ -259,7 +262,7 @@ const Device = (): JSX.Element => {
           </ul>
           <Temperature temp={temp} onTemperature={onTemperature} />
           <Preset
-            currentStatus={device.data.status}
+            currentStatus={status}
             onPreset={(status) => setDevicePreset(id!, status)}
             currentPower={device.data.power}
             onPowerOff={() => setDevicePowerOff(id!)}
