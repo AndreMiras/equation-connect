@@ -32,7 +32,7 @@ import {
 interface NumberInputProps {
   value: number;
   onChange(newValue: number): void;
-  label: string;
+  label?: string;
   step: number;
 }
 
@@ -43,7 +43,7 @@ const NumberInput: FunctionComponent<NumberInputProps> = ({
   step,
 }) => (
   <>
-    <Form.Label htmlFor="input">{label}</Form.Label>
+    {label ?? <Form.Label htmlFor="input">{label}</Form.Label>}
     <Col xs={7} sm={5} lg={3}>
       <InputGroup size="lg">
         <Button onClick={() => onChange(value - step)}>-</Button>
@@ -70,12 +70,7 @@ const Temperature: FunctionComponent<TemperatureProps> = ({
   onTemperature,
 }) => (
   <Form className="row">
-    <NumberInput
-      value={temp}
-      onChange={onTemperature}
-      label="Temperature"
-      step={0.5}
-    />
+    <NumberInput value={temp} onChange={onTemperature} step={0.5} />
   </Form>
 );
 interface PowerOffProps {
@@ -91,11 +86,11 @@ const PowerOff: FunctionComponent<PowerOffProps> = ({
     id="radio-off"
     type="radio"
     name="radio"
-    value="off"
+    value="Off"
     checked={checked}
     onChange={() => onPowerOff()}
   >
-    off
+    Off
   </ToggleButton>
 );
 
@@ -127,7 +122,7 @@ const Preset: FunctionComponent<PresetProps> = ({
     onPowerOff();
   };
   return (
-    <ButtonGroup className="mt-2">
+    <ButtonGroup size="lg" className="mt-2">
       <PowerOff onPowerOff={() => onPowerChange()} checked={!power} />
       {statusList.map((s, idx) => (
         <ToggleButton
@@ -251,11 +246,6 @@ const Device = (): JSX.Element => {
       <Accordion.Item eventKey="0">
         <Accordion.Header>{device.data.name}</Accordion.Header>
         <Accordion.Body>
-          <ul>
-            <li>id: {id}</li>
-            <li>temp_calc: {device.data.temp_calc}&deg;</li>
-            <li>temp_probe: {device.data.temp_probe}&deg;</li>
-          </ul>
           <Temperature temp={temp} onTemperature={onTemperature} />
           <Preset
             status={status}
@@ -263,6 +253,16 @@ const Device = (): JSX.Element => {
             power={power}
             onPowerOff={() => setDevicePowerOff(id!)}
           />
+        </Accordion.Body>
+      </Accordion.Item>
+      <Accordion.Item eventKey="1">
+        <Accordion.Header>Advanced</Accordion.Header>
+        <Accordion.Body>
+          <ul>
+            <li>id: {id}</li>
+            <li>temp_calc: {device.data.temp_calc}&deg;</li>
+            <li>temp_probe: {device.data.temp_probe}&deg;</li>
+          </ul>
           <Backlight
             backlight={backlight}
             onBacklight={onBacklight}
@@ -271,7 +271,7 @@ const Device = (): JSX.Element => {
           />
         </Accordion.Body>
       </Accordion.Item>
-      <Accordion.Item eventKey="1">
+      <Accordion.Item eventKey="2">
         <Accordion.Header>Debug</Accordion.Header>
         <Accordion.Body>
           <pre>{JSON.stringify(device, null, 2)}</pre>
