@@ -100,9 +100,9 @@ const PowerOff: FunctionComponent<PowerOffProps> = ({
 );
 
 interface PresetProps {
-  currentStatus: DeviceStatus;
+  status: DeviceStatus;
   onPreset(newStatus: DeviceStatus): void;
-  currentPower: boolean;
+  power: boolean;
   onPowerOff(): void;
 }
 
@@ -112,37 +112,36 @@ type FormControlElement =
   | HTMLTextAreaElement;
 
 const Preset: FunctionComponent<PresetProps> = ({
-  currentStatus,
+  status,
   onPreset,
-  currentPower,
+  power,
   onPowerOff,
 }) => {
   const statusList = Object.keys(DeviceStatus);
   const onStatusChange = (e: ChangeEvent<FormControlElement>) => {
-    const status =
+    const newStatus =
       DeviceStatus[e.currentTarget.value as keyof typeof DeviceStatus];
-    onPreset(status);
+    onPreset(newStatus);
   };
   const onPowerChange = () => {
     onPowerOff();
   };
   return (
     <ButtonGroup className="mt-2">
-      <PowerOff onPowerOff={() => onPowerChange()} checked={!currentPower} />
-      {statusList.map((status, idx) => (
+      <PowerOff onPowerOff={() => onPowerChange()} checked={!power} />
+      {statusList.map((s, idx) => (
         <ToggleButton
-          key={status}
+          key={s}
           id={`radio-${idx}`}
           type="radio"
           name="radio"
-          value={status}
+          value={s}
           checked={
-            currentPower &&
-            currentStatus === DeviceStatus[status as keyof typeof DeviceStatus]
+            power && status === DeviceStatus[s as keyof typeof DeviceStatus]
           }
           onChange={onStatusChange}
         >
-          {status}
+          {s}
         </ToggleButton>
       ))}
     </ButtonGroup>
@@ -261,9 +260,9 @@ const Device = (): JSX.Element => {
           </ul>
           <Temperature temp={temp} onTemperature={onTemperature} />
           <Preset
-            currentStatus={status}
+            status={status}
             onPreset={(status) => setDevicePreset(id!, status)}
-            currentPower={power}
+            power={power}
             onPowerOff={() => setDevicePowerOff(id!)}
           />
           <Backlight
