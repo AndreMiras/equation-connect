@@ -264,9 +264,9 @@ const Device = (): JSX.Element => {
             onPowerOff={() => setDevicePowerOff(id!)}
           />
           <Backlight
-            backlight={device.data.backlight}
+            backlight={backlight}
             onBacklight={onBacklight}
-            backlightOn={device.data.backlight_on}
+            backlightOn={backlightOn}
             onBacklightOn={onBacklightOn}
           />
         </Accordion.Body>
