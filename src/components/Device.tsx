@@ -215,14 +215,17 @@ const Device = (): JSX.Element => {
     },
     [id, backlightOn]
   );
+  const onDeviceData = useCallback(({ backlight, backlight_on, temp }) => {
+    setTemp(temp);
+    setBacklight(backlight);
+    setBacklightOn(backlight_on);
+  }, []);
   const onDevice = useCallback(
     (device: DeviceType) => {
       setDevice(device);
-      onTemperature(device.data.temp);
-      onBacklight(device.data.backlight);
-      onBacklightOn(device.data.backlight_on);
+      onDeviceData({ ...device.data });
     },
-    [onTemperature, onBacklight, onBacklightOn]
+    [onDeviceData]
   );
 
   const subscribeOnDeviceData = useCallback(() => {
@@ -230,11 +233,9 @@ const Device = (): JSX.Element => {
     const deviceDataRef = ref(database, path);
     onValue(deviceDataRef, (snapshot) => {
       const deviceData = snapshot.val();
-      setTemp(deviceData.temp);
-      setBacklight(deviceData.backlight);
-      setBacklightOn(deviceData.backlight_on);
+      onDeviceData({ ...deviceData });
     });
-  }, [id]);
+  }, [id, onDeviceData]);
 
   useEffect(() => {
     const fetch = async () => {
