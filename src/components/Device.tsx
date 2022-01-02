@@ -15,6 +15,8 @@ import {
   InputGroup,
   ToggleButton,
 } from "react-bootstrap";
+import { IconName } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ref, onValue } from "firebase/database";
 import {
   DeviceStatus,
@@ -90,7 +92,7 @@ const PowerOff: FunctionComponent<PowerOffProps> = ({
     checked={checked}
     onChange={() => onPowerOff()}
   >
-    Off
+    <FontAwesomeIcon icon={"power-off"} /> Off
   </ToggleButton>
 );
 
@@ -121,6 +123,11 @@ const Preset: FunctionComponent<PresetProps> = ({
   const onPowerChange = () => {
     onPowerOff();
   };
+  const iconsMap = {
+    Ice: "snowflake",
+    Eco: "leaf",
+    Comfort: "sun",
+  };
   return (
     <ButtonGroup size="lg" className="mt-2">
       <PowerOff onPowerOff={() => onPowerChange()} checked={!power} />
@@ -136,6 +143,9 @@ const Preset: FunctionComponent<PresetProps> = ({
           }
           onChange={onStatusChange}
         >
+          <FontAwesomeIcon
+            icon={iconsMap[s as keyof typeof DeviceStatus] as IconName}
+          />{" "}
           {s}
         </ToggleButton>
       ))}
