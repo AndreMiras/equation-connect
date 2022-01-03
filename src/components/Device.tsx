@@ -46,7 +46,7 @@ const NumberInput: FunctionComponent<NumberInputProps> = ({
 }) => (
   <>
     {label ?? <Form.Label htmlFor="input">{label}</Form.Label>}
-    <Col xs={7} sm={5} lg={3}>
+    <Col xs={8} sm={5} lg={3}>
       <InputGroup size="lg">
         <Button onClick={() => onChange(value - step)}>
           <FontAwesomeIcon icon={"minus"} />
