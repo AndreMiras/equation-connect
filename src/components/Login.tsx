@@ -1,20 +1,27 @@
-import React, { useContext, useEffect, useState } from "react";
-import { onAuthStateChanged } from "firebase/auth";
-import { Form, Button } from "react-bootstrap";
+import React, { useCallback, useContext, useEffect, useState } from "react";
+import { onAuthStateChanged, Auth } from "firebase/auth";
+import { Button, ButtonGroup, Dropdown, Form } from "react-bootstrap";
 import { anonymousUser, User, UserContext } from "../context/provider";
-import { login, auth } from "equation-connect";
+import { auth, init, login, FirebaseConfig } from "equation-connect";
 
 const Login = (): JSX.Element => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const { setUser } = useContext(UserContext);
 
+  const registerOnAuthStateChanged = useCallback(
+    (auth: Auth) => {
+      onAuthStateChanged(auth, (currentUser) => {
+        const user = currentUser === null ? anonymousUser : currentUser;
+        setUser(user);
+      });
+    },
+    [setUser]
+  );
+
   useEffect(() => {
-    onAuthStateChanged(auth, (currentUser) => {
-      const user = currentUser === null ? anonymousUser : currentUser;
-      setUser(user);
-    });
-  }, [setUser]);
+    registerOnAuthStateChanged(auth!);
+  }, [setUser, registerOnAuthStateChanged]);
 
   const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setEmail(e.target.value);
@@ -29,6 +36,11 @@ const Login = (): JSX.Element => {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const onConfig = (conf: FirebaseConfig) => {
+    const { auth } = init(conf);
+    registerOnAuthStateChanged(auth);
   };
 
   const onLoginClick = (e: React.MouseEvent<HTMLElement>) => onLogin();
@@ -51,9 +63,24 @@ const Login = (): JSX.Element => {
         aria-label="Password"
         onChange={onPasswordChange}
       />
-      <Button type="submit" onClick={onLoginClick}>
-        Login
-      </Button>
+      <Dropdown as={ButtonGroup}>
+        <Button type="submit" onClick={onLoginClick}>
+          Login
+        </Button>
+
+        <Dropdown.Toggle split id="dropdown-split-basic" />
+
+        <Dropdown.Menu>
+          <Dropdown.Item
+            onClick={() => onConfig(FirebaseConfig.EquationConnect)}
+          >
+            Equation Login
+          </Dropdown.Item>
+          <Dropdown.Item onClick={() => onConfig(FirebaseConfig.RointeConnect)}>
+            Rointe Login
+          </Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
     </Form>
   );
 };

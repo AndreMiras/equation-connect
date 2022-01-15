@@ -4976,10 +4976,10 @@ entities@^2.0.0:
   resolved "https://registry.yarnpkg.com/entities/-/entities-2.2.0.tgz#098dc90ebb83d8dffa089d55256b351d34c4da55"
   integrity sha512-p92if5Nz619I0w+akJrLZH0MX0Pb5DX39XOwQTtXSdQQOaYH03S1uIQp4mhOZtAXrxq4ViO67YTiLBo2638o9A==
 
-equation-connect@^1.4.1:
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/equation-connect/-/equation-connect-1.4.1.tgz#6f6853ed6e681f6c9f0b2f1994eec1e334a6d24c"
-  integrity sha512-ne13IEBflMegE0fpAuJAx8pOIG73YxM9xVGT0l9wr4PUcaQQ0MIB1dpi0wx8su+akfVf87vp1j7YMKstOUtcsA==
+equation-connect@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/equation-connect/-/equation-connect-1.5.0.tgz#21c5d38646a406a84fc107aa23ab65191cc973bc"
+  integrity sha512-Q3YlyunBQ3gWA9JvH68kvE22hZw5Zv7b79RI7qKnFAjRs61SRhxLXRB3Q88XbQNWCaNmmOx7a5xd2NBdk8GPUA==
   dependencies:
     firebase "^9.5.0"
 

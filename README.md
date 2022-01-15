@@ -28,6 +28,7 @@ This is built on top of the [equation-connect.js](https://github.com/AndreMiras/
 - [x] Extra features
   - [x] Temperature sensors read
   - [x] Screen backlight control
+- [x] Rointe devices support
 
 ## Run
 ```sh

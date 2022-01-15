@@ -1,3 +1,4 @@
+import { strict as assert } from "assert";
 import React, {
   useCallback,
   useEffect,
@@ -237,6 +238,7 @@ const Device = (): JSX.Element => {
   );
 
   const subscribeOnDeviceData = useCallback(() => {
+    assert(database);
     const path = deviceDataByIdPath(id!);
     const deviceDataRef = ref(database, path);
     onValue(deviceDataRef, (snapshot) => {
