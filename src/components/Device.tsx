@@ -1,22 +1,7 @@
 import { strict as assert } from "assert";
-import React, {
-  useCallback,
-  useEffect,
-  useState,
-  ChangeEvent,
-  FunctionComponent,
-} from "react";
+import { useCallback, useEffect, useState, FC } from "react";
 import { useParams } from "react-router-dom";
-import {
-  Accordion,
-  Button,
-  ButtonGroup,
-  Col,
-  Form,
-  InputGroup,
-  ToggleButton,
-} from "react-bootstrap";
-import { IconName } from "@fortawesome/fontawesome-svg-core";
+import { Accordion, Button, Col, Form, InputGroup } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ref, onValue } from "firebase/database";
 import {
@@ -31,6 +16,7 @@ import {
   setDeviceBacklightOn,
   updateDeviceTemperature,
 } from "equation-connect";
+import Preset from "./Preset";
 
 interface NumberInputProps {
   value: number;
@@ -39,7 +25,7 @@ interface NumberInputProps {
   step: number;
 }
 
-const NumberInput: FunctionComponent<NumberInputProps> = ({
+const NumberInput: FC<NumberInputProps> = ({
   value,
   onChange,
   label,
@@ -72,91 +58,11 @@ interface TemperatureProps {
   onTemperature(newTemperature: number): void;
 }
 
-const Temperature: FunctionComponent<TemperatureProps> = ({
-  temp,
-  onTemperature,
-}) => (
+const Temperature: FC<TemperatureProps> = ({ temp, onTemperature }) => (
   <Form className="row">
     <NumberInput value={temp} onChange={onTemperature} step={0.5} />
   </Form>
 );
-interface PowerOffProps {
-  checked: boolean;
-  onPowerOff(): void;
-}
-
-const PowerOff: FunctionComponent<PowerOffProps> = ({
-  checked,
-  onPowerOff,
-}) => (
-  <ToggleButton
-    id="radio-off"
-    type="radio"
-    name="radio"
-    value="Off"
-    checked={checked}
-    onChange={() => onPowerOff()}
-  >
-    <FontAwesomeIcon icon={"power-off"} /> Off
-  </ToggleButton>
-);
-
-interface PresetProps {
-  status: DeviceStatus;
-  onPreset(newStatus: DeviceStatus): void;
-  power: boolean;
-  onPowerOff(): void;
-}
-
-type FormControlElement =
-  | HTMLInputElement
-  | HTMLSelectElement
-  | HTMLTextAreaElement;
-
-const Preset: FunctionComponent<PresetProps> = ({
-  status,
-  onPreset,
-  power,
-  onPowerOff,
-}) => {
-  const statusList = Object.keys(DeviceStatus);
-  const onStatusChange = (e: ChangeEvent<FormControlElement>) => {
-    const newStatus =
-      DeviceStatus[e.currentTarget.value as keyof typeof DeviceStatus];
-    onPreset(newStatus);
-  };
-  const onPowerChange = () => {
-    onPowerOff();
-  };
-  const iconsMap = {
-    Ice: "snowflake",
-    Eco: "leaf",
-    Comfort: "sun",
-  };
-  return (
-    <ButtonGroup size="lg" className="mt-2">
-      <PowerOff onPowerOff={() => onPowerChange()} checked={!power} />
-      {statusList.map((s, idx) => (
-        <ToggleButton
-          key={s}
-          id={`radio-${idx}`}
-          type="radio"
-          name="radio"
-          value={s}
-          checked={
-            power && status === DeviceStatus[s as keyof typeof DeviceStatus]
-          }
-          onChange={onStatusChange}
-        >
-          <FontAwesomeIcon
-            icon={iconsMap[s as keyof typeof DeviceStatus] as IconName}
-          />{" "}
-          {s}
-        </ToggleButton>
-      ))}
-    </ButtonGroup>
-  );
-};
 
 interface BacklightProps {
   backlight: number;
@@ -165,7 +71,7 @@ interface BacklightProps {
   onBacklightOn(newBacklightOn: number): void;
 }
 
-const Backlight: FunctionComponent<BacklightProps> = ({
+const Backlight: FC<BacklightProps> = ({
   backlight,
   onBacklight,
   backlightOn,
@@ -236,7 +142,15 @@ const Device = (): JSX.Element => {
     },
     [onDeviceData]
   );
-
+  const onPreset = (newStatus: DeviceStatus) => {
+    setDevicePreset(id!, newStatus);
+    setStatus(newStatus);
+    setPower(true);
+  };
+  const onPowerOff = () => {
+    setDevicePowerOff(id!);
+    setPower(false);
+  };
   const subscribeOnDeviceData = useCallback(() => {
     assert(database);
     const path = deviceDataByIdPath(id!);
@@ -265,9 +179,9 @@ const Device = (): JSX.Element => {
           <Temperature temp={temp} onTemperature={onTemperature} />
           <Preset
             status={status}
-            onPreset={(status) => setDevicePreset(id!, status)}
+            onPreset={onPreset}
             power={power}
-            onPowerOff={() => setDevicePowerOff(id!)}
+            onPowerOff={onPowerOff}
           />
         </Accordion.Body>
       </Accordion.Item>

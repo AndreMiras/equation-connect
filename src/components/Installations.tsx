@@ -20,7 +20,7 @@ const Installations = (): JSX.Element => {
     <div>
       {installations &&
         Object.keys(installations).map((key) => (
-          <Installation key={key} installation={installations[key]} />
+          <Installation key={key} id={key} installation={installations[key]} />
         ))}
     </div>
   );

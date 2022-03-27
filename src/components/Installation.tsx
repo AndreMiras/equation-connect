@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React, { FC } from "react";
 import { Accordion, Alert } from "react-bootstrap";
 // @ts-ignore
 import ReactWeather, { useOpenWeather } from "react-open-weather";
@@ -6,12 +6,11 @@ import ZonesOverview from "./ZonesOverview";
 import { InstallationType } from "equation-connect";
 
 interface InstallationProps {
+  id: string;
   installation: InstallationType;
 }
 
-const Installation: FunctionComponent<InstallationProps> = ({
-  installation,
-}) => {
+const Installation: FC<InstallationProps> = ({ id, installation }) => {
   const { name, location, latitude, longitude, zones } = installation;
   const { data, isLoading, errorMessage } = useOpenWeather({
     key: process.env.REACT_APP_OPEN_WEATHER_API_KEY,
@@ -54,7 +53,7 @@ const Installation: FunctionComponent<InstallationProps> = ({
         </Accordion.Item>
       </Accordion>
 
-      <ZonesOverview zones={zones} />
+      <ZonesOverview installationId={id} zones={zones} />
     </div>
   );
 };

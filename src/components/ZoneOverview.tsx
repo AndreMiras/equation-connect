@@ -1,13 +1,23 @@
-import React, { FunctionComponent } from "react";
+import { FC, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Accordion } from "react-bootstrap";
-import { ZoneOverviewType } from "equation-connect";
+import {
+  DeviceStatus,
+  ZoneOverviewType,
+  setZonePowerOff,
+  setZonePreset,
+} from "equation-connect";
+import Preset from "./Preset";
 
 interface ZoneOverviewProps {
+  installationId: string;
   zone: ZoneOverviewType;
 }
-const ZoneOverview: FunctionComponent<ZoneOverviewProps> = ({ zone }) => {
-  const { id, name, type, comfort, eco, temp, power, mode, devices } = zone;
+const ZoneOverview: FC<ZoneOverviewProps> = ({ installationId, zone }) => {
+  const [statusState, setStatusState] = useState(DeviceStatus.Comfort);
+  const [powerState, setPowerState] = useState(false);
+  const { id, name, type, comfort, eco, temp, power, mode, devices, status } =
+    zone;
   const devicesCount = devices ? Object.keys(devices).length : 0;
   const devicesList = devices
     ? Object.keys(devices).map((device) => (
@@ -16,6 +26,19 @@ const ZoneOverview: FunctionComponent<ZoneOverviewProps> = ({ zone }) => {
         </li>
       ))
     : null;
+  const onPreset = (newStatus: DeviceStatus) => {
+    setZonePreset(installationId, id!, newStatus);
+    setStatusState(newStatus);
+    setPowerState(true);
+  };
+  const onPowerOff = () => {
+    setZonePowerOff(installationId, id!);
+    setPowerState(false);
+  };
+  useEffect(() => {
+    setPowerState(power);
+    setStatusState(status);
+  }, [power, status]);
   return (
     <Accordion className="mb-3" defaultActiveKey="0">
       <Accordion.Item eventKey="0">
@@ -33,6 +56,13 @@ const ZoneOverview: FunctionComponent<ZoneOverviewProps> = ({ zone }) => {
             <li>devices: {devicesCount}</li>
             <ul>{devicesList}</ul>
           </ul>
+          <Preset
+            name={`options-${id}`}
+            status={statusState}
+            onPreset={onPreset}
+            power={powerState}
+            onPowerOff={onPowerOff}
+          />
         </Accordion.Body>
       </Accordion.Item>
       <Accordion.Item eventKey="1">
