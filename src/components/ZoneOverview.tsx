@@ -1,6 +1,6 @@
-import { FC, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { Accordion } from "react-bootstrap";
+import { FC, ReactChild, ReactChildren, useEffect, useState } from "react";
+import { useHref } from "react-router-dom";
+import { Accordion, ListGroup } from "react-bootstrap";
 import {
   DeviceStatus,
   ZoneOverviewType,
@@ -9,6 +9,32 @@ import {
 } from "equation-connect";
 import Preset from "./Preset";
 
+interface ListGroupItemProps {
+  children: ReactChild | ReactChildren;
+  to: string;
+}
+const ListGroupItem: FC<ListGroupItemProps> = ({ children, to }) => {
+  const href = useHref(to);
+  return (
+    <ListGroup.Item action href={href}>
+      {children}
+    </ListGroup.Item>
+  );
+};
+
+interface DeviceListProps {
+  devices: string[];
+}
+const DeviceList: FC<DeviceListProps> = ({ devices }) => (
+  <ListGroup>
+    {devices.map((device) => (
+      <ListGroupItem key={device} to={`/devices/${device}`}>
+        {device}
+      </ListGroupItem>
+    ))}
+  </ListGroup>
+);
+
 interface ZoneOverviewProps {
   installationId: string;
   zone: ZoneOverviewType;
@@ -16,16 +42,8 @@ interface ZoneOverviewProps {
 const ZoneOverview: FC<ZoneOverviewProps> = ({ installationId, zone }) => {
   const [statusState, setStatusState] = useState(DeviceStatus.Comfort);
   const [powerState, setPowerState] = useState(false);
-  const { id, name, type, comfort, eco, temp, power, mode, devices, status } =
-    zone;
-  const devicesCount = devices ? Object.keys(devices).length : 0;
-  const devicesList = devices
-    ? Object.keys(devices).map((device) => (
-        <li key={device}>
-          <Link to={`/devices/${device}`}>{device}</Link>
-        </li>
-      ))
-    : null;
+  const { id, name, type, comfort, eco, temp, power, mode, status } = zone;
+  const devices = Object.keys(zone.devices || {});
   const onPreset = (newStatus: DeviceStatus) => {
     setZonePreset(installationId, id!, newStatus);
     setStatusState(newStatus);
@@ -44,18 +62,9 @@ const ZoneOverview: FC<ZoneOverviewProps> = ({ installationId, zone }) => {
       <Accordion.Item eventKey="0">
         <Accordion.Header>{name}</Accordion.Header>
         <Accordion.Body>
-          <ul>
-            <li>id: {id}</li>
-            <li>temp: {temp}&deg;</li>
-            <li>type: {type}</li>
-            <li>comfort: {comfort}&deg;</li>
-            <li>eco: {eco}&deg;</li>
-            <li>temp: {temp}&deg;</li>
-            <li>power: {power.toString()}</li>
-            <li>mode: {mode}</li>
-            <li>devices: {devicesCount}</li>
-            <ul>{devicesList}</ul>
-          </ul>
+          <ListGroup>
+            <DeviceList devices={devices} />
+          </ListGroup>
           <Preset
             name={`options-${id}`}
             status={statusState}
@@ -66,6 +75,28 @@ const ZoneOverview: FC<ZoneOverviewProps> = ({ installationId, zone }) => {
         </Accordion.Body>
       </Accordion.Item>
       <Accordion.Item eventKey="1">
+        <Accordion.Header>Advanced</Accordion.Header>
+        <Accordion.Body>
+          <ul>
+            <li>id: {id}</li>
+            <li>temp: {temp}&deg;</li>
+            <li>type: {type}</li>
+            <li>comfort: {comfort}&deg;</li>
+            <li>eco: {eco}&deg;</li>
+            <li>temp: {temp}&deg;</li>
+            <li>power: {power.toString()}</li>
+            <li>mode: {mode}</li>
+          </ul>
+          <Preset
+            name={`options-${id}`}
+            status={statusState}
+            onPreset={onPreset}
+            power={powerState}
+            onPowerOff={onPowerOff}
+          />
+        </Accordion.Body>
+      </Accordion.Item>
+      <Accordion.Item eventKey="2">
         <Accordion.Header>Debug</Accordion.Header>
         <Accordion.Body>
           <pre>{JSON.stringify(zone, null, 2)}</pre>
