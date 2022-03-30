@@ -1,4 +1,4 @@
-import React, { createContext, useState, FunctionComponent } from "react";
+import React, { createContext, useState, FC } from "react";
 
 type User = {
   uid: string;
@@ -24,7 +24,7 @@ const userContextDefault = {
 
 const UserContext = createContext<UserContextType>(userContextDefault);
 
-const UserContextProvider: FunctionComponent = ({ children }) => {
+const UserContextProvider: FC = ({ children }) => {
   const [user, setUser] = useState<User>(userContextDefault.user);
   return (
     <UserContext.Provider value={{ user, setUser }}>

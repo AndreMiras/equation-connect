@@ -2,14 +2,12 @@ import React from "react";
 import { HashRouter as Router, Route, Routes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container } from "react-bootstrap";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { fab } from "@fortawesome/free-brands-svg-icons";
-import { fas } from "@fortawesome/free-solid-svg-icons";
+import { registerIcons } from "./utils/helpers";
 import Home from "./components/Home";
 import Header from "./components/Header";
 import Device from "./components/Device";
 
-library.add(fas, fab);
+registerIcons();
 
 const App = (): JSX.Element => {
   return (

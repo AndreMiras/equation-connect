@@ -17,8 +17,8 @@ const Header = (): JSX.Element => (
             <FontAwesomeIcon icon={["fab", "github-alt"]} /> About
           </Nav.Link>
         </Nav>
+        <LoginOrLogout />
       </Navbar.Collapse>
-      <LoginOrLogout />
     </Container>
   </Navbar>
 );

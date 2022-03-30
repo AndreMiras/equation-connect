@@ -6,10 +6,29 @@
 
 <https://andremiras.github.io/equation-connect/>
 
-This is a work in progress attempt to reverse and give access to the
-[Equation Connect](https://play.google.com/store/apps/details?id=com.equation.connect) API.
-The Equation Connect is an app for controlling wifi radiators.
+This is an open alternative to the
+[Equation Connect](https://play.google.com/store/apps/details?id=com.equation.connect) application
+used for controlling wifi radiators, like the
+[Emisor fluido EQUATION Adagio 1250w](https://www.leroymerlin.es/fp/83406849/emisor-fluido-equation-adagio-1250w)
+from Leroy Merlin.
 
+This is built on top of the [equation-connect.js](https://github.com/AndreMiras/equation-connect.js) library.
+
+## Features / Roadmap
+- [x] Firebase login
+- [ ] Firebase register
+- [ ] Demo account
+- [x] Weather widget
+- [x] Zones overview / listing
+- [ ] Zones update
+- [ ] Devices pairing
+- [x] Devices overview / listing
+- [x] Devices details
+- [x] Devices update
+- [x] Extra features
+  - [x] Temperature sensors read
+  - [x] Screen backlight control
+- [x] Rointe devices support
 
 ## Run
 ```sh

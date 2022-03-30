@@ -1,16 +1,21 @@
-import React, { FunctionComponent } from "react";
+import React, { FC } from "react";
 import ZoneOverview from "./ZoneOverview";
-import { ZonesOverviewType } from "../types";
+import { ZonesOverviewType } from "equation-connect";
 
 interface ZonesOverviewProps {
+  installationId: string;
   zones: ZonesOverviewType;
 }
 
-const ZonesOverview: FunctionComponent<ZonesOverviewProps> = ({ zones }) => (
+const ZonesOverview: FC<ZonesOverviewProps> = ({ installationId, zones }) => (
   <>
     {zones &&
       Object.keys(zones).map((key) => (
-        <ZoneOverview key={key} zone={zones[key]} />
+        <ZoneOverview
+          key={key}
+          installationId={installationId}
+          zone={zones[key]}
+        />
       ))}
   </>
 );

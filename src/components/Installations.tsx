@@ -1,8 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/provider";
-import { getInstallations } from "../utils/firebase";
+import { InstallationsType, getInstallations } from "equation-connect";
 import Installation from "./Installation";
-import { InstallationsType } from "../types";
 
 const Installations = (): JSX.Element => {
   const [installations, setInstallations] = useState<InstallationsType | null>(
@@ -21,7 +20,7 @@ const Installations = (): JSX.Element => {
     <div>
       {installations &&
         Object.keys(installations).map((key) => (
-          <Installation key={key} installation={installations[key]} />
+          <Installation key={key} id={key} installation={installations[key]} />
         ))}
     </div>
   );
