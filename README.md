@@ -3,7 +3,6 @@
 [![Tests](https://github.com/AndreMiras/equation-connect/workflows/Tests/badge.svg?branch=develop)](https://github.com/AndreMiras/equation-connect/actions?query=workflow%3ATests)
 [![Deploy](https://github.com/AndreMiras/equation-connect/workflows/Deploy/badge.svg?branch=develop)](https://github.com/AndreMiras/equation-connect/actions?query=workflow%3ADeploy)
 
-
 <https://andremiras.github.io/equation-connect/>
 
 This is an open alternative to the
@@ -15,6 +14,7 @@ from Leroy Merlin.
 This is built on top of the [equation-connect.js](https://github.com/AndreMiras/equation-connect.js) library.
 
 ## Features / Roadmap
+
 - [x] Firebase login
 - [ ] Firebase register
 - [ ] Demo account
@@ -31,12 +31,15 @@ This is built on top of the [equation-connect.js](https://github.com/AndreMiras/
 - [x] Rointe devices support
 
 ## Run
+
 ```sh
 yarn start
 ```
+
 Note you need a valid Open Weather API key, see `.env.example` file for details.
 
 ## Test
+
 ```sh
 yarn lint
 yarn test
