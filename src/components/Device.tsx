@@ -23,6 +23,7 @@ import {
   setDevicePreset,
   setDeviceBacklight,
   setDeviceBacklightOn,
+  setDeviceNominalPower,
   updateDeviceTemperature,
 } from "equation-connect";
 import Preset from "./Preset";
@@ -134,12 +135,34 @@ const Backlights: FC<BacklightsProps> = ({
   );
 };
 
+interface NominalPowerProps {
+  nominalPower: number;
+  onNominalPower(newBacklightOn: number): void;
+}
+
+const NominalPower: FC<NominalPowerProps> = ({
+  nominalPower,
+  onNominalPower,
+}) => {
+  return (
+    <Form>
+      <NumberInput
+        value={nominalPower}
+        onChange={onNominalPower}
+        label="Nominal power"
+        step={1}
+      />
+    </Form>
+  );
+};
+
 const Device = (): JSX.Element => {
   const { id } = useParams<"id">();
   const [device, setDevice] = useState<DeviceType | null>(null);
   const [temp, setTemp] = useState(0);
   const [backlight, setBacklight] = useState(0);
   const [backlightOn, setBacklightOn] = useState(0);
+  const [nominalPower, setNominalPower] = useState(0);
   const [status, setStatus] = useState(DeviceStatus.Comfort);
   const [power, setPower] = useState(false);
   const onTemperature = useCallback(
@@ -166,11 +189,21 @@ const Device = (): JSX.Element => {
     },
     [id, backlightOn]
   );
+  const onNominalPower = useCallback(
+    (newNominalPower: number) => {
+      if (newNominalPower === nominalPower) return;
+      setNominalPower(newNominalPower);
+      setDeviceNominalPower(id!, newNominalPower);
+    },
+    [id, nominalPower]
+  );
   const onDeviceData = useCallback((deviceData) => {
-    const { backlight, backlight_on, temp, status, power } = deviceData;
+    const { backlight, backlight_on, temp, status, power, nominal_power } =
+      deviceData;
     setTemp(temp);
     setBacklight(backlight);
     setBacklightOn(backlight_on);
+    setNominalPower(nominal_power);
     setStatus(status);
     setPower(power);
   }, []);
@@ -249,6 +282,10 @@ const Device = (): JSX.Element => {
             onBacklight={onBacklight}
             backlightOn={backlightOn}
             onBacklightOn={onBacklightOn}
+          />
+          <NominalPower
+            nominalPower={nominalPower}
+            onNominalPower={onNominalPower}
           />
         </Accordion.Body>
       </Accordion.Item>
