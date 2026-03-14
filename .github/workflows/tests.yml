@@ -13,6 +13,7 @@ jobs:
         with:
           node-version: "20"
       - run: yarn install
+      - run: yarn build
       - run: yarn test -- --coverage
         env:
           CI: true
