@@ -13,5 +13,11 @@ jobs:
         with:
           node-version: "20"
       - run: yarn install
-      - run: yarn test
+      - run: yarn test -- --coverage
+        env:
+          CI: true
+      - uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
       - run: yarn lint

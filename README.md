@@ -1,6 +1,7 @@
 # Open Equation Connect
 
 [![Tests](https://github.com/AndreMiras/equation-connect/workflows/Tests/badge.svg?branch=main)](https://github.com/AndreMiras/equation-connect/actions?query=workflow%3ATests)
+[![codecov](https://codecov.io/gh/AndreMiras/equation-connect/branch/main/graph/badge.svg?token=PBRVVVDC1L)](https://codecov.io/gh/AndreMiras/equation-connect)
 [![Deploy](https://github.com/AndreMiras/equation-connect/workflows/Deploy/badge.svg?branch=main)](https://github.com/AndreMiras/equation-connect/actions?query=workflow%3ADeploy)
 
 <https://andremiras.github.io/equation-connect/>
