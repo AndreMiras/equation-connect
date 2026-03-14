@@ -1,7 +1,16 @@
 import { strict as assert } from "assert";
 import { useCallback, useEffect, useState, FC } from "react";
 import { useParams } from "react-router-dom";
-import { Accordion, Button, Col, Form, InputGroup } from "react-bootstrap";
+import {
+  Accordion,
+  Button,
+  Col,
+  Form,
+  InputGroup,
+  Row,
+  ToggleButton,
+  ToggleButtonGroup,
+} from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ref, onValue } from "firebase/database";
 import {
@@ -14,6 +23,7 @@ import {
   setDevicePreset,
   setDeviceBacklight,
   setDeviceBacklightOn,
+  setDeviceNominalPower,
   updateDeviceTemperature,
 } from "equation-connect";
 import Preset from "./Preset";
@@ -53,25 +63,55 @@ const NumberInput: FC<NumberInputProps> = ({
   </>
 );
 
+interface SimplifiedBacklightProps {
+  value: boolean;
+  onChange(value: boolean): void;
+}
+
+const SimplifiedBacklight: FC<SimplifiedBacklightProps> = ({
+  value,
+  onChange,
+}) => (
+  <ToggleButtonGroup
+    type="radio"
+    name="backlight-options"
+    onChange={(value: number) => onChange(Boolean(value))}
+    value={Number(value)}
+    size="lg"
+    className="mt-2"
+  >
+    <ToggleButton id="on" value={1}>
+      <FontAwesomeIcon icon={"lightbulb"} /> On
+    </ToggleButton>
+    <ToggleButton id="off" value={0}>
+      <span className="fa-layers fa-fw">
+        <FontAwesomeIcon icon={"lightbulb"} />
+        <FontAwesomeIcon icon={"slash"} />
+      </span>{" "}
+      Off
+    </ToggleButton>
+  </ToggleButtonGroup>
+);
+
 interface TemperatureProps {
   temp: number;
   onTemperature(newTemperature: number): void;
 }
 
 const Temperature: FC<TemperatureProps> = ({ temp, onTemperature }) => (
-  <Form className="row">
+  <Form>
     <NumberInput value={temp} onChange={onTemperature} step={0.5} />
   </Form>
 );
 
-interface BacklightProps {
+interface BacklightsProps {
   backlight: number;
   onBacklight(newBacklight: number): void;
   backlightOn: number;
   onBacklightOn(newBacklightOn: number): void;
 }
 
-const Backlight: FC<BacklightProps> = ({
+const Backlights: FC<BacklightsProps> = ({
   backlight,
   onBacklight,
   backlightOn,
@@ -95,12 +135,34 @@ const Backlight: FC<BacklightProps> = ({
   );
 };
 
+interface NominalPowerProps {
+  nominalPower: number;
+  onNominalPower(newBacklightOn: number): void;
+}
+
+const NominalPower: FC<NominalPowerProps> = ({
+  nominalPower,
+  onNominalPower,
+}) => {
+  return (
+    <Form>
+      <NumberInput
+        value={nominalPower}
+        onChange={onNominalPower}
+        label="Nominal power"
+        step={1}
+      />
+    </Form>
+  );
+};
+
 const Device = (): JSX.Element => {
   const { id } = useParams<"id">();
   const [device, setDevice] = useState<DeviceType | null>(null);
   const [temp, setTemp] = useState(0);
   const [backlight, setBacklight] = useState(0);
   const [backlightOn, setBacklightOn] = useState(0);
+  const [nominalPower, setNominalPower] = useState(0);
   const [status, setStatus] = useState(DeviceStatus.Comfort);
   const [power, setPower] = useState(false);
   const onTemperature = useCallback(
@@ -127,11 +189,21 @@ const Device = (): JSX.Element => {
     },
     [id, backlightOn]
   );
+  const onNominalPower = useCallback(
+    (newNominalPower: number) => {
+      if (newNominalPower === nominalPower) return;
+      setNominalPower(newNominalPower);
+      setDeviceNominalPower(id!, newNominalPower);
+    },
+    [id, nominalPower]
+  );
   const onDeviceData = useCallback((deviceData) => {
-    const { backlight, backlight_on, temp, status, power } = deviceData;
+    const { backlight, backlight_on, temp, status, power, nominal_power } =
+      deviceData;
     setTemp(temp);
     setBacklight(backlight);
     setBacklightOn(backlight_on);
+    setNominalPower(nominal_power);
     setStatus(status);
     setPower(power);
   }, []);
@@ -176,13 +248,25 @@ const Device = (): JSX.Element => {
       <Accordion.Item eventKey="0">
         <Accordion.Header>{device.data.name}</Accordion.Header>
         <Accordion.Body>
-          <Temperature temp={temp} onTemperature={onTemperature} />
-          <Preset
-            status={status}
-            onPreset={onPreset}
-            power={power}
-            onPowerOff={onPowerOff}
-          />
+          <Row>
+            <Col xs={12}>
+              <Temperature temp={temp} onTemperature={onTemperature} />
+            </Col>
+            <Col xs={12}>
+              <Preset
+                status={status}
+                onPreset={onPreset}
+                power={power}
+                onPowerOff={onPowerOff}
+              />
+            </Col>
+            <Col>
+              <SimplifiedBacklight
+                value={Boolean(backlightOn)}
+                onChange={(value) => onBacklightOn(Number(value))}
+              />
+            </Col>
+          </Row>
         </Accordion.Body>
       </Accordion.Item>
       <Accordion.Item eventKey="1">
@@ -193,11 +277,15 @@ const Device = (): JSX.Element => {
             <li>temp_calc: {device.data.temp_calc}&deg;</li>
             <li>temp_probe: {device.data.temp_probe}&deg;</li>
           </ul>
-          <Backlight
+          <Backlights
             backlight={backlight}
             onBacklight={onBacklight}
             backlightOn={backlightOn}
             onBacklightOn={onBacklightOn}
+          />
+          <NominalPower
+            nominalPower={nominalPower}
+            onNominalPower={onNominalPower}
           />
         </Accordion.Body>
       </Accordion.Item>

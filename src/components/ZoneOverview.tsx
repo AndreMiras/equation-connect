@@ -87,13 +87,6 @@ const ZoneOverview: FC<ZoneOverviewProps> = ({ installationId, zone }) => {
             <li>power: {power.toString()}</li>
             <li>mode: {mode}</li>
           </ul>
-          <Preset
-            name={`options-${id}`}
-            status={statusState}
-            onPreset={onPreset}
-            power={powerState}
-            onPowerOff={onPowerOff}
-          />
         </Accordion.Body>
       </Accordion.Item>
       <Accordion.Item eventKey="2">

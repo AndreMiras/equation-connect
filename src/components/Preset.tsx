@@ -42,7 +42,7 @@ const Preset: FC<PresetProps> = ({
       size="lg"
       className="mt-2"
     >
-      <ToggleButton id="radio-off" value={offValue}>
+      <ToggleButton id={`radio-${name}-off`} value={offValue}>
         <FontAwesomeIcon icon={"power-off"} /> Off
       </ToggleButton>
       {statusList.map((s, idx) => (
