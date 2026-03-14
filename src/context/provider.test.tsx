@@ -33,13 +33,13 @@ test("provides anonymous user by default", () => {
   expect(screen.getByTestId("anonymous")).toHaveTextContent("true");
 });
 
-test("setUser updates propagate to consumers", () => {
+test("setUser updates propagate to consumers", async () => {
   render(
     <UserContextProvider>
       <TestConsumer />
     </UserContextProvider>
   );
-  userEvent.click(screen.getByText("Login"));
+  await userEvent.click(screen.getByText("Login"));
   expect(screen.getByTestId("uid")).toHaveTextContent("u1");
   expect(screen.getByTestId("email")).toHaveTextContent("a@b.com");
   expect(screen.getByTestId("anonymous")).toHaveTextContent("false");

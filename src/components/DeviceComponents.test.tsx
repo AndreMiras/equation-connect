@@ -46,7 +46,7 @@ describe("NumberInput", () => {
     expect(screen.getByDisplayValue("10")).toBeInTheDocument();
   });
 
-  test("plus button increments by step", () => {
+  test("plus button increments by step", async () => {
     const onChange = jest.fn();
     renderWithProviders(
       <NumberInput value={10} onChange={onChange} step={0.5} />
@@ -54,11 +54,11 @@ describe("NumberInput", () => {
     const plusButton = screen
       .getAllByRole("button")
       .find((btn) => btn.querySelector("[data-icon='plus']") !== null);
-    userEvent.click(plusButton!);
+    await userEvent.click(plusButton!);
     expect(onChange).toHaveBeenCalledWith(10.5);
   });
 
-  test("minus button decrements by step", () => {
+  test("minus button decrements by step", async () => {
     const onChange = jest.fn();
     renderWithProviders(
       <NumberInput value={10} onChange={onChange} step={2} />
@@ -66,7 +66,7 @@ describe("NumberInput", () => {
     const minusButton = screen
       .getAllByRole("button")
       .find((btn) => btn.querySelector("[data-icon='minus']") !== null);
-    userEvent.click(minusButton!);
+    await userEvent.click(minusButton!);
     expect(onChange).toHaveBeenCalledWith(8);
   });
 });
@@ -80,21 +80,21 @@ describe("SimplifiedBacklight", () => {
     expect(screen.getByText("Off")).toBeInTheDocument();
   });
 
-  test("clicking Off calls onChange with false", () => {
+  test("clicking Off calls onChange with false", async () => {
     const onChange = jest.fn();
     renderWithProviders(
       <SimplifiedBacklight value={true} onChange={onChange} />
     );
-    userEvent.click(screen.getByText("Off"));
+    await userEvent.click(screen.getByText("Off"));
     expect(onChange).toHaveBeenCalledWith(false);
   });
 
-  test("clicking On calls onChange with true", () => {
+  test("clicking On calls onChange with true", async () => {
     const onChange = jest.fn();
     renderWithProviders(
       <SimplifiedBacklight value={false} onChange={onChange} />
     );
-    userEvent.click(screen.getByText("On"));
+    await userEvent.click(screen.getByText("On"));
     expect(onChange).toHaveBeenCalledWith(true);
   });
 });

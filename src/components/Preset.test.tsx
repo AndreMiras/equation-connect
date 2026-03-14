@@ -31,16 +31,16 @@ test("renders Off button and all preset buttons", () => {
   expect(screen.getByText("Comfort")).toBeInTheDocument();
 });
 
-test("clicking Off calls onPowerOff", () => {
+test("clicking Off calls onPowerOff", async () => {
   renderWithProviders(<Preset {...defaultProps} />);
-  userEvent.click(screen.getByText("Off"));
+  await userEvent.click(screen.getByText("Off"));
   expect(defaultProps.onPowerOff).toHaveBeenCalled();
   expect(defaultProps.onPreset).not.toHaveBeenCalled();
 });
 
-test("clicking a preset calls onPreset with correct value", () => {
+test("clicking a preset calls onPreset with correct value", async () => {
   renderWithProviders(<Preset {...defaultProps} />);
-  userEvent.click(screen.getByText("Eco"));
+  await userEvent.click(screen.getByText("Eco"));
   expect(defaultProps.onPreset).toHaveBeenCalledWith(DeviceStatus.Eco);
   expect(defaultProps.onPowerOff).not.toHaveBeenCalled();
 });

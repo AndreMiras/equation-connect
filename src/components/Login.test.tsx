@@ -79,9 +79,9 @@ test("login button calls login with email and password", async () => {
   const setUser = jest.fn();
   renderWithProviders(<Login />, { setUser });
 
-  userEvent.type(screen.getByLabelText(/email/i), "a@b.com");
-  userEvent.type(screen.getByLabelText(/password/i), "secret");
-  userEvent.click(screen.getByText(/login/i));
+  await userEvent.type(screen.getByLabelText(/email/i), "a@b.com");
+  await userEvent.type(screen.getByLabelText(/password/i), "secret");
+  await userEvent.click(screen.getByText(/login/i));
 
   await waitFor(() => {
     expect(login).toHaveBeenCalledWith("a@b.com", "secret");
@@ -95,9 +95,9 @@ test("login error is caught and logged", async () => {
   const consoleSpy = jest.spyOn(console, "error").mockImplementation();
   renderWithProviders(<Login />);
 
-  userEvent.type(screen.getByLabelText(/email/i), "a@b.com");
-  userEvent.type(screen.getByLabelText(/password/i), "wrong");
-  userEvent.click(screen.getByText(/login/i));
+  await userEvent.type(screen.getByLabelText(/email/i), "a@b.com");
+  await userEvent.type(screen.getByLabelText(/password/i), "wrong");
+  await userEvent.click(screen.getByText(/login/i));
 
   await waitFor(() => {
     expect(consoleSpy).toHaveBeenCalledWith(error);
@@ -112,10 +112,8 @@ test("config switch calls init and re-registers auth listener", async () => {
 
   // The split dropdown toggle button
   const toggleButton = document.getElementById("dropdown-split-basic")!;
-  userEvent.click(toggleButton);
-  await waitFor(() => {
-    userEvent.click(screen.getByText(/equation login/i));
-  });
+  await userEvent.click(toggleButton);
+  await userEvent.click(screen.getByText(/equation login/i));
 
   expect(init).toHaveBeenCalledWith(FirebaseConfig.EquationConnect);
   expect(onAuthStateChanged).toHaveBeenCalledWith(

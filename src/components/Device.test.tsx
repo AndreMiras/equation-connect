@@ -124,7 +124,7 @@ test("preset change calls setDevicePreset", async () => {
     expect(screen.getByText("Living Room Heater")).toBeInTheDocument();
   });
 
-  userEvent.click(screen.getByText("Eco"));
+  await userEvent.click(screen.getByText("Eco"));
   expect(setDevicePreset).toHaveBeenCalledWith("device-abc", DeviceStatus.Eco);
 });
 
@@ -138,7 +138,7 @@ test("power off calls setDevicePowerOff", async () => {
 
   // Click the power-off "Off" button in the Preset (not the backlight Off)
   const presetOffButton = document.getElementById("radio-options-off")!;
-  userEvent.click(presetOffButton);
+  await userEvent.click(presetOffButton);
   expect(setDevicePowerOff).toHaveBeenCalledWith("device-abc");
 });
 
@@ -158,7 +158,7 @@ test("temperature plus button calls updateDeviceTemperature", async () => {
     (btn) => btn.querySelector("[data-icon='plus']") !== null
   );
   expect(plusButton).toBeDefined();
-  userEvent.click(plusButton!);
+  await userEvent.click(plusButton!);
 
   expect(updateDeviceTemperature).toHaveBeenCalledWith("device-abc", 21.5);
 });

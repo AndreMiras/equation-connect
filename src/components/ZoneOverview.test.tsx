@@ -60,13 +60,13 @@ test("ZoneOverview devices is optional", () => {
   expect(asFragment()).toMatchSnapshot();
 });
 
-test("clicking preset calls setZonePreset and updates state", () => {
+test("clicking preset calls setZonePreset and updates state", async () => {
   render(
     <Router>
       <ZoneOverview installationId={installationId} zone={zoneProps} />
     </Router>
   );
-  userEvent.click(screen.getByText("Eco"));
+  await userEvent.click(screen.getByText("Eco"));
   expect(setZonePreset).toHaveBeenCalledWith(
     installationId,
     zoneProps.id,
@@ -74,7 +74,7 @@ test("clicking preset calls setZonePreset and updates state", () => {
   );
 });
 
-test("clicking off calls setZonePowerOff", () => {
+test("clicking off calls setZonePowerOff", async () => {
   render(
     <Router>
       <ZoneOverview installationId={installationId} zone={zoneProps} />
@@ -83,7 +83,7 @@ test("clicking off calls setZonePowerOff", () => {
   const offButton = document.getElementById(
     `radio-options-${zoneProps.id}-off`
   )!;
-  userEvent.click(offButton);
+  await userEvent.click(offButton);
   expect(setZonePowerOff).toHaveBeenCalledWith(installationId, zoneProps.id);
 });
 
