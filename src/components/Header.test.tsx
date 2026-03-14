@@ -20,14 +20,14 @@ test("renders about link pointing to GitHub", () => {
   const aboutLink = screen.getByText("About").closest("a");
   expect(aboutLink).toHaveAttribute(
     "href",
-    "https://github.com/AndreMiras/equation-connect"
+    "https://github.com/AndreMiras/equation-connect",
   );
 });
 
 test("renders thermometer icon in brand", () => {
   const { container } = renderWithProviders(<Header />);
   expect(
-    container.querySelector("[data-icon='temperature-three-quarters']")
+    container.querySelector("[data-icon='temperature-three-quarters']"),
   ).toBeInTheDocument();
 });
 

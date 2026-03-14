@@ -17,7 +17,7 @@ const Login = () => {
         setUser(user);
       });
     },
-    [setUser]
+    [setUser],
   );
 
   useEffect(() => {

@@ -37,21 +37,21 @@ const installation = {
 
 test("renders installation name in accordion header", () => {
   renderWithProviders(
-    <Installation id="inst-1" installation={installation as any} />
+    <Installation id="inst-1" installation={installation as any} />,
   );
   expect(screen.getByText("My Home")).toBeInTheDocument();
 });
 
 test("renders debug panel with JSON", () => {
   renderWithProviders(
-    <Installation id="inst-1" installation={installation as any} />
+    <Installation id="inst-1" installation={installation as any} />,
   );
   expect(screen.getByText("Debug")).toBeInTheDocument();
 });
 
 test("renders ZonesOverview with installation id", () => {
   renderWithProviders(
-    <Installation id="inst-1" installation={installation as any} />
+    <Installation id="inst-1" installation={installation as any} />,
   );
   expect(screen.getByTestId("zones-overview")).toHaveTextContent("inst-1");
 });
@@ -60,10 +60,10 @@ test("shows missing API key warning when env var is absent", () => {
   const original = import.meta.env.VITE_OPEN_WEATHER_API_KEY;
   import.meta.env.VITE_OPEN_WEATHER_API_KEY = "";
   renderWithProviders(
-    <Installation id="inst-1" installation={installation as any} />
+    <Installation id="inst-1" installation={installation as any} />,
   );
   expect(
-    screen.getByText(/VITE_OPEN_WEATHER_API_KEY environment variable missing/i)
+    screen.getByText(/VITE_OPEN_WEATHER_API_KEY environment variable missing/i),
   ).toBeInTheDocument();
   import.meta.env.VITE_OPEN_WEATHER_API_KEY = original;
 });
@@ -71,7 +71,7 @@ test("shows missing API key warning when env var is absent", () => {
 test("renders weather widget when API key is set", () => {
   import.meta.env.VITE_OPEN_WEATHER_API_KEY = "test-key";
   renderWithProviders(
-    <Installation id="inst-1" installation={installation as any} />
+    <Installation id="inst-1" installation={installation as any} />,
   );
   expect(screen.getByTestId("react-weather")).toBeInTheDocument();
   import.meta.env.VITE_OPEN_WEATHER_API_KEY = "";

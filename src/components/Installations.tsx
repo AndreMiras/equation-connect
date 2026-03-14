@@ -6,7 +6,7 @@ import Installation from "./Installation";
 
 const Installations = () => {
   const [installations, setInstallations] = useState<InstallationsType | null>(
-    null
+    null,
   );
   const { user } = useContext(UserContext);
 

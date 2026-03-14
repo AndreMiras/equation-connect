@@ -172,7 +172,7 @@ const Device = () => {
       setTemp(newTemperature);
       updateDeviceTemperature(id!, newTemperature);
     },
-    [id, temp]
+    [id, temp],
   );
   const onBacklight = useCallback(
     (newBacklight: number) => {
@@ -180,7 +180,7 @@ const Device = () => {
       setBacklight(newBacklight);
       setDeviceBacklight(id!, newBacklight);
     },
-    [id, backlight]
+    [id, backlight],
   );
   const onBacklightOn = useCallback(
     (newBacklight: number) => {
@@ -188,7 +188,7 @@ const Device = () => {
       setBacklightOn(newBacklight);
       setDeviceBacklightOn(id!, newBacklight);
     },
-    [id, backlightOn]
+    [id, backlightOn],
   );
   const onNominalPower = useCallback(
     (newNominalPower: number) => {
@@ -196,7 +196,7 @@ const Device = () => {
       setNominalPower(newNominalPower);
       setDeviceNominalPower(id!, newNominalPower);
     },
-    [id, nominalPower]
+    [id, nominalPower],
   );
   const onDeviceData = useCallback((deviceData: DeviceDataType) => {
     const { backlight, backlight_on, temp, status, power, nominal_power } =
@@ -213,7 +213,7 @@ const Device = () => {
       setDevice(device);
       onDeviceData(device.data);
     },
-    [onDeviceData]
+    [onDeviceData],
   );
   const onPreset = (newStatus: DeviceStatus) => {
     setDevicePreset(id!, newStatus);

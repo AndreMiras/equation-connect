@@ -29,7 +29,7 @@ const createWrapper = ({
 
 const renderWithProviders = (
   ui: React.ReactElement,
-  options: WrapperOptions & Omit<RenderOptions, "wrapper"> = {}
+  options: WrapperOptions & Omit<RenderOptions, "wrapper"> = {},
 ) => {
   const { user, setUser, ...renderOptions } = options;
   return render(ui, {

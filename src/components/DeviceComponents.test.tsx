@@ -41,7 +41,7 @@ describe("NumberInput", () => {
   test("displays the current value", () => {
     const onChange = vi.fn();
     renderWithProviders(
-      <NumberInput value={10} onChange={onChange} step={1} />
+      <NumberInput value={10} onChange={onChange} step={1} />,
     );
     expect(screen.getByDisplayValue("10")).toBeInTheDocument();
   });
@@ -49,7 +49,7 @@ describe("NumberInput", () => {
   test("plus button increments by step", async () => {
     const onChange = vi.fn();
     renderWithProviders(
-      <NumberInput value={10} onChange={onChange} step={0.5} />
+      <NumberInput value={10} onChange={onChange} step={0.5} />,
     );
     const plusButton = screen
       .getAllByRole("button")
@@ -61,7 +61,7 @@ describe("NumberInput", () => {
   test("minus button decrements by step", async () => {
     const onChange = vi.fn();
     renderWithProviders(
-      <NumberInput value={10} onChange={onChange} step={2} />
+      <NumberInput value={10} onChange={onChange} step={2} />,
     );
     const minusButton = screen
       .getAllByRole("button")
@@ -74,7 +74,7 @@ describe("NumberInput", () => {
 describe("SimplifiedBacklight", () => {
   test("renders On and Off buttons", () => {
     renderWithProviders(
-      <SimplifiedBacklight value={true} onChange={vi.fn()} />
+      <SimplifiedBacklight value={true} onChange={vi.fn()} />,
     );
     expect(screen.getByText("On")).toBeInTheDocument();
     expect(screen.getByText("Off")).toBeInTheDocument();
@@ -83,7 +83,7 @@ describe("SimplifiedBacklight", () => {
   test("clicking Off calls onChange with false", async () => {
     const onChange = vi.fn();
     renderWithProviders(
-      <SimplifiedBacklight value={true} onChange={onChange} />
+      <SimplifiedBacklight value={true} onChange={onChange} />,
     );
     await userEvent.click(screen.getByText("Off"));
     expect(onChange).toHaveBeenCalledWith(false);
@@ -92,7 +92,7 @@ describe("SimplifiedBacklight", () => {
   test("clicking On calls onChange with true", async () => {
     const onChange = vi.fn();
     renderWithProviders(
-      <SimplifiedBacklight value={false} onChange={onChange} />
+      <SimplifiedBacklight value={false} onChange={onChange} />,
     );
     await userEvent.click(screen.getByText("On"));
     expect(onChange).toHaveBeenCalledWith(true);

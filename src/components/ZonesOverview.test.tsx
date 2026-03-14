@@ -21,7 +21,7 @@ test("renders a ZoneOverview for each zone", () => {
     z2: { id: "z2", name: "Zone 2" },
   };
   renderWithProviders(
-    <ZonesOverview installationId="inst-1" zones={zones as any} />
+    <ZonesOverview installationId="inst-1" zones={zones as any} />,
   );
   expect(screen.getByTestId("zone-z1")).toBeInTheDocument();
   expect(screen.getByTestId("zone-z2")).toBeInTheDocument();
@@ -29,14 +29,14 @@ test("renders a ZoneOverview for each zone", () => {
 
 test("renders nothing when zones is null", () => {
   const { container } = renderWithProviders(
-    <ZonesOverview installationId="inst-1" zones={null as any} />
+    <ZonesOverview installationId="inst-1" zones={null as any} />,
   );
   expect(container.innerHTML).toBe("");
 });
 
 test("renders nothing when zones is empty", () => {
   const { container } = renderWithProviders(
-    <ZonesOverview installationId="inst-1" zones={{} as any} />
+    <ZonesOverview installationId="inst-1" zones={{} as any} />,
   );
   expect(container.innerHTML).toBe("");
 });

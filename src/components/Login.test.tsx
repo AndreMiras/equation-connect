@@ -120,6 +120,6 @@ test("config switch calls init and re-registers auth listener", async () => {
   expect(init).toHaveBeenCalledWith(FirebaseConfig.EquationConnect);
   expect(onAuthStateChanged).toHaveBeenCalledWith(
     newAuth,
-    expect.any(Function)
+    expect.any(Function),
   );
 });

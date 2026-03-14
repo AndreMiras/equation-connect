@@ -155,7 +155,7 @@ test("temperature plus button calls updateDeviceTemperature", async () => {
   // Temperature section has minus(-) and plus(+) buttons
   // Find the button containing the "plus" icon
   const plusButton = buttons.find(
-    (btn) => btn.querySelector("[data-icon='plus']") !== null
+    (btn) => btn.querySelector("[data-icon='plus']") !== null,
   );
   expect(plusButton).toBeDefined();
   await userEvent.click(plusButton!);

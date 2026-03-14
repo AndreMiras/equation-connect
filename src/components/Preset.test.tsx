@@ -48,7 +48,7 @@ test("clicking a preset calls onPreset with correct value", async () => {
 test("Off button is selected when power is false", () => {
   renderWithProviders(<Preset {...defaultProps} power={false} />);
   const offButton = document.getElementById(
-    "radio-options-off"
+    "radio-options-off",
   ) as HTMLInputElement;
   expect(offButton.checked).toBe(true);
 });

@@ -44,7 +44,7 @@ test("ZoneOverview renders correctly", () => {
   const { asFragment } = render(
     <Router>
       <ZoneOverview installationId={installationId} zone={zoneProps} />
-    </Router>
+    </Router>,
   );
   expect(asFragment()).toMatchSnapshot();
 });
@@ -55,7 +55,7 @@ test("ZoneOverview devices is optional", () => {
   const { asFragment } = render(
     <Router>
       <ZoneOverview installationId={installationId} zone={zoneProps2} />
-    </Router>
+    </Router>,
   );
   expect(asFragment()).toMatchSnapshot();
 });
@@ -64,13 +64,13 @@ test("clicking preset calls setZonePreset and updates state", async () => {
   render(
     <Router>
       <ZoneOverview installationId={installationId} zone={zoneProps} />
-    </Router>
+    </Router>,
   );
   await userEvent.click(screen.getByText("Eco"));
   expect(setZonePreset).toHaveBeenCalledWith(
     installationId,
     zoneProps.id,
-    DeviceStatus.Eco
+    DeviceStatus.Eco,
   );
 });
 
@@ -78,10 +78,10 @@ test("clicking off calls setZonePowerOff", async () => {
   render(
     <Router>
       <ZoneOverview installationId={installationId} zone={zoneProps} />
-    </Router>
+    </Router>,
   );
   const offButton = document.getElementById(
-    `radio-options-${zoneProps.id}-off`
+    `radio-options-${zoneProps.id}-off`,
   )!;
   await userEvent.click(offButton);
   expect(setZonePowerOff).toHaveBeenCalledWith(installationId, zoneProps.id);
@@ -91,7 +91,7 @@ test("useEffect syncs power and status props to state", () => {
   const { rerender } = render(
     <Router>
       <ZoneOverview installationId={installationId} zone={zoneProps} />
-    </Router>
+    </Router>,
   );
   const updatedZone = {
     ...zoneProps,
@@ -101,11 +101,11 @@ test("useEffect syncs power and status props to state", () => {
   rerender(
     <Router>
       <ZoneOverview installationId={installationId} zone={updatedZone} />
-    </Router>
+    </Router>,
   );
   // The Off button should now be selected (power=false)
   const offButton = document.getElementById(
-    `radio-options-${zoneProps.id}-off`
+    `radio-options-${zoneProps.id}-off`,
   ) as HTMLInputElement;
   expect(offButton.checked).toBe(true);
 });
