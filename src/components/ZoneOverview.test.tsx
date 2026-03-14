@@ -1,11 +1,27 @@
 import React from "react";
 import { HashRouter as Router } from "react-router-dom";
-import { render } from "@testing-library/react";
-import { ZoneOverviewType, DeviceStatus } from "equation-connect";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import {
+  ZoneOverviewType,
+  DeviceStatus,
+  setZonePreset,
+  setZonePowerOff,
+} from "equation-connect";
 import { registerIcons } from "../utils/helpers";
 import ZoneOverview from "./ZoneOverview";
 
 registerIcons();
+
+jest.mock("equation-connect", () => ({
+  DeviceStatus: { Ice: "ice", Eco: "eco", Comfort: "comfort" },
+  setZonePreset: jest.fn(),
+  setZonePowerOff: jest.fn(),
+}));
+
+beforeEach(() => {
+  jest.clearAllMocks();
+});
 
 const installationId = "-OqGNxWzMGLOcFc5Vcsr";
 const zoneProps: ZoneOverviewType = {
@@ -42,4 +58,54 @@ test("ZoneOverview devices is optional", () => {
     </Router>
   );
   expect(asFragment()).toMatchSnapshot();
+});
+
+test("clicking preset calls setZonePreset and updates state", () => {
+  render(
+    <Router>
+      <ZoneOverview installationId={installationId} zone={zoneProps} />
+    </Router>
+  );
+  userEvent.click(screen.getByText("Eco"));
+  expect(setZonePreset).toHaveBeenCalledWith(
+    installationId,
+    zoneProps.id,
+    DeviceStatus.Eco
+  );
+});
+
+test("clicking off calls setZonePowerOff", () => {
+  render(
+    <Router>
+      <ZoneOverview installationId={installationId} zone={zoneProps} />
+    </Router>
+  );
+  const offButton = document.getElementById(
+    `radio-options-${zoneProps.id}-off`
+  )!;
+  userEvent.click(offButton);
+  expect(setZonePowerOff).toHaveBeenCalledWith(installationId, zoneProps.id);
+});
+
+test("useEffect syncs power and status props to state", () => {
+  const { rerender } = render(
+    <Router>
+      <ZoneOverview installationId={installationId} zone={zoneProps} />
+    </Router>
+  );
+  const updatedZone = {
+    ...zoneProps,
+    power: false,
+    status: DeviceStatus.Eco,
+  };
+  rerender(
+    <Router>
+      <ZoneOverview installationId={installationId} zone={updatedZone} />
+    </Router>
+  );
+  // The Off button should now be selected (power=false)
+  const offButton = document.getElementById(
+    `radio-options-${zoneProps.id}-off`
+  ) as HTMLInputElement;
+  expect(offButton.checked).toBe(true);
 });
