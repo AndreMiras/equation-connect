@@ -61,7 +61,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@vitejs/plugin-react": "^5",
+    "@vitejs/plugin-react": "^6",
     "@vitest/coverage-v8": "^3",
     "eslint": "^10",
     "eslint-plugin-react": "^7.37.5",
