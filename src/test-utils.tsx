@@ -1,0 +1,40 @@
+import React, { FC } from "react";
+import { render, RenderOptions } from "@testing-library/react";
+import { HashRouter as Router } from "react-router-dom";
+import { User, UserContext } from "./context/provider";
+
+const anonymousUser: User = {
+  uid: "",
+  email: null,
+  isAnonymous: true,
+};
+
+interface WrapperOptions {
+  user?: User;
+  setUser?: jest.Mock;
+}
+
+const createWrapper = ({
+  user = anonymousUser,
+  setUser = jest.fn(),
+}: WrapperOptions = {}): FC => {
+  const Wrapper: FC = ({ children }) => (
+    <UserContext.Provider value={{ user, setUser }}>
+      <Router>{children}</Router>
+    </UserContext.Provider>
+  );
+  return Wrapper;
+};
+
+const renderWithProviders = (
+  ui: React.ReactElement,
+  options: WrapperOptions & Omit<RenderOptions, "wrapper"> = {}
+) => {
+  const { user, setUser, ...renderOptions } = options;
+  return render(ui, {
+    wrapper: createWrapper({ user, setUser }),
+    ...renderOptions,
+  });
+};
+
+export { renderWithProviders, anonymousUser };
