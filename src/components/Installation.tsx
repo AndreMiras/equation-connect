@@ -1,7 +1,7 @@
 import { InstallationType } from "equation-connect";
 import { FC } from "react";
 import { Accordion, Alert } from "react-bootstrap";
-// @ts-ignore
+// @ts-expect-error react-open-weather has no type declarations
 import ReactWeather, { useOpenWeather } from "react-open-weather";
 
 import ZonesOverview from "./ZonesOverview";

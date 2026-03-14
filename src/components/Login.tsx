@@ -44,7 +44,7 @@ const Login = () => {
     registerOnAuthStateChanged(auth);
   };
 
-  const onLoginClick = (e: React.MouseEvent<HTMLElement>) => onLogin();
+  const onLoginClick = () => onLogin();
 
   const onFormSubmit = (e: React.FormEvent) => e.preventDefault();
 

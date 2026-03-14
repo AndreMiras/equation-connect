@@ -12,7 +12,7 @@ const Logout = () => {
     setUser(anonymousUser);
   };
 
-  const onLogoutClick = (e: React.MouseEvent<HTMLElement>) => onLogout();
+  const onLogoutClick = () => onLogout();
 
   return (
     <Button type="submit" onClick={onLogoutClick}>
