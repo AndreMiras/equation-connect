@@ -56,6 +56,9 @@
       "last 1 safari version"
     ]
   },
+  "resolutions": {
+    "postcss-safe-parser/postcss": "~8.4.49"
+  },
   "devDependencies": {
     "gh-pages": "^3.2.3",
     "prettier": "^2.5.0"
