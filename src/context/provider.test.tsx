@@ -1,6 +1,7 @@
-import React, { useContext } from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import React, { useContext } from "react";
+
 import { UserContext, UserContextProvider } from "./provider";
 
 const TestConsumer = () => {

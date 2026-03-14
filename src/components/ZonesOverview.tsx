@@ -1,6 +1,7 @@
-import React, { FC } from "react";
-import ZoneOverview from "./ZoneOverview";
 import { ZonesOverviewType } from "equation-connect";
+import React, { FC } from "react";
+
+import ZoneOverview from "./ZoneOverview";
 
 interface ZonesOverviewProps {
   installationId: string;

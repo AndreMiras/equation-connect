@@ -1,6 +1,7 @@
-import React, { FC } from "react";
 import { render, RenderOptions } from "@testing-library/react";
+import React, { FC } from "react";
 import { HashRouter as Router } from "react-router-dom";
+
 import { User, UserContext } from "./context/provider";
 
 const anonymousUser: User = {
@@ -37,4 +38,4 @@ const renderWithProviders = (
   });
 };
 
-export { renderWithProviders, anonymousUser };
+export { anonymousUser, renderWithProviders };

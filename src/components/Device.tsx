@@ -1,6 +1,20 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { strict as assert } from "assert";
-import { useCallback, useEffect, useState, FC } from "react";
-import { useParams } from "react-router-dom";
+import {
+  database,
+  deviceDataByIdPath,
+  DeviceStatus,
+  DeviceType,
+  getDevice,
+  setDeviceBacklight,
+  setDeviceBacklightOn,
+  setDeviceNominalPower,
+  setDevicePowerOff,
+  setDevicePreset,
+  updateDeviceTemperature,
+} from "equation-connect";
+import { onValue, ref } from "firebase/database";
+import { FC, useCallback, useEffect, useState } from "react";
 import {
   Accordion,
   Button,
@@ -11,21 +25,8 @@ import {
   ToggleButton,
   ToggleButtonGroup,
 } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { ref, onValue } from "firebase/database";
-import {
-  DeviceStatus,
-  DeviceType,
-  database,
-  deviceDataByIdPath,
-  getDevice,
-  setDevicePowerOff,
-  setDevicePreset,
-  setDeviceBacklight,
-  setDeviceBacklightOn,
-  setDeviceNominalPower,
-  updateDeviceTemperature,
-} from "equation-connect";
+import { useParams } from "react-router-dom";
+
 import Preset from "./Preset";
 
 interface NumberInputProps {

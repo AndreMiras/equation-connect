@@ -1,11 +1,13 @@
-import React from "react";
-import { HashRouter as Router, Route, Routes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+
+import React from "react";
 import { Container } from "react-bootstrap";
-import { registerIcons } from "./utils/helpers";
-import Home from "./components/Home";
-import Header from "./components/Header";
+import { HashRouter as Router, Route, Routes } from "react-router-dom";
+
 import Device from "./components/Device";
+import Header from "./components/Header";
+import Home from "./components/Home";
+import { registerIcons } from "./utils/helpers";
 
 registerIcons();
 

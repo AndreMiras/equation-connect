@@ -1,9 +1,10 @@
+import { InstallationType } from "equation-connect";
 import React, { FC } from "react";
 import { Accordion, Alert } from "react-bootstrap";
 // @ts-ignore
 import ReactWeather, { useOpenWeather } from "react-open-weather";
+
 import ZonesOverview from "./ZonesOverview";
-import { InstallationType } from "equation-connect";
 
 interface InstallationProps {
   id: string;

@@ -1,9 +1,10 @@
-import React from "react";
 import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { auth, FirebaseConfig, init, login } from "equation-connect";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth, init, login, FirebaseConfig } from "equation-connect";
-import { renderWithProviders, anonymousUser } from "../test-utils";
+import React from "react";
+
+import { anonymousUser, renderWithProviders } from "../test-utils";
 import Login from "./Login";
 
 jest.mock("equation-connect", () => ({

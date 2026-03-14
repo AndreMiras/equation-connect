@@ -1,16 +1,17 @@
-import React from "react";
 import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { ref, onValue } from "firebase/database";
 import {
+  database,
+  deviceDataByIdPath,
   DeviceStatus,
   getDevice,
   setDevicePowerOff,
   setDevicePreset,
   updateDeviceTemperature,
-  database,
-  deviceDataByIdPath,
 } from "equation-connect";
+import { onValue, ref } from "firebase/database";
+import React from "react";
+
 import { renderWithProviders } from "../test-utils";
 import { registerIcons } from "../utils/helpers";
 import Device from "./Device";

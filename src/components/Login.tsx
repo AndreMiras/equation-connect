@@ -1,8 +1,9 @@
+import { auth, FirebaseConfig, init, login } from "equation-connect";
+import { Auth, onAuthStateChanged } from "firebase/auth";
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { onAuthStateChanged, Auth } from "firebase/auth";
 import { Button, ButtonGroup, Dropdown, Form } from "react-bootstrap";
+
 import { anonymousUser, User, UserContext } from "../context/provider";
-import { auth, init, login, FirebaseConfig } from "equation-connect";
 
 const Login = (): JSX.Element => {
   const [email, setEmail] = useState<string>("");

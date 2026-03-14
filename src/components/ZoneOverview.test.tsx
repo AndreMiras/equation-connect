@@ -1,13 +1,14 @@
-import React from "react";
-import { HashRouter as Router } from "react-router-dom";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import {
-  ZoneOverviewType,
   DeviceStatus,
-  setZonePreset,
   setZonePowerOff,
+  setZonePreset,
+  ZoneOverviewType,
 } from "equation-connect";
+import React from "react";
+import { HashRouter as Router } from "react-router-dom";
+
 import { registerIcons } from "../utils/helpers";
 import ZoneOverview from "./ZoneOverview";
 

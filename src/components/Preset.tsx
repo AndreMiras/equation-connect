@@ -1,8 +1,8 @@
-import { FC } from "react";
-import { ToggleButton, ToggleButtonGroup } from "react-bootstrap";
 import { IconName } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { DeviceStatus } from "equation-connect";
+import { FC } from "react";
+import { ToggleButton, ToggleButtonGroup } from "react-bootstrap";
 
 interface PresetProps {
   name?: string;

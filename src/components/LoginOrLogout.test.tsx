@@ -1,6 +1,7 @@
-import React from "react";
 import { screen } from "@testing-library/react";
-import { renderWithProviders, anonymousUser } from "../test-utils";
+import React from "react";
+
+import { anonymousUser, renderWithProviders } from "../test-utils";
 import LoginOrLogout from "./LoginOrLogout";
 
 jest.mock("./Login", () => {

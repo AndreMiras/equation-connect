@@ -1,7 +1,8 @@
+import { logout } from "equation-connect";
 import React, { useContext } from "react";
 import { Button } from "react-bootstrap";
-import { UserContext, anonymousUser } from "../context/provider";
-import { logout } from "equation-connect";
+
+import { anonymousUser, UserContext } from "../context/provider";
 
 const Logout = (): JSX.Element => {
   const { setUser } = useContext(UserContext);
