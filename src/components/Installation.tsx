@@ -1,8 +1,8 @@
 import { InstallationType } from "equation-connect";
+import { CloudSun } from "lucide-react";
 import { FC } from "react";
-import { Accordion, Alert } from "react-bootstrap";
 // @ts-expect-error react-open-weather has no type declarations
-import ReactWeather, { useOpenWeather } from "react-open-weather";
+import { useOpenWeather } from "react-open-weather";
 
 import ZonesOverview from "./ZonesOverview";
 
@@ -20,42 +20,38 @@ const Installation: FC<InstallationProps> = ({ id, installation }) => {
     lang: "en",
     unit: "metric",
   });
-  const missingApiKeyMessage = (
-    <Alert variant="warning">
-      VITE_OPEN_WEATHER_API_KEY environment variable missing.
-    </Alert>
-  );
+
   return (
-    <div>
-      <Accordion className="mb-3" defaultActiveKey="0">
-        <Accordion.Item eventKey="0">
-          <Accordion.Header>{name}</Accordion.Header>
-          <Accordion.Body>
-            {import.meta.env.VITE_OPEN_WEATHER_API_KEY ? (
-              <ReactWeather
-                isLoading={isLoading}
-                errorMessage={errorMessage}
-                data={data}
-                lang="en"
-                locationLabel={location}
-                unitsLabels={{ temperature: "C", windSpeed: "Km/h" }}
-                showForecast
-              />
-            ) : (
-              missingApiKeyMessage
-            )}
-          </Accordion.Body>
-        </Accordion.Item>
-        <Accordion.Item eventKey="1">
-          <Accordion.Header>Debug</Accordion.Header>
-          <Accordion.Body>
-            <pre>{JSON.stringify(installation, null, 2)}</pre>
-          </Accordion.Body>
-        </Accordion.Item>
-      </Accordion>
+    <section className="mb-10">
+      <div className="mb-6 flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-semibold text-zinc-900">{name}</h1>
+          <p className="mt-1 text-sm text-zinc-500">{location}</p>
+        </div>
+        {import.meta.env.VITE_OPEN_WEATHER_API_KEY ? (
+          <div className="flex items-center gap-3 rounded-xl border border-zinc-200 bg-white px-4 py-2">
+            <CloudSun className="h-5 w-5 text-amber-400" />
+            <div className="text-sm">
+              {isLoading ? (
+                <span className="text-zinc-400">Loading...</span>
+              ) : errorMessage ? (
+                <span className="text-red-500">Error</span>
+              ) : (
+                <span className="font-medium">
+                  {data?.current?.temperature?.current}°C
+                </span>
+              )}
+            </div>
+          </div>
+        ) : (
+          <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-2 text-sm text-amber-700">
+            Weather API key missing
+          </div>
+        )}
+      </div>
 
       <ZonesOverview installationId={id} zones={zones} />
-    </div>
+    </section>
   );
 };
 

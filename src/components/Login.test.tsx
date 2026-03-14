@@ -112,8 +112,8 @@ test("config switch calls init and re-registers auth listener", async () => {
   vi.mocked(init).mockReturnValue({ auth: newAuth } as any);
   renderWithProviders(<Login />);
 
-  // The split dropdown toggle button
-  const toggleButton = document.getElementById("dropdown-split-basic")!;
+  // Click the dropdown toggle button (the chevron)
+  const toggleButton = screen.getByLabelText("Login options");
   await userEvent.click(toggleButton);
   await userEvent.click(screen.getByText(/equation login/i));
 

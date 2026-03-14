@@ -15,7 +15,7 @@ vi.mock("react-open-weather", () => ({
     <div data-testid="react-weather">{locationLabel}</div>
   ),
   useOpenWeather: () => ({
-    data: null,
+    data: { current: { temperature: { current: 18 } } },
     isLoading: false,
     errorMessage: "",
   }),
@@ -35,18 +35,11 @@ const installation = {
   zones: {},
 };
 
-test("renders installation name in accordion header", () => {
+test("renders installation name", () => {
   renderWithProviders(
     <Installation id="inst-1" installation={installation as any} />,
   );
   expect(screen.getByText("My Home")).toBeInTheDocument();
-});
-
-test("renders debug panel with JSON", () => {
-  renderWithProviders(
-    <Installation id="inst-1" installation={installation as any} />,
-  );
-  expect(screen.getByText("Debug")).toBeInTheDocument();
 });
 
 test("renders ZonesOverview with installation id", () => {
@@ -62,17 +55,15 @@ test("shows missing API key warning when env var is absent", () => {
   renderWithProviders(
     <Installation id="inst-1" installation={installation as any} />,
   );
-  expect(
-    screen.getByText(/VITE_OPEN_WEATHER_API_KEY environment variable missing/i),
-  ).toBeInTheDocument();
+  expect(screen.getByText(/Weather API key missing/i)).toBeInTheDocument();
   import.meta.env.VITE_OPEN_WEATHER_API_KEY = original;
 });
 
-test("renders weather widget when API key is set", () => {
+test("renders weather data when API key is set", () => {
   import.meta.env.VITE_OPEN_WEATHER_API_KEY = "test-key";
   renderWithProviders(
     <Installation id="inst-1" installation={installation as any} />,
   );
-  expect(screen.getByTestId("react-weather")).toBeInTheDocument();
+  expect(screen.getByText(/18°C/)).toBeInTheDocument();
   import.meta.env.VITE_OPEN_WEATHER_API_KEY = "";
 });

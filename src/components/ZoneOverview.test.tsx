@@ -8,10 +8,7 @@ import {
 } from "equation-connect";
 import { HashRouter as Router } from "react-router";
 
-import { registerIcons } from "../utils/helpers";
 import ZoneOverview from "./ZoneOverview";
-
-registerIcons();
 
 vi.mock("equation-connect", () => ({
   DeviceStatus: { Ice: "ice", Eco: "eco", Comfort: "comfort" },
@@ -40,24 +37,26 @@ const zoneProps: ZoneOverviewType = {
   status: DeviceStatus.Comfort,
 };
 
-test("ZoneOverview renders correctly", () => {
-  const { asFragment } = render(
+test("ZoneOverview renders zone name and device cards", () => {
+  render(
     <Router>
       <ZoneOverview installationId={installationId} zone={zoneProps} />
     </Router>,
   );
-  expect(asFragment()).toMatchSnapshot();
+  expect(screen.getByText("Living room")).toBeInTheDocument();
+  expect(screen.getByText("D89DDF3A7D80D89DDF3A7D80")).toBeInTheDocument();
+  expect(screen.getByText("F9097F334FC4F9097F334FC4")).toBeInTheDocument();
 });
 
 test("ZoneOverview devices is optional", () => {
   const zoneProps2 = { ...zoneProps };
   delete zoneProps2.devices;
-  const { asFragment } = render(
+  render(
     <Router>
       <ZoneOverview installationId={installationId} zone={zoneProps2} />
     </Router>,
   );
-  expect(asFragment()).toMatchSnapshot();
+  expect(screen.getByText("Living room")).toBeInTheDocument();
 });
 
 test("clicking preset calls setZonePreset and updates state", async () => {
@@ -66,7 +65,9 @@ test("clicking preset calls setZonePreset and updates state", async () => {
       <ZoneOverview installationId={installationId} zone={zoneProps} />
     </Router>,
   );
-  await userEvent.click(screen.getByText("Eco"));
+  // Click one of the Eco preset buttons (there are multiple cards, each with preset buttons)
+  const ecoButtons = screen.getAllByLabelText("Eco");
+  await userEvent.click(ecoButtons[0]);
   expect(setZonePreset).toHaveBeenCalledWith(
     installationId,
     zoneProps.id,
@@ -80,10 +81,8 @@ test("clicking off calls setZonePowerOff", async () => {
       <ZoneOverview installationId={installationId} zone={zoneProps} />
     </Router>,
   );
-  const offButton = document.getElementById(
-    `radio-options-${zoneProps.id}-off`,
-  )!;
-  await userEvent.click(offButton);
+  const offButtons = screen.getAllByLabelText("Off");
+  await userEvent.click(offButtons[0]);
   expect(setZonePowerOff).toHaveBeenCalledWith(installationId, zoneProps.id);
 });
 
@@ -103,9 +102,7 @@ test("useEffect syncs power and status props to state", () => {
       <ZoneOverview installationId={installationId} zone={updatedZone} />
     </Router>,
   );
-  // The Off button should now be selected (power=false)
-  const offButton = document.getElementById(
-    `radio-options-${zoneProps.id}-off`,
-  ) as HTMLInputElement;
-  expect(offButton.checked).toBe(true);
+  // The Off button should now have active styling (power=false)
+  const offButtons = screen.getAllByLabelText("Off");
+  expect(offButtons[0].className).toContain("bg-zinc-100");
 });

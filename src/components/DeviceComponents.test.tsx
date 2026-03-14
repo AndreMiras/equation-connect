@@ -2,7 +2,6 @@ import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { renderWithProviders } from "../test-utils";
-import { registerIcons } from "../utils/helpers";
 import { NumberInput, SimplifiedBacklight } from "./Device";
 
 vi.mock("equation-connect", () => ({
@@ -35,38 +34,40 @@ vi.mock("firebase/database", () => ({
   onValue: vi.fn(),
 }));
 
-registerIcons();
-
 describe("NumberInput", () => {
   test("displays the current value", () => {
     const onChange = vi.fn();
     renderWithProviders(
       <NumberInput value={10} onChange={onChange} step={1} />,
     );
-    expect(screen.getByDisplayValue("10")).toBeInTheDocument();
+    expect(screen.getByText("10")).toBeInTheDocument();
   });
 
   test("plus button increments by step", async () => {
     const onChange = vi.fn();
     renderWithProviders(
-      <NumberInput value={10} onChange={onChange} step={0.5} />,
+      <NumberInput
+        value={10}
+        onChange={onChange}
+        step={0.5}
+        label="Temperature"
+      />,
     );
-    const plusButton = screen
-      .getAllByRole("button")
-      .find((btn) => btn.querySelector("[data-icon='plus']") !== null);
-    await userEvent.click(plusButton!);
+    await userEvent.click(screen.getByLabelText("Increase Temperature"));
     expect(onChange).toHaveBeenCalledWith(10.5);
   });
 
   test("minus button decrements by step", async () => {
     const onChange = vi.fn();
     renderWithProviders(
-      <NumberInput value={10} onChange={onChange} step={2} />,
+      <NumberInput
+        value={10}
+        onChange={onChange}
+        step={2}
+        label="Temperature"
+      />,
     );
-    const minusButton = screen
-      .getAllByRole("button")
-      .find((btn) => btn.querySelector("[data-icon='minus']") !== null);
-    await userEvent.click(minusButton!);
+    await userEvent.click(screen.getByLabelText("Decrease Temperature"));
     expect(onChange).toHaveBeenCalledWith(8);
   });
 });

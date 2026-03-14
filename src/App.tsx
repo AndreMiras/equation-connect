@@ -1,27 +1,21 @@
-import "bootstrap/dist/css/bootstrap.min.css";
-
-import { Container } from "react-bootstrap";
 import { HashRouter as Router, Route, Routes } from "react-router";
 
 import Device from "./components/Device";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Home from "./components/Home";
-import { registerIcons } from "./utils/helpers";
-
-registerIcons();
 
 const App = () => {
   return (
-    <div className="App d-flex flex-column min-vh-100">
+    <div className="flex min-h-screen flex-col bg-zinc-50 text-zinc-900">
       <Router>
         <Header />
-        <Container className="mt-3 flex-grow-1">
+        <main className="mx-auto mt-6 w-full max-w-6xl flex-1 px-6">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="devices/:id" element={<Device />} />
           </Routes>
-        </Container>
+        </main>
         <Footer />
       </Router>
     </div>

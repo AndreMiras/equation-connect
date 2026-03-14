@@ -1,6 +1,5 @@
 import { logout } from "equation-connect";
-import React, { useContext } from "react";
-import { Button } from "react-bootstrap";
+import { useContext } from "react";
 
 import { anonymousUser, UserContext } from "../context/provider";
 
@@ -15,9 +14,13 @@ const Logout = () => {
   const onLogoutClick = () => onLogout();
 
   return (
-    <Button type="submit" onClick={onLogoutClick}>
+    <button
+      type="submit"
+      onClick={onLogoutClick}
+      className="text-sm text-zinc-500 hover:text-zinc-900"
+    >
       Logout
-    </Button>
+    </button>
   );
 };
 

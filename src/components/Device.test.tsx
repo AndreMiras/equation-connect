@@ -12,7 +12,6 @@ import {
 import { onValue, ref } from "firebase/database";
 
 import { renderWithProviders } from "../test-utils";
-import { registerIcons } from "../utils/helpers";
 import Device from "./Device";
 
 vi.mock("equation-connect", () => ({
@@ -49,8 +48,6 @@ vi.mock("react-router", async () => ({
   useParams: () => ({ id: "device-abc" }),
 }));
 
-registerIcons();
-
 const mockDeviceData = {
   name: "Living Room Heater",
   temp: 21,
@@ -73,10 +70,10 @@ beforeEach(() => {
   vi.mocked(deviceDataByIdPath).mockReturnValue("devices/device-abc/data");
 });
 
-test("renders empty div while device is loading", () => {
+test("renders loading state while device is loading", () => {
   vi.mocked(getDevice).mockReturnValue(new Promise(() => {}) as any);
-  const { container } = renderWithProviders(<Device />);
-  expect(container.firstChild).toBeEmptyDOMElement();
+  renderWithProviders(<Device />);
+  expect(screen.getByText("Loading device...")).toBeInTheDocument();
 });
 
 test("fetches device and renders after load", async () => {
@@ -112,7 +109,7 @@ test("onValue callback updates displayed data", async () => {
   });
 
   await waitFor(() => {
-    expect(screen.getByDisplayValue("25")).toBeInTheDocument();
+    expect(screen.getByText("25")).toBeInTheDocument();
   });
 });
 
@@ -124,7 +121,7 @@ test("preset change calls setDevicePreset", async () => {
     expect(screen.getByText("Living Room Heater")).toBeInTheDocument();
   });
 
-  await userEvent.click(screen.getByText("Eco"));
+  await userEvent.click(screen.getByLabelText("Eco"));
   expect(setDevicePreset).toHaveBeenCalledWith("device-abc", DeviceStatus.Eco);
 });
 
@@ -136,9 +133,7 @@ test("power off calls setDevicePowerOff", async () => {
     expect(screen.getByText("Living Room Heater")).toBeInTheDocument();
   });
 
-  // Click the power-off "Off" button in the Preset (not the backlight Off)
-  const presetOffButton = document.getElementById("radio-options-off")!;
-  await userEvent.click(presetOffButton);
+  await userEvent.click(screen.getByLabelText("Off"));
   expect(setDevicePowerOff).toHaveBeenCalledWith("device-abc");
 });
 
@@ -150,15 +145,7 @@ test("temperature plus button calls updateDeviceTemperature", async () => {
     expect(screen.getByText("Living Room Heater")).toBeInTheDocument();
   });
 
-  // Find the temperature NumberInput's plus button (first one in the DOM)
-  const buttons = screen.getAllByRole("button");
-  // Temperature section has minus(-) and plus(+) buttons
-  // Find the button containing the "plus" icon
-  const plusButton = buttons.find(
-    (btn) => btn.querySelector("[data-icon='plus']") !== null,
-  );
-  expect(plusButton).toBeDefined();
-  await userEvent.click(plusButton!);
+  await userEvent.click(screen.getByLabelText("Increase temperature"));
 
   expect(updateDeviceTemperature).toHaveBeenCalledWith("device-abc", 21.5);
 });

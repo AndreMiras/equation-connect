@@ -1,14 +1,11 @@
 import { screen } from "@testing-library/react";
 
 import { renderWithProviders } from "../test-utils";
-import { registerIcons } from "../utils/helpers";
 import Header from "./Header";
 
 vi.mock("./LoginOrLogout", () => ({
   default: () => <div data-testid="login-or-logout" />,
 }));
-
-registerIcons();
 
 test("renders brand text", () => {
   renderWithProviders(<Header />);
@@ -26,9 +23,7 @@ test("renders about link pointing to GitHub", () => {
 
 test("renders thermometer icon in brand", () => {
   const { container } = renderWithProviders(<Header />);
-  expect(
-    container.querySelector("[data-icon='temperature-three-quarters']"),
-  ).toBeInTheDocument();
+  expect(container.querySelector("svg")).toBeInTheDocument();
 });
 
 test("renders LoginOrLogout component", () => {
