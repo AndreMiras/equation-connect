@@ -1,6 +1,5 @@
 import { screen, waitFor } from "@testing-library/react";
 import { getInstallations } from "equation-connect";
-import React from "react";
 
 import { renderWithProviders } from "../test-utils";
 import Installations from "./Installations";

@@ -1,5 +1,5 @@
 import { InstallationType } from "equation-connect";
-import React, { FC } from "react";
+import { FC } from "react";
 import { Accordion, Alert } from "react-bootstrap";
 // @ts-ignore
 import ReactWeather, { useOpenWeather } from "react-open-weather";

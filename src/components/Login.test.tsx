@@ -2,7 +2,6 @@ import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { auth, FirebaseConfig, init, login } from "equation-connect";
 import { onAuthStateChanged } from "firebase/auth";
-import React from "react";
 
 import { anonymousUser, renderWithProviders } from "../test-utils";
 import Login from "./Login";

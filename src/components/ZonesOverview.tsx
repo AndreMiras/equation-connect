@@ -1,5 +1,5 @@
 import { ZonesOverviewType } from "equation-connect";
-import React, { FC } from "react";
+import { FC } from "react";
 
 import ZoneOverview from "./ZoneOverview";
 

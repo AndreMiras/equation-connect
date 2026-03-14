@@ -10,7 +10,6 @@ import {
   updateDeviceTemperature,
 } from "equation-connect";
 import { onValue, ref } from "firebase/database";
-import React from "react";
 
 import { renderWithProviders } from "../test-utils";
 import { registerIcons } from "../utils/helpers";

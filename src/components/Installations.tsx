@@ -1,5 +1,5 @@
 import { getInstallations, InstallationsType } from "equation-connect";
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { UserContext } from "../context/provider";
 import Installation from "./Installation";

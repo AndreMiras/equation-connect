@@ -1,4 +1,4 @@
-import React, { createContext, FC, useState } from "react";
+import { createContext, FC, useState } from "react";
 
 type User = {
   uid: string;
