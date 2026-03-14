@@ -1,4 +1,4 @@
-import { screen, waitFor } from "@testing-library/react";
+import { act, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import {
   database,
@@ -90,6 +90,10 @@ test("subscribes to real-time updates via onValue", async () => {
   vi.mocked(getDevice).mockResolvedValue(mockDevice as any);
   renderWithProviders(<Device />);
 
+  await waitFor(() => {
+    expect(screen.getByText("Living Room Heater")).toBeInTheDocument();
+  });
+
   expect(ref).toHaveBeenCalledWith(database, "devices/device-abc/data");
   expect(onValue).toHaveBeenCalledWith("mock-ref", expect.any(Function));
 });
@@ -104,8 +108,10 @@ test("onValue callback updates displayed data", async () => {
 
   // Simulate real-time update
   const onValueCallback = vi.mocked(onValue).mock.calls[0][1];
-  (onValueCallback as any)({
-    val: () => ({ ...mockDeviceData, temp: 25 }),
+  act(() => {
+    (onValueCallback as any)({
+      val: () => ({ ...mockDeviceData, temp: 25 }),
+    });
   });
 
   await waitFor(() => {

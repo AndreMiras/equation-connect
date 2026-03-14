@@ -1,4 +1,4 @@
-import { screen, waitFor } from "@testing-library/react";
+import { act, screen, waitFor } from "@testing-library/react";
 import { getInstallations } from "equation-connect";
 
 import { renderWithProviders } from "../test-utils";
@@ -31,10 +31,12 @@ test("renders nothing before data loads", () => {
   expect(container.querySelector("[data-testid]")).toBeNull();
 });
 
-test("fetches installations with user uid", () => {
+test("fetches installations with user uid", async () => {
   vi.mocked(getInstallations).mockResolvedValue({} as any);
   renderWithProviders(<Installations />, { user: authenticatedUser });
   expect(getInstallations).toHaveBeenCalledWith("user-123");
+  // Flush the async getInstallations resolution to avoid act() warning
+  await act(async () => {});
 });
 
 test("renders installations after fetch", async () => {
