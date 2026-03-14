@@ -3,12 +3,9 @@ import { screen } from "@testing-library/react";
 import { anonymousUser, renderWithProviders } from "../test-utils";
 import Home from "./Home";
 
-jest.mock("./Installations", () => {
-  const MockInstallations = () => (
-    <div data-testid="installations">Installations</div>
-  );
-  return MockInstallations;
-});
+vi.mock("./Installations", () => ({
+  default: () => <div data-testid="installations">Installations</div>,
+}));
 
 const authenticatedUser = {
   uid: "user-123",

@@ -4,7 +4,9 @@ import { renderWithProviders } from "../test-utils";
 import { registerIcons } from "../utils/helpers";
 import Header from "./Header";
 
-jest.mock("./LoginOrLogout", () => () => <div data-testid="login-or-logout" />);
+vi.mock("./LoginOrLogout", () => ({
+  default: () => <div data-testid="login-or-logout" />,
+}));
 
 registerIcons();
 

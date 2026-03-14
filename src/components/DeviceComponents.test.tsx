@@ -5,24 +5,24 @@ import { renderWithProviders } from "../test-utils";
 import { registerIcons } from "../utils/helpers";
 import { NumberInput, SimplifiedBacklight } from "./Device";
 
-jest.mock("equation-connect", () => ({
+vi.mock("equation-connect", () => ({
   DeviceStatus: { Ice: "ice", Eco: "eco", Comfort: "comfort" },
   auth: { currentUser: null },
   database: {},
-  login: jest.fn(),
-  logout: jest.fn(),
-  init: jest.fn(() => ({ auth: { currentUser: null } })),
-  getInstallations: jest.fn(),
-  getDevice: jest.fn(),
-  deviceDataByIdPath: jest.fn(),
-  setDevicePowerOff: jest.fn(),
-  setDevicePreset: jest.fn(),
-  setDeviceBacklight: jest.fn(),
-  setDeviceBacklightOn: jest.fn(),
-  setDeviceNominalPower: jest.fn(),
-  updateDeviceTemperature: jest.fn(),
-  setZonePreset: jest.fn(),
-  setZonePowerOff: jest.fn(),
+  login: vi.fn(),
+  logout: vi.fn(),
+  init: vi.fn(() => ({ auth: { currentUser: null } })),
+  getInstallations: vi.fn(),
+  getDevice: vi.fn(),
+  deviceDataByIdPath: vi.fn(),
+  setDevicePowerOff: vi.fn(),
+  setDevicePreset: vi.fn(),
+  setDeviceBacklight: vi.fn(),
+  setDeviceBacklightOn: vi.fn(),
+  setDeviceNominalPower: vi.fn(),
+  updateDeviceTemperature: vi.fn(),
+  setZonePreset: vi.fn(),
+  setZonePowerOff: vi.fn(),
   FirebaseConfig: {
     0: "EquationConnect",
     1: "RointeConnect",
@@ -30,16 +30,16 @@ jest.mock("equation-connect", () => ({
     RointeConnect: 1,
   },
 }));
-jest.mock("firebase/database", () => ({
-  ref: jest.fn(),
-  onValue: jest.fn(),
+vi.mock("firebase/database", () => ({
+  ref: vi.fn(),
+  onValue: vi.fn(),
 }));
 
 registerIcons();
 
 describe("NumberInput", () => {
   test("displays the current value", () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     renderWithProviders(
       <NumberInput value={10} onChange={onChange} step={1} />
     );
@@ -47,7 +47,7 @@ describe("NumberInput", () => {
   });
 
   test("plus button increments by step", async () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     renderWithProviders(
       <NumberInput value={10} onChange={onChange} step={0.5} />
     );
@@ -59,7 +59,7 @@ describe("NumberInput", () => {
   });
 
   test("minus button decrements by step", async () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     renderWithProviders(
       <NumberInput value={10} onChange={onChange} step={2} />
     );
@@ -74,14 +74,14 @@ describe("NumberInput", () => {
 describe("SimplifiedBacklight", () => {
   test("renders On and Off buttons", () => {
     renderWithProviders(
-      <SimplifiedBacklight value={true} onChange={jest.fn()} />
+      <SimplifiedBacklight value={true} onChange={vi.fn()} />
     );
     expect(screen.getByText("On")).toBeInTheDocument();
     expect(screen.getByText("Off")).toBeInTheDocument();
   });
 
   test("clicking Off calls onChange with false", async () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     renderWithProviders(
       <SimplifiedBacklight value={true} onChange={onChange} />
     );
@@ -90,7 +90,7 @@ describe("SimplifiedBacklight", () => {
   });
 
   test("clicking On calls onChange with true", async () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     renderWithProviders(
       <SimplifiedBacklight value={false} onChange={onChange} />
     );

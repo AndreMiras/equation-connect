@@ -6,24 +6,24 @@ import { onAuthStateChanged } from "firebase/auth";
 import { anonymousUser, renderWithProviders } from "../test-utils";
 import Login from "./Login";
 
-jest.mock("equation-connect", () => ({
+vi.mock("equation-connect", () => ({
   DeviceStatus: { Ice: "ice", Eco: "eco", Comfort: "comfort" },
   auth: { currentUser: null },
   database: {},
-  login: jest.fn(),
-  logout: jest.fn(),
-  init: jest.fn(() => ({ auth: { currentUser: null } })),
-  getInstallations: jest.fn(),
-  getDevice: jest.fn(),
-  deviceDataByIdPath: jest.fn((id: string) => `devices/${id}/data`),
-  setDevicePowerOff: jest.fn(),
-  setDevicePreset: jest.fn(),
-  setDeviceBacklight: jest.fn(),
-  setDeviceBacklightOn: jest.fn(),
-  setDeviceNominalPower: jest.fn(),
-  updateDeviceTemperature: jest.fn(),
-  setZonePreset: jest.fn(),
-  setZonePowerOff: jest.fn(),
+  login: vi.fn(),
+  logout: vi.fn(),
+  init: vi.fn(() => ({ auth: { currentUser: null } })),
+  getInstallations: vi.fn(),
+  getDevice: vi.fn(),
+  deviceDataByIdPath: vi.fn((id: string) => `devices/${id}/data`),
+  setDevicePowerOff: vi.fn(),
+  setDevicePreset: vi.fn(),
+  setDeviceBacklight: vi.fn(),
+  setDeviceBacklightOn: vi.fn(),
+  setDeviceNominalPower: vi.fn(),
+  updateDeviceTemperature: vi.fn(),
+  setZonePreset: vi.fn(),
+  setZonePowerOff: vi.fn(),
   FirebaseConfig: {
     0: "EquationConnect",
     1: "RointeConnect",
@@ -31,12 +31,12 @@ jest.mock("equation-connect", () => ({
     RointeConnect: 1,
   },
 }));
-jest.mock("firebase/auth", () => ({
-  onAuthStateChanged: jest.fn(),
+vi.mock("firebase/auth", () => ({
+  onAuthStateChanged: vi.fn(),
 }));
 
 beforeEach(() => {
-  jest.clearAllMocks();
+  vi.clearAllMocks();
 });
 
 test("renders email and password fields and login button", () => {
@@ -52,9 +52,10 @@ test("registers onAuthStateChanged on mount", () => {
 });
 
 test("onAuthStateChanged callback sets user when user logs in", () => {
-  const setUser = jest.fn();
-  (onAuthStateChanged as jest.Mock).mockImplementation((_, callback) => {
-    callback({ uid: "u1", email: "a@b.com", isAnonymous: false });
+  const setUser = vi.fn();
+  vi.mocked(onAuthStateChanged).mockImplementation((_: any, callback: any) => {
+    (callback as any)({ uid: "u1", email: "a@b.com", isAnonymous: false });
+    return () => {};
   });
   renderWithProviders(<Login />, { setUser });
   expect(setUser).toHaveBeenCalledWith({
@@ -65,9 +66,10 @@ test("onAuthStateChanged callback sets user when user logs in", () => {
 });
 
 test("onAuthStateChanged callback sets anonymous user on null", () => {
-  const setUser = jest.fn();
-  (onAuthStateChanged as jest.Mock).mockImplementation((_, callback) => {
-    callback(null);
+  const setUser = vi.fn();
+  vi.mocked(onAuthStateChanged).mockImplementation((_: any, callback: any) => {
+    (callback as any)(null);
+    return () => {};
   });
   renderWithProviders(<Login />, { setUser });
   expect(setUser).toHaveBeenCalledWith(anonymousUser);
@@ -75,8 +77,8 @@ test("onAuthStateChanged callback sets anonymous user on null", () => {
 
 test("login button calls login with email and password", async () => {
   const mockUser = { uid: "u1", email: "a@b.com", isAnonymous: false };
-  (login as jest.Mock).mockResolvedValue(mockUser);
-  const setUser = jest.fn();
+  vi.mocked(login).mockResolvedValue(mockUser as any);
+  const setUser = vi.fn();
   renderWithProviders(<Login />, { setUser });
 
   await userEvent.type(screen.getByLabelText(/email/i), "a@b.com");
@@ -91,8 +93,8 @@ test("login button calls login with email and password", async () => {
 
 test("login error is caught and logged", async () => {
   const error = new Error("auth failed");
-  (login as jest.Mock).mockRejectedValue(error);
-  const consoleSpy = jest.spyOn(console, "error").mockImplementation();
+  vi.mocked(login).mockRejectedValue(error);
+  const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
   renderWithProviders(<Login />);
 
   await userEvent.type(screen.getByLabelText(/email/i), "a@b.com");
@@ -107,7 +109,7 @@ test("login error is caught and logged", async () => {
 
 test("config switch calls init and re-registers auth listener", async () => {
   const newAuth = { currentUser: null };
-  (init as jest.Mock).mockReturnValue({ auth: newAuth });
+  vi.mocked(init).mockReturnValue({ auth: newAuth } as any);
   renderWithProviders(<Login />);
 
   // The split dropdown toggle button

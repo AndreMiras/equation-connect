@@ -3,15 +3,17 @@ import { screen } from "@testing-library/react";
 import { renderWithProviders } from "../test-utils";
 import ZonesOverview from "./ZonesOverview";
 
-jest.mock("equation-connect", () => ({
+vi.mock("equation-connect", () => ({
   DeviceStatus: { Ice: "ice", Eco: "eco", Comfort: "comfort" },
-  setZonePreset: jest.fn(),
-  setZonePowerOff: jest.fn(),
+  setZonePreset: vi.fn(),
+  setZonePowerOff: vi.fn(),
 }));
 
-jest.mock("./ZoneOverview", () => ({ zone }: { zone: { id: string } }) => (
-  <div data-testid={`zone-${zone.id}`} />
-));
+vi.mock("./ZoneOverview", () => ({
+  default: ({ zone }: { zone: { id: string } }) => (
+    <div data-testid={`zone-${zone.id}`} />
+  ),
+}));
 
 test("renders a ZoneOverview for each zone", () => {
   const zones = {

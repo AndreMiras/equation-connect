@@ -1,5 +1,4 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { strict as assert } from "assert";
 import {
   database,
   deviceDataByIdPath,
@@ -226,7 +225,7 @@ const Device = (): JSX.Element => {
     setPower(false);
   };
   const subscribeOnDeviceData = useCallback(() => {
-    assert(database);
+    if (!database) throw new Error("database is not initialized");
     const path = deviceDataByIdPath(id!);
     const deviceDataRef = ref(database, path);
     onValue(deviceDataRef, (snapshot) => {

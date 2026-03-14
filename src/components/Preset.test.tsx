@@ -6,7 +6,7 @@ import { renderWithProviders } from "../test-utils";
 import { registerIcons } from "../utils/helpers";
 import Preset from "./Preset";
 
-jest.mock("equation-connect", () => ({
+vi.mock("equation-connect", () => ({
   DeviceStatus: { Ice: "ice", Eco: "eco", Comfort: "comfort" },
 }));
 
@@ -14,13 +14,13 @@ registerIcons();
 
 const defaultProps = {
   status: DeviceStatus.Comfort,
-  onPreset: jest.fn(),
+  onPreset: vi.fn(),
   power: true,
-  onPowerOff: jest.fn(),
+  onPowerOff: vi.fn(),
 };
 
 beforeEach(() => {
-  jest.clearAllMocks();
+  vi.clearAllMocks();
 });
 
 test("renders Off button and all preset buttons", () => {

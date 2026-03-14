@@ -14,7 +14,7 @@ interface InstallationProps {
 const Installation: FC<InstallationProps> = ({ id, installation }) => {
   const { name, location, latitude, longitude, zones } = installation;
   const { data, isLoading, errorMessage } = useOpenWeather({
-    key: process.env.REACT_APP_OPEN_WEATHER_API_KEY,
+    key: import.meta.env.VITE_OPEN_WEATHER_API_KEY,
     lat: latitude.toString(),
     lon: longitude.toString(),
     lang: "en",
@@ -22,7 +22,7 @@ const Installation: FC<InstallationProps> = ({ id, installation }) => {
   });
   const missingApiKeyMessage = (
     <Alert variant="warning">
-      REACT_APP_OPEN_WEATHER_API_KEY environment variable missing.
+      VITE_OPEN_WEATHER_API_KEY environment variable missing.
     </Alert>
   );
   return (
@@ -31,7 +31,7 @@ const Installation: FC<InstallationProps> = ({ id, installation }) => {
         <Accordion.Item eventKey="0">
           <Accordion.Header>{name}</Accordion.Header>
           <Accordion.Body>
-            {"REACT_APP_OPEN_WEATHER_API_KEY" in process.env ? (
+            {import.meta.env.VITE_OPEN_WEATHER_API_KEY ? (
               <ReactWeather
                 isLoading={isLoading}
                 errorMessage={errorMessage}

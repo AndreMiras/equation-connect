@@ -13,14 +13,14 @@ import ZoneOverview from "./ZoneOverview";
 
 registerIcons();
 
-jest.mock("equation-connect", () => ({
+vi.mock("equation-connect", () => ({
   DeviceStatus: { Ice: "ice", Eco: "eco", Comfort: "comfort" },
-  setZonePreset: jest.fn(),
-  setZonePowerOff: jest.fn(),
+  setZonePreset: vi.fn(),
+  setZonePowerOff: vi.fn(),
 }));
 
 beforeEach(() => {
-  jest.clearAllMocks();
+  vi.clearAllMocks();
 });
 
 const installationId = "-OqGNxWzMGLOcFc5Vcsr";

@@ -15,24 +15,24 @@ import { renderWithProviders } from "../test-utils";
 import { registerIcons } from "../utils/helpers";
 import Device from "./Device";
 
-jest.mock("equation-connect", () => ({
+vi.mock("equation-connect", () => ({
   DeviceStatus: { Ice: "ice", Eco: "eco", Comfort: "comfort" },
   auth: { currentUser: null },
   database: {},
-  login: jest.fn(),
-  logout: jest.fn(),
-  init: jest.fn(() => ({ auth: { currentUser: null } })),
-  getInstallations: jest.fn(),
-  getDevice: jest.fn(),
-  deviceDataByIdPath: jest.fn((id: string) => `devices/${id}/data`),
-  setDevicePowerOff: jest.fn(),
-  setDevicePreset: jest.fn(),
-  setDeviceBacklight: jest.fn(),
-  setDeviceBacklightOn: jest.fn(),
-  setDeviceNominalPower: jest.fn(),
-  updateDeviceTemperature: jest.fn(),
-  setZonePreset: jest.fn(),
-  setZonePowerOff: jest.fn(),
+  login: vi.fn(),
+  logout: vi.fn(),
+  init: vi.fn(() => ({ auth: { currentUser: null } })),
+  getInstallations: vi.fn(),
+  getDevice: vi.fn(),
+  deviceDataByIdPath: vi.fn((id: string) => `devices/${id}/data`),
+  setDevicePowerOff: vi.fn(),
+  setDevicePreset: vi.fn(),
+  setDeviceBacklight: vi.fn(),
+  setDeviceBacklightOn: vi.fn(),
+  setDeviceNominalPower: vi.fn(),
+  updateDeviceTemperature: vi.fn(),
+  setZonePreset: vi.fn(),
+  setZonePowerOff: vi.fn(),
   FirebaseConfig: {
     0: "EquationConnect",
     1: "RointeConnect",
@@ -40,12 +40,12 @@ jest.mock("equation-connect", () => ({
     RointeConnect: 1,
   },
 }));
-jest.mock("firebase/database", () => ({
-  ref: jest.fn(),
-  onValue: jest.fn(),
+vi.mock("firebase/database", () => ({
+  ref: vi.fn(),
+  onValue: vi.fn(),
 }));
-jest.mock("react-router-dom", () => ({
-  ...jest.requireActual("react-router-dom"),
+vi.mock("react-router-dom", async () => ({
+  ...(await vi.importActual("react-router-dom")),
   useParams: () => ({ id: "device-abc" }),
 }));
 
@@ -68,19 +68,19 @@ const mockDevice = {
 };
 
 beforeEach(() => {
-  jest.clearAllMocks();
-  (ref as jest.Mock).mockReturnValue("mock-ref");
-  (deviceDataByIdPath as jest.Mock).mockReturnValue("devices/device-abc/data");
+  vi.clearAllMocks();
+  vi.mocked(ref).mockReturnValue("mock-ref" as any);
+  vi.mocked(deviceDataByIdPath).mockReturnValue("devices/device-abc/data");
 });
 
 test("renders empty div while device is loading", () => {
-  (getDevice as jest.Mock).mockReturnValue(new Promise(() => {}));
+  vi.mocked(getDevice).mockReturnValue(new Promise(() => {}) as any);
   const { container } = renderWithProviders(<Device />);
   expect(container.firstChild).toBeEmptyDOMElement();
 });
 
 test("fetches device and renders after load", async () => {
-  (getDevice as jest.Mock).mockResolvedValue(mockDevice);
+  vi.mocked(getDevice).mockResolvedValue(mockDevice as any);
   renderWithProviders(<Device />);
 
   expect(getDevice).toHaveBeenCalledWith("device-abc");
@@ -90,7 +90,7 @@ test("fetches device and renders after load", async () => {
 });
 
 test("subscribes to real-time updates via onValue", async () => {
-  (getDevice as jest.Mock).mockResolvedValue(mockDevice);
+  vi.mocked(getDevice).mockResolvedValue(mockDevice as any);
   renderWithProviders(<Device />);
 
   expect(ref).toHaveBeenCalledWith(database, "devices/device-abc/data");
@@ -98,7 +98,7 @@ test("subscribes to real-time updates via onValue", async () => {
 });
 
 test("onValue callback updates displayed data", async () => {
-  (getDevice as jest.Mock).mockResolvedValue(mockDevice);
+  vi.mocked(getDevice).mockResolvedValue(mockDevice as any);
   renderWithProviders(<Device />);
 
   await waitFor(() => {
@@ -106,8 +106,8 @@ test("onValue callback updates displayed data", async () => {
   });
 
   // Simulate real-time update
-  const onValueCallback = (onValue as jest.Mock).mock.calls[0][1];
-  onValueCallback({
+  const onValueCallback = vi.mocked(onValue).mock.calls[0][1];
+  (onValueCallback as any)({
     val: () => ({ ...mockDeviceData, temp: 25 }),
   });
 
@@ -117,7 +117,7 @@ test("onValue callback updates displayed data", async () => {
 });
 
 test("preset change calls setDevicePreset", async () => {
-  (getDevice as jest.Mock).mockResolvedValue(mockDevice);
+  vi.mocked(getDevice).mockResolvedValue(mockDevice as any);
   renderWithProviders(<Device />);
 
   await waitFor(() => {
@@ -129,7 +129,7 @@ test("preset change calls setDevicePreset", async () => {
 });
 
 test("power off calls setDevicePowerOff", async () => {
-  (getDevice as jest.Mock).mockResolvedValue(mockDevice);
+  vi.mocked(getDevice).mockResolvedValue(mockDevice as any);
   renderWithProviders(<Device />);
 
   await waitFor(() => {
@@ -143,7 +143,7 @@ test("power off calls setDevicePowerOff", async () => {
 });
 
 test("temperature plus button calls updateDeviceTemperature", async () => {
-  (getDevice as jest.Mock).mockResolvedValue(mockDevice);
+  vi.mocked(getDevice).mockResolvedValue(mockDevice as any);
   renderWithProviders(<Device />);
 
   await waitFor(() => {

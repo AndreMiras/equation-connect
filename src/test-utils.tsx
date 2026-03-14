@@ -12,12 +12,12 @@ const anonymousUser: User = {
 
 interface WrapperOptions {
   user?: User;
-  setUser?: jest.Mock;
+  setUser?: ReturnType<typeof vi.fn>;
 }
 
 const createWrapper = ({
   user = anonymousUser,
-  setUser = jest.fn(),
+  setUser = vi.fn(),
 }: WrapperOptions = {}): FC => {
   const Wrapper: FC<PropsWithChildren> = ({ children }) => (
     <UserContext.Provider value={{ user, setUser }}>

@@ -3,13 +3,13 @@ import { screen } from "@testing-library/react";
 import { renderWithProviders } from "../test-utils";
 import Installation from "./Installation";
 
-jest.mock("equation-connect", () => ({
+vi.mock("equation-connect", () => ({
   DeviceStatus: { Ice: "ice", Eco: "eco", Comfort: "comfort" },
-  setZonePreset: jest.fn(),
-  setZonePowerOff: jest.fn(),
+  setZonePreset: vi.fn(),
+  setZonePowerOff: vi.fn(),
 }));
 
-jest.mock("react-open-weather", () => ({
+vi.mock("react-open-weather", () => ({
   __esModule: true,
   default: ({ locationLabel }: { locationLabel: string }) => (
     <div data-testid="react-weather">{locationLabel}</div>
@@ -21,12 +21,11 @@ jest.mock("react-open-weather", () => ({
   }),
 }));
 
-jest.mock(
-  "./ZonesOverview",
-  () =>
-    ({ installationId }: { installationId: string }) =>
-      <div data-testid="zones-overview">{installationId}</div>
-);
+vi.mock("./ZonesOverview", () => ({
+  default: ({ installationId }: { installationId: string }) => (
+    <div data-testid="zones-overview">{installationId}</div>
+  ),
+}));
 
 const installation = {
   name: "My Home",
@@ -58,25 +57,22 @@ test("renders ZonesOverview with installation id", () => {
 });
 
 test("shows missing API key warning when env var is absent", () => {
-  const original = process.env.REACT_APP_OPEN_WEATHER_API_KEY;
-  delete process.env.REACT_APP_OPEN_WEATHER_API_KEY;
+  const original = import.meta.env.VITE_OPEN_WEATHER_API_KEY;
+  import.meta.env.VITE_OPEN_WEATHER_API_KEY = "";
   renderWithProviders(
     <Installation id="inst-1" installation={installation as any} />
   );
   expect(
-    screen.getByText(
-      /REACT_APP_OPEN_WEATHER_API_KEY environment variable missing/i
-    )
+    screen.getByText(/VITE_OPEN_WEATHER_API_KEY environment variable missing/i)
   ).toBeInTheDocument();
-  if (original !== undefined)
-    process.env.REACT_APP_OPEN_WEATHER_API_KEY = original;
+  import.meta.env.VITE_OPEN_WEATHER_API_KEY = original;
 });
 
 test("renders weather widget when API key is set", () => {
-  process.env.REACT_APP_OPEN_WEATHER_API_KEY = "test-key";
+  import.meta.env.VITE_OPEN_WEATHER_API_KEY = "test-key";
   renderWithProviders(
     <Installation id="inst-1" installation={installation as any} />
   );
   expect(screen.getByTestId("react-weather")).toBeInTheDocument();
-  delete process.env.REACT_APP_OPEN_WEATHER_API_KEY;
+  import.meta.env.VITE_OPEN_WEATHER_API_KEY = "";
 });

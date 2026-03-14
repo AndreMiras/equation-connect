@@ -4,15 +4,14 @@ import { getInstallations } from "equation-connect";
 import { renderWithProviders } from "../test-utils";
 import Installations from "./Installations";
 
-jest.mock("equation-connect", () => ({
-  getInstallations: jest.fn(),
+vi.mock("equation-connect", () => ({
+  getInstallations: vi.fn(),
 }));
-jest.mock("./Installation", () => {
-  const MockInstallation = ({ id }: { id: string }) => (
+vi.mock("./Installation", () => ({
+  default: ({ id }: { id: string }) => (
     <div data-testid={`installation-${id}`}>{id}</div>
-  );
-  return MockInstallation;
-});
+  ),
+}));
 
 const authenticatedUser = {
   uid: "user-123",
@@ -21,11 +20,11 @@ const authenticatedUser = {
 };
 
 beforeEach(() => {
-  jest.clearAllMocks();
+  vi.clearAllMocks();
 });
 
 test("renders nothing before data loads", () => {
-  (getInstallations as jest.Mock).mockReturnValue(new Promise(() => {}));
+  vi.mocked(getInstallations).mockReturnValue(new Promise(() => {}) as any);
   const { container } = renderWithProviders(<Installations />, {
     user: authenticatedUser,
   });
@@ -33,7 +32,7 @@ test("renders nothing before data loads", () => {
 });
 
 test("fetches installations with user uid", () => {
-  (getInstallations as jest.Mock).mockResolvedValue({});
+  vi.mocked(getInstallations).mockResolvedValue({} as any);
   renderWithProviders(<Installations />, { user: authenticatedUser });
   expect(getInstallations).toHaveBeenCalledWith("user-123");
 });
@@ -43,7 +42,7 @@ test("renders installations after fetch", async () => {
     "install-1": { name: "Home", zones: {} },
     "install-2": { name: "Office", zones: {} },
   };
-  (getInstallations as jest.Mock).mockResolvedValue(mockData);
+  vi.mocked(getInstallations).mockResolvedValue(mockData as any);
   renderWithProviders(<Installations />, { user: authenticatedUser });
   await waitFor(() => {
     expect(screen.getByTestId("installation-install-1")).toBeInTheDocument();

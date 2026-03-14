@@ -2,18 +2,15 @@ import { render, screen } from "@testing-library/react";
 
 import App from "./App";
 
-jest.mock("./components/Home", () => {
-  const MockHome = () => <div data-testid="home-page">Home</div>;
-  return MockHome;
-});
-jest.mock("./components/Device", () => {
-  const MockDevice = () => <div data-testid="device-page">Device</div>;
-  return MockDevice;
-});
-jest.mock("./components/Header", () => {
-  const MockHeader = () => <div data-testid="header">Header</div>;
-  return MockHeader;
-});
+vi.mock("./components/Home", () => ({
+  default: () => <div data-testid="home-page">Home</div>,
+}));
+vi.mock("./components/Device", () => ({
+  default: () => <div data-testid="device-page">Device</div>,
+}));
+vi.mock("./components/Header", () => ({
+  default: () => <div data-testid="header">Header</div>,
+}));
 
 beforeEach(() => {
   window.location.hash = "#/";

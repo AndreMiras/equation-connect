@@ -3,14 +3,12 @@ import { screen } from "@testing-library/react";
 import { anonymousUser, renderWithProviders } from "../test-utils";
 import LoginOrLogout from "./LoginOrLogout";
 
-jest.mock("./Login", () => {
-  const MockLogin = () => <div data-testid="login">Login</div>;
-  return MockLogin;
-});
-jest.mock("./Logout", () => {
-  const MockLogout = () => <div data-testid="logout">Logout</div>;
-  return MockLogout;
-});
+vi.mock("./Login", () => ({
+  default: () => <div data-testid="login">Login</div>,
+}));
+vi.mock("./Logout", () => ({
+  default: () => <div data-testid="logout">Logout</div>,
+}));
 
 const authenticatedUser = {
   uid: "user-123",
