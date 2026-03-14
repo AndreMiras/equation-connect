@@ -157,7 +157,7 @@ const NominalPower: FC<NominalPowerProps> = ({
   );
 };
 
-const Device = (): JSX.Element => {
+const Device = () => {
   const { id } = useParams<"id">();
   const [device, setDevice] = useState<DeviceType | null>(null);
   const [temp, setTemp] = useState(0);

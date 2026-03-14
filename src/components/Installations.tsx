@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/provider";
 import Installation from "./Installation";
 
-const Installations = (): JSX.Element => {
+const Installations = () => {
   const [installations, setInstallations] = useState<InstallationsType | null>(
     null
   );

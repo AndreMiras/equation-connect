@@ -5,7 +5,7 @@ import { Button, ButtonGroup, Dropdown, Form } from "react-bootstrap";
 
 import { anonymousUser, User, UserContext } from "../context/provider";
 
-const Login = (): JSX.Element => {
+const Login = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const { setUser } = useContext(UserContext);

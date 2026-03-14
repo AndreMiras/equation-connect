@@ -10,7 +10,7 @@ import { registerIcons } from "./utils/helpers";
 
 registerIcons();
 
-const App = (): JSX.Element => {
+const App = () => {
   return (
     <div className="App">
       <Router>

@@ -4,7 +4,7 @@ import { Button } from "react-bootstrap";
 
 import { anonymousUser, UserContext } from "../context/provider";
 
-const Logout = (): JSX.Element => {
+const Logout = () => {
   const { setUser } = useContext(UserContext);
 
   const onLogout = async () => {

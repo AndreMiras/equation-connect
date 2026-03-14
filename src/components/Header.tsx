@@ -3,7 +3,7 @@ import { Container, Nav, Navbar } from "react-bootstrap";
 
 import LoginOrLogout from "./LoginOrLogout";
 
-const Header = (): JSX.Element => (
+const Header = () => (
   <Navbar bg="dark" variant="dark" expand="sm">
     <Container>
       <Navbar.Brand href={import.meta.env.BASE_URL}>

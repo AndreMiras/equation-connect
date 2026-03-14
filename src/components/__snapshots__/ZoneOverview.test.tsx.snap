@@ -48,7 +48,6 @@ exports[`ZoneOverview devices is optional 1`] = `
             <label
               class="btn btn-primary"
               for="radio-options--MpGOkgR4zExLBUDUafq-off"
-              role="button"
               tabindex="0"
             >
               <svg
@@ -77,7 +76,6 @@ exports[`ZoneOverview devices is optional 1`] = `
             <label
               class="btn btn-primary"
               for="radio-options--MpGOkgR4zExLBUDUafq-0"
-              role="button"
               tabindex="0"
             >
               <svg
@@ -106,7 +104,6 @@ exports[`ZoneOverview devices is optional 1`] = `
             <label
               class="btn btn-primary"
               for="radio-options--MpGOkgR4zExLBUDUafq-1"
-              role="button"
               tabindex="0"
             >
               <svg
@@ -135,7 +132,6 @@ exports[`ZoneOverview devices is optional 1`] = `
             <label
               class="btn btn-primary"
               for="radio-options--MpGOkgR4zExLBUDUafq-2"
-              role="button"
               tabindex="0"
             >
               <svg
@@ -309,7 +305,6 @@ exports[`ZoneOverview renders correctly 1`] = `
             <label
               class="btn btn-primary"
               for="radio-options--MpGOkgR4zExLBUDUafq-off"
-              role="button"
               tabindex="0"
             >
               <svg
@@ -338,7 +333,6 @@ exports[`ZoneOverview renders correctly 1`] = `
             <label
               class="btn btn-primary"
               for="radio-options--MpGOkgR4zExLBUDUafq-0"
-              role="button"
               tabindex="0"
             >
               <svg
@@ -367,7 +361,6 @@ exports[`ZoneOverview renders correctly 1`] = `
             <label
               class="btn btn-primary"
               for="radio-options--MpGOkgR4zExLBUDUafq-1"
-              role="button"
               tabindex="0"
             >
               <svg
@@ -396,7 +389,6 @@ exports[`ZoneOverview renders correctly 1`] = `
             <label
               class="btn btn-primary"
               for="radio-options--MpGOkgR4zExLBUDUafq-2"
-              role="button"
               tabindex="0"
             >
               <svg
