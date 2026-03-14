@@ -29,7 +29,7 @@
   },
   "scripts": {
     "start": "vite",
-    "build": "tsc --noEmit && vite build",
+    "build": "VITE_GIT_DESCRIBE=$(git describe --tags --always) tsc --noEmit && VITE_GIT_DESCRIBE=$(git describe --tags --always) vite build",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
