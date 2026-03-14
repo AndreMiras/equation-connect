@@ -4,14 +4,14 @@ import {
   setZonePreset,
   ZoneOverviewType,
 } from "equation-connect";
-import { FC, ReactChild, ReactChildren, useEffect, useState } from "react";
+import { FC, ReactNode, useEffect, useState } from "react";
 import { Accordion, ListGroup } from "react-bootstrap";
 import { useHref } from "react-router-dom";
 
 import Preset from "./Preset";
 
 interface ListGroupItemProps {
-  children: ReactChild | ReactChildren;
+  children: ReactNode;
   to: string;
 }
 const ListGroupItem: FC<ListGroupItemProps> = ({ children, to }) => {

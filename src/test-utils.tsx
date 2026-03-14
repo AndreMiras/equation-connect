@@ -1,5 +1,5 @@
 import { render, RenderOptions } from "@testing-library/react";
-import React, { FC } from "react";
+import React, { FC, PropsWithChildren } from "react";
 import { HashRouter as Router } from "react-router-dom";
 
 import { User, UserContext } from "./context/provider";
@@ -19,7 +19,7 @@ const createWrapper = ({
   user = anonymousUser,
   setUser = jest.fn(),
 }: WrapperOptions = {}): FC => {
-  const Wrapper: FC = ({ children }) => (
+  const Wrapper: FC<PropsWithChildren> = ({ children }) => (
     <UserContext.Provider value={{ user, setUser }}>
       <Router>{children}</Router>
     </UserContext.Provider>

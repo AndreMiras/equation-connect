@@ -3,6 +3,7 @@ import { strict as assert } from "assert";
 import {
   database,
   deviceDataByIdPath,
+  DeviceDataType,
   DeviceStatus,
   DeviceType,
   getDevice,
@@ -198,7 +199,7 @@ const Device = (): JSX.Element => {
     },
     [id, nominalPower]
   );
-  const onDeviceData = useCallback((deviceData) => {
+  const onDeviceData = useCallback((deviceData: DeviceDataType) => {
     const { backlight, backlight_on, temp, status, power, nominal_power } =
       deviceData;
     setTemp(temp);
