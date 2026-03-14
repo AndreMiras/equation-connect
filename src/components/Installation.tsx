@@ -25,15 +25,15 @@ const Installation: FC<InstallationProps> = ({ id, installation }) => {
     <section className="mb-10">
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-zinc-900">{name}</h1>
-          <p className="mt-1 text-sm text-zinc-500">{location}</p>
+          <h1 className="text-2xl font-semibold text-fg">{name}</h1>
+          <p className="mt-1 text-sm text-fg-muted">{location}</p>
         </div>
         {import.meta.env.VITE_OPEN_WEATHER_API_KEY ? (
-          <div className="flex items-center gap-3 rounded-xl border border-zinc-200 bg-white px-4 py-2">
+          <div className="flex items-center gap-3 rounded-xl border border-edge bg-card px-4 py-2">
             <CloudSun className="h-5 w-5 text-amber-400" />
             <div className="text-sm">
               {isLoading ? (
-                <span className="text-zinc-400">Loading...</span>
+                <span className="text-fg-subtle">Loading...</span>
               ) : errorMessage ? (
                 <span className="text-red-500">Error</span>
               ) : (
@@ -44,7 +44,7 @@ const Installation: FC<InstallationProps> = ({ id, installation }) => {
             </div>
           </div>
         ) : (
-          <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-2 text-sm text-amber-700">
+          <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-2 text-sm text-amber-700 dark:border-amber-800 dark:bg-amber-950 dark:text-amber-400">
             Weather API key missing
           </div>
         )}

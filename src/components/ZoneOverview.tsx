@@ -38,7 +38,7 @@ const ZoneOverview: FC<ZoneOverviewProps> = ({ installationId, zone }) => {
 
   return (
     <div className="mb-8">
-      <h2 className="mb-4 text-sm font-medium uppercase tracking-wider text-zinc-400">
+      <h2 className="mb-4 text-sm font-medium uppercase tracking-wider text-fg-subtle">
         {name}
       </h2>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -46,10 +46,10 @@ const ZoneOverview: FC<ZoneOverviewProps> = ({ installationId, zone }) => {
           <Link
             key={deviceId}
             to={`/devices/${deviceId}`}
-            className="group cursor-pointer rounded-2xl border border-zinc-200 bg-white p-5 no-underline transition hover:border-zinc-300 hover:shadow-md"
+            className="group cursor-pointer rounded-2xl border border-edge bg-card p-5 no-underline transition hover:border-edge-strong hover:shadow-md"
           >
             <div className="mb-4 flex items-center justify-between">
-              <span className="text-sm font-medium text-zinc-500">
+              <span className="text-sm font-medium text-fg-muted">
                 {deviceId}
               </span>
               <StatusBadge power={powerState} status={statusState} />
@@ -58,15 +58,15 @@ const ZoneOverview: FC<ZoneOverviewProps> = ({ installationId, zone }) => {
               <div>
                 {powerState ? (
                   <>
-                    <span className="text-4xl font-light text-zinc-900">
-                      {temp}
-                    </span>
-                    <span className="text-lg text-zinc-400">°C</span>
+                    <span className="text-4xl font-light text-fg">{temp}</span>
+                    <span className="text-lg text-fg-subtle">°C</span>
                   </>
                 ) : (
                   <>
-                    <span className="text-4xl font-light text-zinc-300">—</span>
-                    <span className="text-lg text-zinc-300">°C</span>
+                    <span className="text-4xl font-light text-fg-disabled">
+                      —
+                    </span>
+                    <span className="text-lg text-fg-disabled">°C</span>
                   </>
                 )}
               </div>
@@ -93,16 +93,19 @@ const StatusBadge: FC<{ power: boolean; status: DeviceStatus }> = ({
 }) => {
   if (!power) {
     return (
-      <span className="inline-flex items-center gap-1 rounded-full bg-zinc-100 px-2 py-0.5 text-xs font-medium text-zinc-500">
-        <span className="h-1.5 w-1.5 rounded-full bg-zinc-400" />
+      <span className="inline-flex items-center gap-1 rounded-full bg-inset px-2 py-0.5 text-xs font-medium text-fg-muted">
+        <span className="h-1.5 w-1.5 rounded-full bg-fg-subtle" />
         Off
       </span>
     );
   }
   const colorMap: Record<string, string> = {
-    [DeviceStatus.Ice]: "bg-sky-50 text-sky-600",
-    [DeviceStatus.Eco]: "bg-emerald-50 text-emerald-600",
-    [DeviceStatus.Comfort]: "bg-amber-50 text-amber-600",
+    [DeviceStatus.Ice]:
+      "bg-sky-50 text-sky-600 dark:bg-sky-950 dark:text-sky-400",
+    [DeviceStatus.Eco]:
+      "bg-emerald-50 text-emerald-600 dark:bg-emerald-950 dark:text-emerald-400",
+    [DeviceStatus.Comfort]:
+      "bg-amber-50 text-amber-600 dark:bg-amber-950 dark:text-amber-400",
   };
   const dotMap: Record<string, string> = {
     [DeviceStatus.Ice]: "bg-sky-500",

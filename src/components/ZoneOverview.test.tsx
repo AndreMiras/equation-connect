@@ -104,5 +104,5 @@ test("useEffect syncs power and status props to state", () => {
   );
   // The Off button should now have active styling (power=false)
   const offButtons = screen.getAllByLabelText("Off");
-  expect(offButtons[0].className).toContain("bg-zinc-100");
+  expect(offButtons[0].className).toContain("bg-inset");
 });

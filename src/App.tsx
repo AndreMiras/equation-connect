@@ -7,7 +7,7 @@ import Home from "./components/Home";
 
 const App = () => {
   return (
-    <div className="flex min-h-screen flex-col bg-zinc-50 text-zinc-900">
+    <div className="flex min-h-screen flex-col bg-surface text-fg">
       <Router>
         <Header />
         <main className="mx-auto mt-6 w-full max-w-6xl flex-1 px-6">

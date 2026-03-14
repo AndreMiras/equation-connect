@@ -45,5 +45,5 @@ test("clicking a preset calls onPreset with correct value", async () => {
 test("Off button has active styling when power is false", () => {
   renderWithProviders(<Preset {...defaultProps} power={false} />);
   const offButton = screen.getByLabelText("Off");
-  expect(offButton.className).toContain("bg-zinc-100");
+  expect(offButton.className).toContain("bg-inset");
 });

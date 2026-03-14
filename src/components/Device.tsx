@@ -34,24 +34,24 @@ const NumberInput: FC<NumberInputProps> = ({
 }) => (
   <div>
     {label && (
-      <label className="mb-2 block text-sm font-medium text-zinc-500">
+      <label className="mb-2 block text-sm font-medium text-fg-muted">
         {label}
       </label>
     )}
     <div className="inline-flex items-center gap-3">
       <button
         onClick={() => onChange(value - step)}
-        className="flex h-10 w-10 items-center justify-center rounded-lg border border-zinc-200 text-zinc-400 transition hover:border-zinc-300 hover:text-zinc-600"
+        className="flex h-10 w-10 items-center justify-center rounded-lg border border-edge text-fg-subtle transition hover:border-edge-strong hover:text-fg-secondary"
         aria-label={`Decrease ${label || "value"}`}
       >
         <Minus className="h-4 w-4" />
       </button>
-      <span className="w-16 text-center text-lg font-medium tabular-nums text-zinc-900">
+      <span className="w-16 text-center text-lg font-medium tabular-nums text-fg">
         {value}
       </span>
       <button
         onClick={() => onChange(value + step)}
-        className="flex h-10 w-10 items-center justify-center rounded-lg border border-zinc-200 text-zinc-400 transition hover:border-zinc-300 hover:text-zinc-600"
+        className="flex h-10 w-10 items-center justify-center rounded-lg border border-edge text-fg-subtle transition hover:border-edge-strong hover:text-fg-secondary"
         aria-label={`Increase ${label || "value"}`}
       >
         <Plus className="h-4 w-4" />
@@ -70,7 +70,7 @@ const SimplifiedBacklight: FC<SimplifiedBacklightProps> = ({
   onChange,
 }) => (
   <div>
-    <label className="mb-2 block text-sm font-medium text-zinc-500">
+    <label className="mb-2 block text-sm font-medium text-fg-muted">
       Backlight
     </label>
     <div className="flex gap-2">
@@ -78,8 +78,8 @@ const SimplifiedBacklight: FC<SimplifiedBacklightProps> = ({
         onClick={() => onChange(true)}
         className={`flex items-center gap-2 rounded-lg border px-4 py-2 text-sm transition ${
           value
-            ? "border-amber-200 bg-amber-50 text-amber-600"
-            : "border-zinc-200 text-zinc-400 hover:border-zinc-300"
+            ? "border-amber-200 bg-amber-50 text-amber-600 dark:border-amber-800 dark:bg-amber-950 dark:text-amber-400"
+            : "border-edge text-fg-subtle hover:border-edge-strong"
         }`}
       >
         <Lightbulb className="h-4 w-4" /> On
@@ -88,8 +88,8 @@ const SimplifiedBacklight: FC<SimplifiedBacklightProps> = ({
         onClick={() => onChange(false)}
         className={`flex items-center gap-2 rounded-lg border px-4 py-2 text-sm transition ${
           !value
-            ? "border-zinc-300 bg-zinc-100 text-zinc-600"
-            : "border-zinc-200 text-zinc-400 hover:border-zinc-300"
+            ? "border-edge-strong bg-inset text-fg-secondary"
+            : "border-edge text-fg-subtle hover:border-edge-strong"
         }`}
       >
         <LightbulbOff className="h-4 w-4" /> Off
@@ -194,7 +194,7 @@ const Device = () => {
 
   if (device === null) {
     return (
-      <div className="py-12 text-center text-zinc-400">Loading device...</div>
+      <div className="py-12 text-center text-fg-subtle">Loading device...</div>
     );
   }
 
@@ -202,38 +202,36 @@ const Device = () => {
     <div className="mx-auto max-w-2xl">
       <Link
         to="/"
-        className="mb-6 inline-flex items-center gap-1 text-sm text-zinc-500 no-underline hover:text-zinc-900"
+        className="mb-6 inline-flex items-center gap-1 text-sm text-fg-muted no-underline hover:text-fg"
       >
         <ArrowLeft className="h-4 w-4" />
         Back to devices
       </Link>
 
       <div className="mb-8">
-        <h1 className="text-2xl font-semibold text-zinc-900">
-          {device.data.name}
-        </h1>
+        <h1 className="text-2xl font-semibold text-fg">{device.data.name}</h1>
       </div>
 
       {/* Main Controls */}
-      <div className="mb-6 rounded-2xl border border-zinc-200 bg-white p-6">
+      <div className="mb-6 rounded-2xl border border-edge bg-card p-6">
         <div className="mb-8 text-center">
-          <div className="mb-1 text-6xl font-extralight text-zinc-900">
+          <div className="mb-1 text-6xl font-extralight text-fg">
             {temp}
-            <span className="text-2xl text-zinc-400">°C</span>
+            <span className="text-2xl text-fg-subtle">°C</span>
           </div>
-          <p className="text-sm text-zinc-400">Target temperature</p>
+          <p className="text-sm text-fg-subtle">Target temperature</p>
           <div className="mt-4 flex items-center justify-center gap-6">
             <button
               onClick={() => onTemperature(temp - 0.5)}
-              className="flex h-12 w-12 items-center justify-center rounded-full border border-zinc-200 text-zinc-400 transition hover:border-zinc-300 hover:text-zinc-600"
+              className="flex h-12 w-12 items-center justify-center rounded-full border border-edge text-fg-subtle transition hover:border-edge-strong hover:text-fg-secondary"
               aria-label="Decrease temperature"
             >
               <Minus className="h-5 w-5" />
             </button>
-            <span className="text-sm text-zinc-400">step 0.5°C</span>
+            <span className="text-sm text-fg-subtle">step 0.5°C</span>
             <button
               onClick={() => onTemperature(temp + 0.5)}
-              className="flex h-12 w-12 items-center justify-center rounded-full border border-zinc-200 text-zinc-400 transition hover:border-zinc-300 hover:text-zinc-600"
+              className="flex h-12 w-12 items-center justify-center rounded-full border border-edge text-fg-subtle transition hover:border-edge-strong hover:text-fg-secondary"
               aria-label="Increase temperature"
             >
               <Plus className="h-5 w-5" />
@@ -242,7 +240,7 @@ const Device = () => {
         </div>
 
         <div className="mb-8">
-          <label className="mb-3 block text-sm font-medium text-zinc-500">
+          <label className="mb-3 block text-sm font-medium text-fg-muted">
             Mode
           </label>
           <Preset
@@ -260,28 +258,30 @@ const Device = () => {
       </div>
 
       {/* Sensor Readings */}
-      <div className="mb-6 rounded-2xl border border-zinc-200 bg-white p-6">
-        <h2 className="mb-4 text-sm font-medium text-zinc-500">
+      <div className="mb-6 rounded-2xl border border-edge bg-card p-6">
+        <h2 className="mb-4 text-sm font-medium text-fg-muted">
           Sensor readings
         </h2>
         <div className="space-y-3">
           <div className="flex justify-between text-sm">
-            <span className="text-zinc-400">Calculated temp</span>
-            <span className="text-zinc-700">{device.data.temp_calc}°C</span>
+            <span className="text-fg-subtle">Calculated temp</span>
+            <span className="text-fg-secondary">{device.data.temp_calc}°C</span>
           </div>
           <div className="flex justify-between text-sm">
-            <span className="text-zinc-400">Probe temp</span>
-            <span className="text-zinc-700">{device.data.temp_probe}°C</span>
+            <span className="text-fg-subtle">Probe temp</span>
+            <span className="text-fg-secondary">
+              {device.data.temp_probe}°C
+            </span>
           </div>
         </div>
       </div>
 
       {/* Advanced */}
-      <details className="mb-6 rounded-2xl border border-zinc-200 bg-white">
-        <summary className="cursor-pointer px-6 py-4 text-sm font-medium text-zinc-500 hover:text-zinc-700">
+      <details className="mb-6 rounded-2xl border border-edge bg-card">
+        <summary className="cursor-pointer px-6 py-4 text-sm font-medium text-fg-muted hover:text-fg-secondary">
           Advanced settings
         </summary>
-        <div className="space-y-6 border-t border-zinc-100 px-6 py-6">
+        <div className="space-y-6 border-t border-edge-subtle px-6 py-6">
           <NumberInput
             value={backlight}
             onChange={onBacklight}
@@ -304,12 +304,12 @@ const Device = () => {
       </details>
 
       {/* Debug */}
-      <details className="mb-6 rounded-2xl border border-zinc-200 bg-white">
-        <summary className="cursor-pointer px-6 py-4 text-sm font-medium text-zinc-500 hover:text-zinc-700">
+      <details className="mb-6 rounded-2xl border border-edge bg-card">
+        <summary className="cursor-pointer px-6 py-4 text-sm font-medium text-fg-muted hover:text-fg-secondary">
           Debug
         </summary>
-        <div className="border-t border-zinc-100 px-6 py-4">
-          <pre className="overflow-x-auto text-xs text-zinc-500">
+        <div className="border-t border-edge-subtle px-6 py-4">
+          <pre className="overflow-x-auto text-xs text-fg-muted">
             {JSON.stringify(device, null, 2)}
           </pre>
         </div>

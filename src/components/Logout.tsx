@@ -17,7 +17,7 @@ const Logout = () => {
     <button
       type="submit"
       onClick={onLogoutClick}
-      className="text-sm text-zinc-500 hover:text-zinc-900"
+      className="text-sm text-fg-muted hover:text-fg"
     >
       Logout
     </button>

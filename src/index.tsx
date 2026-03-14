@@ -5,14 +5,17 @@ import { createRoot } from "react-dom/client";
 
 import App from "./App";
 import { UserContextProvider } from "./context/provider";
+import { ThemeProvider } from "./context/theme";
 import reportWebVitals from "./reportWebVitals";
 
 const root = createRoot(document.getElementById("root")!);
 root.render(
   <React.StrictMode>
-    <UserContextProvider>
-      <App />
-    </UserContextProvider>
+    <ThemeProvider>
+      <UserContextProvider>
+        <App />
+      </UserContextProvider>
+    </ThemeProvider>
   </React.StrictMode>,
 );
 

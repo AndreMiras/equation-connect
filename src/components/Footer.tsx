@@ -1,5 +1,5 @@
 const Footer = () => (
-  <footer className="mt-auto py-6 text-center text-xs text-zinc-400">
+  <footer className="mt-auto py-6 text-center text-xs text-fg-subtle">
     Open Equation Connect v{import.meta.env.VITE_GIT_DESCRIBE || "dev"}
   </footer>
 );

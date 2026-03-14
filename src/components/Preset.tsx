@@ -18,16 +18,19 @@ const iconsMap = {
 
 const colorsMap = {
   Ice: {
-    active: "bg-sky-50 text-sky-500 border-sky-200",
-    idle: "text-sky-400 hover:bg-sky-50",
+    active:
+      "bg-sky-50 text-sky-500 border-sky-200 dark:bg-sky-950 dark:text-sky-400 dark:border-sky-800",
+    idle: "text-sky-400 hover:bg-sky-50 dark:text-sky-500 dark:hover:bg-sky-950",
   },
   Eco: {
-    active: "bg-emerald-50 text-emerald-500 border-emerald-200",
-    idle: "text-emerald-400 hover:bg-emerald-50",
+    active:
+      "bg-emerald-50 text-emerald-500 border-emerald-200 dark:bg-emerald-950 dark:text-emerald-400 dark:border-emerald-800",
+    idle: "text-emerald-400 hover:bg-emerald-50 dark:text-emerald-500 dark:hover:bg-emerald-950",
   },
   Comfort: {
-    active: "bg-amber-50 text-amber-500 border-amber-200",
-    idle: "text-amber-400 hover:bg-amber-50",
+    active:
+      "bg-amber-50 text-amber-500 border-amber-200 dark:bg-amber-950 dark:text-amber-400 dark:border-amber-800",
+    idle: "text-amber-400 hover:bg-amber-50 dark:text-amber-500 dark:hover:bg-amber-950",
   },
 };
 
@@ -41,8 +44,8 @@ const Preset: FC<PresetProps> = ({ status, onPreset, power, onPowerOff }) => {
         onClick={onPowerOff}
         className={`flex h-9 w-9 items-center justify-center rounded-lg border transition ${
           currentValue === "off"
-            ? "border-zinc-300 bg-zinc-100 text-zinc-500"
-            : "border-transparent text-zinc-400 hover:bg-zinc-100"
+            ? "border-edge-strong bg-inset text-fg-muted"
+            : "border-transparent text-fg-subtle hover:bg-inset"
         }`}
         aria-label="Off"
       >

@@ -77,46 +77,46 @@ const Login = () => {
         placeholder="Email"
         aria-label="Email"
         onChange={onEmailChange}
-        className="h-9 rounded-lg border border-zinc-200 bg-zinc-50 px-3 text-sm outline-none focus:border-zinc-400"
+        className="h-9 rounded-lg border border-edge bg-input px-3 text-sm text-fg outline-none focus:border-edge-focus"
       />
       <input
         type="password"
         placeholder="Password"
         aria-label="Password"
         onChange={onPasswordChange}
-        className="h-9 rounded-lg border border-zinc-200 bg-zinc-50 px-3 text-sm outline-none focus:border-zinc-400"
+        className="h-9 rounded-lg border border-edge bg-input px-3 text-sm text-fg outline-none focus:border-edge-focus"
       />
       <div className="relative" ref={dropdownRef}>
         <div className="flex">
           <button
             type="submit"
             onClick={onLoginClick}
-            className="h-9 rounded-l-lg bg-zinc-900 px-4 text-sm font-medium text-white hover:bg-zinc-800"
+            className="h-9 rounded-l-lg bg-btn px-4 text-sm font-medium text-btn-fg hover:bg-btn-hover"
           >
             Login
           </button>
           <button
             type="button"
             onClick={() => setDropdownOpen(!dropdownOpen)}
-            className="flex h-9 items-center rounded-r-lg border-l border-zinc-700 bg-zinc-900 px-2 text-white hover:bg-zinc-800"
+            className="flex h-9 items-center rounded-r-lg border-l border-btn-edge bg-btn px-2 text-btn-fg hover:bg-btn-hover"
             aria-label="Login options"
           >
             <ChevronDown className="h-4 w-4" />
           </button>
         </div>
         {dropdownOpen && (
-          <div className="absolute right-0 top-full z-50 mt-1 w-48 rounded-lg border border-zinc-200 bg-white py-1 shadow-lg">
+          <div className="absolute right-0 top-full z-50 mt-1 w-48 rounded-lg border border-edge bg-card py-1 shadow-lg">
             <button
               type="button"
               onClick={() => onConfig(FirebaseConfig.EquationConnect)}
-              className="w-full px-4 py-2 text-left text-sm text-zinc-700 hover:bg-zinc-50"
+              className="w-full px-4 py-2 text-left text-sm text-fg-secondary hover:bg-inset"
             >
               Equation Login
             </button>
             <button
               type="button"
               onClick={() => onConfig(FirebaseConfig.RointeConnect)}
-              className="w-full px-4 py-2 text-left text-sm text-zinc-700 hover:bg-zinc-50"
+              className="w-full px-4 py-2 text-left text-sm text-fg-secondary hover:bg-inset"
             >
               Rointe Login
             </button>

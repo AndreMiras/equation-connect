@@ -1,5 +1,80 @@
 @import "tailwindcss";
 
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Surfaces */
+  --color-surface: var(--surface);
+  --color-card: var(--card);
+  --color-inset: var(--inset);
+  --color-input: var(--input);
+
+  /* Foreground / text */
+  --color-fg: var(--fg);
+  --color-fg-secondary: var(--fg-secondary);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-subtle: var(--fg-subtle);
+  --color-fg-disabled: var(--fg-disabled);
+
+  /* Borders */
+  --color-edge: var(--edge);
+  --color-edge-subtle: var(--edge-subtle);
+  --color-edge-strong: var(--edge-strong);
+  --color-edge-focus: var(--edge-focus);
+
+  /* Primary action (buttons) */
+  --color-btn: var(--btn);
+  --color-btn-fg: var(--btn-fg);
+  --color-btn-hover: var(--btn-hover);
+  --color-btn-edge: var(--btn-edge);
+}
+
+:root {
+  --surface: #fafafa; /* zinc-50 */
+  --card: #ffffff;
+  --inset: #f4f4f5; /* zinc-100 */
+  --input: #fafafa; /* zinc-50 */
+
+  --fg: #18181b; /* zinc-900 */
+  --fg-secondary: #3f3f46; /* zinc-700 */
+  --fg-muted: #71717a; /* zinc-500 */
+  --fg-subtle: #a1a1aa; /* zinc-400 */
+  --fg-disabled: #d4d4d8; /* zinc-300 */
+
+  --edge: #e4e4e7; /* zinc-200 */
+  --edge-subtle: #f4f4f5; /* zinc-100 */
+  --edge-strong: #d4d4d8; /* zinc-300 */
+  --edge-focus: #a1a1aa; /* zinc-400 */
+
+  --btn: #18181b; /* zinc-900 */
+  --btn-fg: #ffffff;
+  --btn-hover: #27272a; /* zinc-800 */
+  --btn-edge: #3f3f46; /* zinc-700 */
+}
+
+.dark {
+  --surface: #09090b; /* zinc-950 */
+  --card: #18181b; /* zinc-900 */
+  --inset: #27272a; /* zinc-800 */
+  --input: #27272a; /* zinc-800 */
+
+  --fg: #f4f4f5; /* zinc-100 */
+  --fg-secondary: #d4d4d8; /* zinc-300 */
+  --fg-muted: #a1a1aa; /* zinc-400 */
+  --fg-subtle: #71717a; /* zinc-500 */
+  --fg-disabled: #52525b; /* zinc-600 */
+
+  --edge: #3f3f46; /* zinc-700 */
+  --edge-subtle: #27272a; /* zinc-800 */
+  --edge-strong: #52525b; /* zinc-600 */
+  --edge-focus: #71717a; /* zinc-500 */
+
+  --btn: #f4f4f5; /* zinc-100 */
+  --btn-fg: #18181b; /* zinc-900 */
+  --btn-hover: #e4e4e7; /* zinc-200 */
+  --btn-edge: #d4d4d8; /* zinc-300 */
+}
+
 body {
   margin: 0;
   font-family:
