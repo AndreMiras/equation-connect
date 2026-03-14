@@ -25,7 +25,7 @@ import {
   ToggleButton,
   ToggleButtonGroup,
 } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 
 import Preset from "./Preset";
 

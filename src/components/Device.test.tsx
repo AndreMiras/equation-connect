@@ -44,8 +44,8 @@ vi.mock("firebase/database", () => ({
   ref: vi.fn(),
   onValue: vi.fn(),
 }));
-vi.mock("react-router-dom", async () => ({
-  ...(await vi.importActual("react-router-dom")),
+vi.mock("react-router", async () => ({
+  ...(await vi.importActual("react-router")),
   useParams: () => ({ id: "device-abc" }),
 }));
 

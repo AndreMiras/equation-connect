@@ -1,6 +1,6 @@
 import { render, RenderOptions } from "@testing-library/react";
 import React, { FC, PropsWithChildren } from "react";
-import { HashRouter as Router } from "react-router-dom";
+import { HashRouter as Router } from "react-router";
 
 import { User, UserContext } from "./context/provider";
 

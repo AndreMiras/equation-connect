@@ -6,7 +6,7 @@ import {
   setZonePreset,
   ZoneOverviewType,
 } from "equation-connect";
-import { HashRouter as Router } from "react-router-dom";
+import { HashRouter as Router } from "react-router";
 
 import { registerIcons } from "../utils/helpers";
 import ZoneOverview from "./ZoneOverview";
