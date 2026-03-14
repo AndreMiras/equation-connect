@@ -7,7 +7,7 @@ const Header = (): JSX.Element => (
   <Navbar bg="dark" variant="dark" expand="sm">
     <Container>
       <Navbar.Brand href={process.env.PUBLIC_URL}>
-        <FontAwesomeIcon icon={["fas", "thermometer-three-quarters"]} />{" "}
+        <FontAwesomeIcon icon={["fas", "temperature-three-quarters"]} />{" "}
         Equation Connect
       </Navbar.Brand>
       <Navbar.Toggle />

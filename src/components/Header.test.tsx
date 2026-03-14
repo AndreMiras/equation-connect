@@ -25,7 +25,7 @@ test("renders about link pointing to GitHub", () => {
 test("renders thermometer icon in brand", () => {
   const { container } = renderWithProviders(<Header />);
   expect(
-    container.querySelector("[data-icon='thermometer-three-quarters']")
+    container.querySelector("[data-icon='temperature-three-quarters']")
   ).toBeInTheDocument();
 });
 
