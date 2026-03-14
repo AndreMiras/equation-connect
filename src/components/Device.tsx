@@ -300,4 +300,5 @@ const Device = (): JSX.Element => {
   );
 };
 
+export { NumberInput, SimplifiedBacklight };
 export default Device;
