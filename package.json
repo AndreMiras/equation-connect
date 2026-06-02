@@ -13,7 +13,7 @@
     "@types/react": "^19.2.15",
     "@types/react-dom": "^19.2.3",
     "equation-connect": "^1.7.0",
-    "firebase": "^12.11.0",
+    "firebase": "^12.14.0",
     "lucide-react": "^0.577.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
